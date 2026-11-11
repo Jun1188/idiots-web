@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "games": [
+    {
+      "game": "coredawn",
+      "repository": "Jun1188/CoreDawn",
+      "branch": "Master",
+      "observed": "7e2b8413857dcd05322f001dbf8796755a2955b5",
+      "current": "7e2b8413857dcd05322f001dbf8796755a2955b5",
+      "method": "pinned",
+      "sourceChange": false,
+      "compare": null,
+      "buildSource": null,
+      "buildStatus": "unverified"
+    },
+    {
+      "game": "ai-diots",
+      "repository": "Jun1188/ai-hack-gameJam",
+      "branch": "main",
+      "observed": "4078091f9d08a3e026d8929ac27ec7e28c24f323",
+      "current": "4078091f9d08a3e026d8929ac27ec7e28c24f323",
+      "method": "pinned",
+      "sourceChange": false,
+      "compare": null,
+      "buildSource": null,
+      "buildStatus": "unverified"
+    }
+  ]
+}

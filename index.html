@@ -1,0 +1,1606 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f5f4ee">
+<meta name="description" content="한국공학대학교 게임개발 소모임 얼간이들의 플레이 로그. 직접 만든 게임, 함께 쌓은 활동 기록, 티노 픽셀 러너.">
+<title>IDIOTS — 얼간이들의 플레이 로그</title><style>/* Standalone Tino runner styles. All selectors stay inside runner-* names. */
+.runner-section{--runner-ink:#14233b;--runner-blue:#2948d8;--runner-paper:#f5f3e9;--runner-mint:#74dcc6;padding:64px 0 72px;border-top:1px solid var(--line,#ccd0c8);scroll-margin-top:30px}
+.runner-inner{width:min(1180px,90%);margin-inline:auto;min-width:0}
+.runner-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:22px}
+.runner-kicker{font:700 11px/1.5 var(--mono,monospace);letter-spacing:.13em;margin:0 0 10px;color:var(--muted,#687169)}
+.runner-title{font-size:clamp(28px,4vw,46px);line-height:1.22;letter-spacing:-.06em;margin:0}
+.runner-intro{margin:10px 0 0;color:var(--muted,#687169);font-size:14px}
+.runner-badge{font:700 10px/1.5 var(--mono,monospace);white-space:nowrap;border:1px solid currentColor;padding:7px 10px;letter-spacing:.1em}
+.runner-machine{min-width:0;border:2px solid var(--runner-ink);background:var(--runner-paper);color:var(--runner-ink);box-shadow:7px 7px 0 var(--runner-ink)}
+.runner-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 20px;border-bottom:2px solid var(--runner-ink);background:var(--runner-mint);font:700 11px/1.5 var(--mono,monospace)}
+.runner-machine-title{display:flex;align-items:center;gap:9px;letter-spacing:.04em}
+.runner-machine-title::before{content:"";width:8px;height:8px;background:var(--runner-blue);flex:none}
+.runner-scores{display:flex;gap:22px;flex-wrap:wrap}
+.runner-score-item{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.runner-score-label{font-size:9px;letter-spacing:.07em}
+.runner-score-value{font-size:16px;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.runner-screen{position:relative;isolation:isolate;overflow:hidden}
+.runner-canvas{display:block;width:100%;height:auto;aspect-ratio:10/3;image-rendering:pixelated;touch-action:pan-y;cursor:pointer;background:var(--runner-paper)}
+.runner-canvas:focus-visible{outline:4px solid var(--runner-blue);outline-offset:-5px}
+.runner-overlay{position:absolute;z-index:1;left:50%;top:31%;transform:translate(-50%,-50%);width:max-content;max-width:calc(100% - 30px);text-align:center;pointer-events:none;padding:12px 22px;background:#f5f3e9ee;border:1px solid #c9cfc3}
+.runner-overlay[hidden]{display:none}
+.runner-overlay-title{display:block;font:900 clamp(15px,2.7vw,27px)/1.3 var(--mono,monospace);letter-spacing:.03em}
+.runner-overlay-copy{display:block;font-size:12px;line-height:1.6;margin-top:5px;word-break:keep-all}
+.runner-bottom{padding:18px 20px 15px;border-top:1px solid #ccd0c8}
+.runner-controls{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.runner-button{appearance:none;border:1px solid var(--runner-ink);background:transparent;color:var(--runner-ink);min-height:44px;padding:10px 18px;font:700 12px/1.5 var(--sans,system-ui,sans-serif);cursor:pointer;border-radius:0}
+.runner-button-primary{background:var(--runner-blue);border-color:var(--runner-blue);color:#fff}
+.runner-button:not(:disabled):hover{box-shadow:3px 3px 0 var(--runner-ink)}
+.runner-button:focus-visible{outline:3px solid var(--runner-blue);outline-offset:3px}
+.runner-button:disabled{opacity:.45;cursor:default}
+.runner-help{font-size:11px;line-height:1.8;color:#4b594e;margin:13px 0 0;word-break:keep-all}
+.runner-help kbd{display:inline-block;font:700 10px/1.2 var(--mono,monospace);padding:3px 5px;border:1px solid #a8b2a5;box-shadow:0 1px 0 #a8b2a5;background:#fffdf6;color:var(--runner-ink)}
+.runner-status{font-size:11px;line-height:1.7;color:#4b594e;margin:6px 0 0;min-height:1.7em}
+.runner-motion-note{font-size:11px;margin:9px 0 0;color:#4b594e}
+.runner-motion-note[hidden]{display:none}
+.runner-noscript{margin:0;padding:18px 20px;font-size:13px}
+@media(max-width:640px){.runner-section{padding:42px 0 50px}.runner-heading{display:block}.runner-badge{display:inline-block;margin-top:16px}.runner-toolbar{padding:11px 12px;align-items:start;gap:10px}.runner-machine-title{font-size:9px;margin-top:3px}.runner-scores{gap:10px}.runner-score-item{display:block;text-align:right}.runner-score-label{display:block;font-size:8px}.runner-score-value{font-size:14px}.runner-canvas{aspect-ratio:2/1}.runner-overlay{top:29%;padding:8px 13px}.runner-overlay-copy{font-size:10px;line-height:1.5;max-width:230px}.runner-bottom{padding:14px 12px}.runner-controls{display:grid;grid-template-columns:1fr 1fr}.runner-button-primary{grid-column:1/-1}.runner-button{padding:9px 10px}.runner-machine{box-shadow:4px 4px 0 var(--runner-ink)}}
+@media(prefers-reduced-motion:reduce){.runner-section *{scroll-behavior:auto}}
+
+:root{color-scheme:light;--paper:#f5f4ee;--white:#fffef9;--ink:#202624;--muted:#646b65;--line:#cdcec4;--blue:#214bc0;--orange:#e48647;--mint:#bfe0d0;--mono:"Courier New",monospace;--sans:"Noto Sans CJK KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:28px}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.75 var(--sans);word-break:keep-all}a{color:inherit;text-underline-offset:4px}button,input,select{font:inherit;color:inherit}button,a,select,input{-webkit-tap-highlight-color:transparent}button:not(:disabled),select{cursor:pointer}button:disabled{cursor:default}[hidden]{display:none!important}:focus-visible{outline:3px solid var(--blue);outline-offset:5px}img{max-width:100%;height:auto}.wrap{width:min(1200px,calc(100% - 96px));margin:auto}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.skip{position:absolute;top:-100px;left:20px;z-index:50;background:var(--ink);color:#fff;padding:12px 20px}.skip:focus{top:10px}
+.mast{border-bottom:1px solid var(--line)}.mast-inner{display:flex;align-items:center;gap:30px;min-height:100px}.wordmark{display:flex;gap:12px;align-items:center;text-decoration:none;font:900 27px/.9 var(--mono);letter-spacing:-1.5px}.wordmark small{display:block;font:8px var(--mono);letter-spacing:1px;margin-top:10px}.brand-card{margin:0;width:42px;height:43px;overflow:hidden}.brand-card img{display:block;width:42px;height:43px;object-fit:cover}.brand-card figcaption{display:none}.mast nav{display:flex;gap:28px;margin-left:auto;align-items:center;font-size:12px;font-weight:700}.mast nav a{text-decoration:none}.mast nav a:hover{color:var(--blue)}.nav-play{background:var(--ink);color:var(--white);padding:7px 13px;font:700 11px var(--mono)}.motion-toggle{font-size:10px;padding:7px 0;border:0;border-bottom:1px solid var(--muted);background:none;color:var(--muted);white-space:nowrap}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:70px;padding-top:68px;padding-bottom:62px;align-items:center}.eyebrow{font:700 10px/1.6 var(--mono);letter-spacing:1.4px;margin:0 0 20px}.tiny-square{display:inline-block;width:7px;height:7px;background:var(--blue);margin-right:5px}.hero h1{font-size:clamp(44px,4.6vw,68px);line-height:1.21;letter-spacing:-.065em;margin:0;font-weight:900}.hero h1 em{font-style:normal;color:var(--blue)}.hero-description{font-size:15px;line-height:1.85;color:var(--muted);margin:22px 0}.hero-links{display:flex;gap:28px;margin:25px 0 31px;font-size:12px;font-weight:700}.hero-links a{text-decoration:none;padding-bottom:6px;border-bottom:1px solid var(--ink)}.hero-links span{margin-left:10px}.field-glimpse{display:flex;gap:22px;align-items:center}.glimpse-image{display:block;width:54%;max-width:260px;transform:rotate(-2deg);border:5px solid var(--white);box-shadow:0 3px 5px #17291a0d}.glimpse-image img{display:block;object-fit:cover;width:100%;height:145px;object-position:50% 70%}.field-glimpse>div{min-width:0}.field-glimpse .tino-sprite{width:76px;height:76px}.field-glimpse p{font-size:11px;line-height:1.6;margin:0}.field-glimpse b{display:block;margin-bottom:4px}.field-glimpse p span{color:var(--muted);font-size:10px}
+.story-panel{background:#e8ede3;border:1px solid #cbd3c5;padding:25px 28px 20px;position:relative;min-width:0}.story-heading{display:flex;justify-content:space-between;gap:12px;align-items:start}.story-heading .eyebrow{font-size:9px;margin:0;color:#3a5449}.story-live{font-size:9px;color:#526355;white-space:nowrap}.story-panel h2{font-size:25px;line-height:1.4;margin:18px 0 8px;letter-spacing:-.045em}.story-intro{font-size:12px;line-height:1.8;color:#5b6b5e;margin:0}.story-totals{display:flex;gap:15px;align-items:center;margin:18px 0 14px}.story-totals>div{display:flex;align-items:baseline;gap:8px}.story-totals strong{font:700 34px/1 var(--mono);letter-spacing:-2px}.story-totals span:not(.tino-sprite){font-size:9px}.story-totals .total-slash{font:30px var(--mono)!important;color:#adb7aa}.story-totals .tino-sprite{margin-left:auto;width:50px;height:50px}.story-pixels{display:grid;grid-template-columns:repeat(19,minmax(0,1fr));gap:5px;min-height:190px;align-content:start}.pixel-dot{display:block;aspect-ratio:1;background:#cfd8cb;transition:background-color .25s,transform .3s,opacity .3s;opacity:.45}.pixel-dot.is-active{background:var(--blue);opacity:1}.pixel-dot.is-active[data-category=news]{background:var(--orange)}.pixel-dot[data-undated=true],.pixel-dot.is-active[data-undated=true]{background-image:repeating-linear-gradient(45deg,transparent 0 2px,#f5f4ee99 2px 3px);outline:1px dashed #597263;outline-offset:-1px}.pixel-dot.is-new{animation:pixel-arrive .45s cubic-bezier(.18,.8,.2,1) both}.story-key{display:flex;flex-wrap:wrap;gap:12px;font-size:9px;color:#5a695b;margin:14px 0 20px}.story-key>span:last-child{margin-left:auto}.story-key i{display:inline-block;width:6px;height:6px;margin-right:5px}.key-news{background:var(--orange)}.key-info{background:var(--blue)}.story-transport{display:flex;align-items:center;gap:12px;justify-content:space-between;padding-top:15px;border-top:1px solid #c4cec0}.story-transport button{font-size:10px;font-weight:700;padding:7px 12px;background:var(--ink);color:var(--paper);border:0;min-width:111px}.story-transport>span{font:700 10px var(--mono)}.story-panel input[type=range]{width:100%;accent-color:var(--blue);height:24px;margin:10px 0 0;cursor:pointer}.story-caption{font-size:9px;line-height:1.6;color:#5f6e61;margin:4px 0 0;min-height:29px}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) 1.2fr;align-items:center;padding-top:25px;padding-bottom:25px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}.stat-card{display:flex;align-items:baseline;gap:12px;text-decoration:none;border-right:1px solid var(--line);padding:0 24px}#dashboard>.stat-card:first-of-type{padding-left:0}.stat-card strong{font:700 32px/1 var(--mono);letter-spacing:-1.5px}.stat-card span{font-size:10px;color:var(--muted);line-height:1.5}.stat-card:hover strong{color:var(--blue)}.facts>p{font-size:9px;line-height:1.8;color:var(--muted);margin:0;padding-left:24px}
+.section{padding-top:80px;padding-bottom:80px;border-bottom:1px solid var(--line)}.section-heading{display:flex;justify-content:space-between;gap:25px;align-items:end;margin-bottom:32px}.section-heading .eyebrow{color:var(--muted);margin-bottom:12px}.section-heading h2,.club-section h2{font-size:clamp(28px,3.3vw,43px);line-height:1.25;letter-spacing:-.06em;margin:0}.section-note{font-size:11px;line-height:1.85;color:var(--muted);margin:0}.games{display:grid;grid-template-columns:1fr 1.3fr;gap:40px;align-items:start}.game-card{min-width:0}.game-card:nth-child(2){padding-top:60px}.game-cover{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--ink)}.game-cover h3{font-size:22px;letter-spacing:-.035em;margin:0}.game-cover>span{font:9px var(--mono);color:var(--muted)}.game-art{display:none}.game-photo{margin:18px 0 0;background:#1a2230;overflow:hidden}.game-photo img{display:block;width:100%;height:260px;object-fit:contain}.game-card:nth-child(2) .game-photo img{height:auto;aspect-ratio:1672/941;object-fit:cover}.game-card:first-child .game-photo img{padding:40px}.game-photo figcaption{font-size:9px;color:#c5cdd6;padding:8px 14px;border-top:1px solid #fff2}.game-details{padding:18px 0 0}.game-details>p{font-size:12px;color:var(--muted);margin:0 0 15px;line-height:1.8}.game-details .download{display:inline-flex;justify-content:space-between;gap:34px;text-decoration:none;font-size:12px;font-weight:700;padding:8px 0;border-bottom:1px solid var(--ink)}.game-details .play{margin-left:20px;color:var(--blue)}.game-details .build-note{font-size:10px;margin:12px 0 0}.revision{font:9px/1.9 var(--mono);color:#5c665e;margin-top:14px;overflow-wrap:anywhere}.revision a{color:#4b5c6b}
+.field-section{padding:70px 0 75px;background:#e5e7de;border-bottom:1px solid #c6cbbf}.field-section .section-heading{margin-bottom:30px}.field-section .section-heading .tino-sprite{width:70px;height:70px}.update-card{display:grid;grid-template-columns:1.5fr 1fr;gap:55px;align-items:center}.update-card>a{display:block;position:relative}.update-card>a:after{content:"사진 크게 보기 ↗";position:absolute;bottom:15px;right:15px;padding:7px 10px;color:var(--paper);background:#182821d9;font-size:9px}.update-card img{display:block;width:100%;height:390px;object-fit:cover;object-position:50% 68%}.update-card>div{padding:0}.update-card .kicker{font:10px/1.7 var(--mono);color:#526755;margin:0 0 20px}.update-card h3{font-size:31px;line-height:1.35;letter-spacing:-.05em;margin:0 0 20px;word-break:normal}.update-card p:not(.kicker){font-size:13px;color:#57635a;line-height:1.9;margin:0 0 24px}.update-card small{font:9px/1.8 var(--mono);color:#536056;overflow-wrap:anywhere;word-break:normal;display:block;border-top:1px solid #bec7b9;padding-top:15px}
+.archive-tabs{display:flex;gap:25px;border-bottom:1px solid var(--line);margin-bottom:25px}.archive-tabs a{font-size:13px;font-weight:700;color:var(--muted);text-decoration:none;padding:13px 2px;border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap}.archive-tabs a[aria-current=page]{color:var(--blue);border-color:var(--blue)}.archive-tabs a:hover{color:var(--ink)}.archive-heading{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:28px}.archive-heading h3{font-size:17px;letter-spacing:-.02em;margin:0}.archive-heading p{font-size:11px;color:var(--muted);margin:5px 0 0}.year{font-size:10px;color:var(--muted);white-space:nowrap}.year select{font-size:11px;margin-left:10px;border:1px solid var(--line);padding:7px 10px;background:transparent;border-radius:0}.explorer-grid{display:grid;grid-template-columns:.95fr 1.1fr;gap:60px;align-items:start}.chart-card{position:sticky;top:25px;background:#ebece5;padding:25px 25px 20px;min-width:0}.chart-card header{display:flex;flex-direction:column;gap:8px;padding-bottom:15px}.chart-card h4{font-size:14px;margin:0}.chart-card header p{font:10px var(--mono);color:var(--muted);margin:0}.chart{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:5px;margin-top:12px;min-height:195px}.chart-bar{display:grid;grid-template-rows:25px 145px 25px;align-items:end;background:transparent;border:0;padding:0;min-width:0;text-align:center}.chart-bar .value{font:9px var(--mono);color:var(--ink);align-self:center}.plot{height:100%;display:flex;align-items:end;justify-content:center;border-bottom:1px solid #7c8b7e;width:100%;background:repeating-linear-gradient(to top,transparent 0 35px,#bcc3b666 35px 36px)}.plot i{display:block;width:78%;max-width:25px;height:var(--height);background:var(--blue);transform-origin:bottom}.chart-bar[aria-pressed=true] .plot i{background:var(--orange)}.chart-bar:hover:not(:disabled) .plot i{background:#3863ce}.chart-bar[aria-pressed=true] .month{font-weight:700;color:var(--ink);text-decoration:underline;text-underline-offset:4px}.chart-bar:disabled{opacity:.35}.month{font:9px var(--mono);color:var(--muted);align-self:center}.chart-foot{display:flex;justify-content:space-between;gap:10px;margin-top:18px;font-size:9px;color:var(--muted);align-items:baseline}.link-btn{border:0;background:none;font-size:10px;padding:0;text-decoration:underline;color:var(--blue)}.link-btn:disabled{color:var(--muted);text-decoration:none}.chart-note{font-size:9px;line-height:1.8;border-top:1px solid #ccd0c4;padding-top:15px;margin:20px 0 0;color:var(--muted)}.records-head{display:flex;justify-content:space-between;align-items:baseline;gap:15px;border-bottom:1px solid var(--ink);padding-bottom:13px}.records-head h4{font-size:14px;margin:0}.records-head>span{font:10px var(--mono);color:var(--muted)}.records ul{list-style:none;padding:0;margin:0}.record{display:grid;grid-template-columns:79px minmax(0,1fr) auto;gap:12px;align-items:baseline;padding:17px 0;border-bottom:1px solid var(--line)}.record-date,.record-count{font:9px/1.7 var(--mono);color:var(--muted);white-space:nowrap}.record strong{font-size:12px;font-weight:500;line-height:1.6;overflow-wrap:anywhere;word-break:normal}.record-image{grid-column:2/-1;margin:3px 0;display:block}.record-image img{display:block;width:150px;height:90px;object-fit:cover;object-position:50% 68%}.more{width:100%;background:transparent;border:0;border-bottom:1px solid var(--ink);padding:15px;font-size:11px;margin-top:7px}.more:hover{color:var(--blue);background:#e9ece3}
+.club-section{background:var(--ink);color:var(--paper);padding:75px 0 70px}.club-layout{display:grid;grid-template-columns:1fr 1fr;gap:100px}.club-section .eyebrow{color:#a8c4b3}.club-section h2{font-size:42px;line-height:1.4}.club-mascots{display:flex;align-items:end;gap:2px;margin-top:30px}.club-mascots .tino-sprite{width:100px;height:100px}.club-description>p{font-size:12px;color:#bdc6bc;line-height:1.95;margin:0 0 20px}.club-description .club-lead{font-size:17px;font-weight:600;color:var(--paper);line-height:1.7}.club-practices{margin:25px 0}.club-practices>div{border-top:1px solid #596158;padding:13px 0;display:grid;grid-template-columns:105px 1fr;gap:15px}.club-practices dt{font-size:12px;font-weight:600}.club-practices dd{font-size:11px;line-height:1.8;color:#aebcae;margin:0}.text-link{font-size:11px;color:#cfdfcd}.arcade-section{border-bottom:0;padding-bottom:75px}
+.foot{border-top:1px solid var(--ink);padding:45px 0 20px}.foot-inner{display:grid;grid-template-columns:1.4fr 1fr auto;gap:35px;align-items:start}.foot b{font:900 46px/1 var(--mono);letter-spacing:-3px}.foot p{font-size:11px;line-height:1.8;color:var(--muted);margin:17px 0}.foot small{font-size:9px;color:var(--muted);line-height:1.9;display:block}.foot nav{display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:11px;padding-top:7px}.foot nav a{text-decoration:none}.foot nav a:hover{color:var(--blue)}.foot .tino-sprite{width:96px;height:96px}.foot-bottom{display:flex;justify-content:space-between;gap:20px;margin-top:45px;border-top:1px solid var(--line);padding-top:17px;font:8px var(--mono);color:var(--muted);letter-spacing:1px}
+.tino-sprite{display:inline-block;width:88px;height:88px;background-repeat:no-repeat;background-image:url("media/tino-sprites.png");background-position:0 0;background-size:300% 200%;image-rendering:pixelated;flex-shrink:0;vertical-align:bottom}.tino-idle{background-position:0% 0%}.tino-wave{background-position:50% 100%;animation:tino-wave 2.8s steps(2,end) infinite;transform-origin:50% 85%}.tino-think,.tino-load{background-position:100% 100%}.tino-jump{background-position:0% 100%;animation:tino-hop 3.6s steps(5,end) infinite}.tino-run{background-position:50% 0%;animation:tino-run .22s steps(1,end) infinite}.loading-screen{position:fixed;inset:0;z-index:40;background:#f5f4eef2;display:grid;place-items:center;pointer-events:none}.loading-screen>div{display:flex;align-items:center;gap:22px}.loading-screen p{font:700 14px var(--mono);letter-spacing:1px}.loading-screen p span{display:block;font:11px var(--sans);letter-spacing:0;color:var(--muted);margin-top:10px}.loading-screen .tino-sprite{width:90px;height:90px;animation:tino-load .6s steps(2,end) infinite}.loading-screen.is-leaving{opacity:0;transition:opacity .2s}.reveal{opacity:1}
+@keyframes pixel-arrive{from{transform:translateY(-5px) scale(.3);opacity:0}to{transform:none;opacity:1}}@keyframes tino-wave{0%,70%,100%{transform:rotate(0)}75%{transform:rotate(-5deg)}85%{transform:rotate(5deg)}}@keyframes tino-hop{0%,65%,100%{transform:translateY(0)}75%{transform:translateY(-12px)}85%{transform:translateY(-6px)}}@keyframes tino-run{0%,100%{background-position:50% 0%}50%{background-position:100% 0%}}@keyframes tino-load{0%,100%{background-position:100% 100%;transform:translateY(0)}50%{background-position:50% 100%;transform:translateY(-3px)}}
+html[data-motion=off]{scroll-behavior:auto}html[data-motion=off] *,html[data-motion=off] *:before,html[data-motion=off] *:after{animation:none!important;transition:none!important}
+@media(max-width:1100px){.wrap{width:calc(100% - 64px)}.hero{gap:40px}.hero h1{font-size:54px}.story-panel{padding:22px}.story-pixels{gap:4px;min-height:165px}.story-totals strong{font-size:30px}.story-totals>div{gap:5px}.stat-card{padding:0 15px;gap:8px}.stat-card strong{font-size:28px}.stat-card span{font-size:9px}.facts>p{padding-left:15px}.explorer-grid{gap:35px}.record{grid-template-columns:1fr auto;gap:4px 10px}.record-date{grid-column:1/-1}.record-image{grid-column:1/-1}.club-layout{gap:60px}.club-section h2{font-size:36px}.update-card{gap:35px}}
+@media(max-width:800px){.wrap{width:calc(100% - 48px)}.mast-inner{min-height:85px;gap:18px}.mast nav{gap:20px}.wordmark{font-size:24px}.motion-toggle{font-size:9px}.hero{gap:28px;padding-top:45px;padding-bottom:45px}.hero h1{font-size:44px}.hero-description{font-size:12px}.hero .eyebrow{font-size:8px}.hero-links{gap:16px;font-size:10px;margin:20px 0 25px}.field-glimpse{gap:12px}.glimpse-image img{height:130px}.field-glimpse .tino-sprite{width:62px;height:62px}.field-glimpse p{font-size:9px}.field-glimpse p span{font-size:8px}.story-panel{padding:18px}.story-heading{flex-wrap:wrap;gap:3px}.story-live{display:none}.story-panel h2{font-size:20px;margin-top:13px}.story-intro{font-size:10px}.story-totals{gap:10px}.story-totals>div{align-items:start;flex-direction:column;gap:4px}.story-totals strong{font-size:30px}.story-pixels{gap:3px;min-height:135px}.story-key{font-size:8px;gap:8px;margin:12px 0 13px}.story-key>span:last-child{margin-left:0;width:100%}.story-transport{padding-top:12px;gap:7px}.story-transport button{min-width:0;padding:7px 8px;font-size:9px}.story-transport>span{font-size:9px}.story-caption{font-size:8px}.facts{grid-template-columns:repeat(4,1fr);row-gap:20px}.facts>p{grid-column:1/-1;padding:0;margin:0;font-size:8px}.facts>p br{display:none}.stat-card:last-of-type{border-right:0}.stat-card{padding:0 15px;display:block}.stat-card span{display:block;margin-top:7px}.section{padding-top:55px;padding-bottom:55px}.section-heading h2{font-size:32px}.section-note{font-size:9px}.games{gap:25px}.game-cover h3{font-size:20px}.game-cover>span{font-size:8px}.game-photo img{height:210px}.game-card:first-child .game-photo img{padding:25px}.game-details>p{font-size:11px}.game-details .download{font-size:11px}.update-card{gap:25px;grid-template-columns:1.3fr 1fr}.update-card img{height:330px}.update-card h3{font-size:25px}.update-card p:not(.kicker){font-size:11px}.update-card small{font-size:8px}.explorer-grid{grid-template-columns:1fr;gap:30px}.chart-card{position:static}.chart{gap:12px}.chart-bar{grid-template-rows:25px 160px 25px}.plot i{max-width:45px}.record{grid-template-columns:85px 1fr auto;gap:12px}.record-date{grid-column:auto}.record-image{grid-column:2/-1}.club-layout{gap:35px}.club-section h2{font-size:32px}.club-mascots .tino-sprite{width:80px;height:80px}.club-description .club-lead{font-size:15px}.club-practices>div{display:block}.club-practices dd{margin-top:5px}.foot-inner{grid-template-columns:1.2fr 1fr auto;gap:25px}.foot .tino-sprite{width:70px;height:70px}.foot nav{font-size:10px}}
+@media(max-width:600px){.wrap{width:calc(100% - 40px)}.mast-inner{gap:15px;min-height:76px;flex-wrap:wrap;position:relative;padding-top:16px;padding-bottom:15px}.brand-card,.brand-card img{width:33px;height:34px}.wordmark{font-size:24px;gap:9px}.wordmark small{font-size:6px;letter-spacing:.8px;margin-top:7px}.mast nav{gap:17px;font-size:10px}.mast nav a:nth-child(3){display:none}.nav-play{font-size:9px;padding:6px 9px}.motion-toggle{position:absolute;right:0;bottom:-28px;font-size:8px;padding:2px 0;z-index:2}.hero{grid-template-columns:1fr;gap:35px;padding-top:45px;padding-bottom:35px}.hero .eyebrow{font-size:8px;margin-bottom:16px}.hero h1{font-size:clamp(43px,11.5vw,65px);line-height:1.2}.hero-description{font-size:13px;margin:18px 0}.hero-links{font-size:11px;gap:28px;margin:23px 0 27px}.field-glimpse{gap:22px;max-width:400px}.glimpse-image{width:58%}.glimpse-image img{height:120px}.field-glimpse .tino-sprite{width:66px;height:66px}.field-glimpse p{font-size:10px}.field-glimpse p span{font-size:9px}.story-panel{padding:23px 22px 18px}.story-panel h2{font-size:24px;margin-top:13px}.story-heading .eyebrow{margin-bottom:0}.story-intro{font-size:11px}.story-totals{margin-top:17px;margin-bottom:15px}.story-totals>div{flex-direction:row;align-items:baseline;gap:6px}.story-totals strong{font-size:33px}.story-totals span:not(.tino-sprite){font-size:8px}.story-totals .tino-sprite{width:45px;height:45px}.story-pixels{gap:4px;min-height:149px}.story-key{font-size:8px;gap:12px;margin-bottom:18px}.story-key>span:last-child{width:auto;margin-left:auto}.story-transport button{font-size:10px;padding:8px 12px}.story-transport>span{font-size:10px}.story-caption{font-size:9px}.facts{padding-top:22px;padding-bottom:20px;row-gap:16px}.stat-card{padding:0 12px}.stat-card strong{font-size:29px}.stat-card span{font-size:8px;margin-top:8px;line-height:1.5}.facts>p{font-size:8px}.section{padding-top:45px;padding-bottom:45px}.section-heading{gap:20px;align-items:start;margin-bottom:26px}.section-heading .eyebrow{font-size:8px;margin-bottom:11px}.section-heading h2{font-size:29px}.section-note{display:none}.games{grid-template-columns:1fr;gap:36px}.game-card:nth-child(2){padding-top:0}.game-cover h3{font-size:22px}.game-photo img{height:240px}.game-card:first-child .game-photo img{padding:35px}.game-details>p{font-size:12px}.game-details .download{font-size:12px}.game-details .build-note{font-size:9px}.revision{font-size:8px}.field-section{padding:45px 0}.field-section .section-heading{align-items:center;margin-bottom:25px}.field-section .section-heading .tino-sprite{width:50px;height:50px}.update-card{grid-template-columns:1fr;gap:25px}.update-card img{height:290px}.update-card h3{font-size:28px;margin-bottom:13px}.update-card .kicker{font-size:9px;margin-bottom:12px}.update-card p:not(.kicker){font-size:12px;margin-bottom:17px}.update-card small{font-size:9px}.archive-tabs{gap:18px;margin-bottom:22px}.archive-tabs a{font-size:11px;padding-top:5px;padding-bottom:12px}.archive-heading{align-items:start;gap:12px;margin-bottom:23px}.archive-heading h3{font-size:15px}.archive-heading p{font-size:10px}.year{font-size:0}.year select{font-size:10px;margin-left:0;padding:7px}.chart-card{padding:20px 18px 17px}.chart-card h4{font-size:13px}.chart-card header p{font-size:9px}.chart{gap:5px;min-height:180px}.chart-bar{grid-template-rows:20px 132px 25px}.chart-bar .value,.month{font-size:8px}.chart-foot{font-size:8px}.link-btn{font-size:9px}.chart-note{font-size:8px}.records-head h4{font-size:13px}.records-head>span{font-size:9px}.record{grid-template-columns:1fr auto;gap:5px 10px;padding:15px 0}.record-date{grid-column:1/-1;font-size:9px}.record strong{font-size:12px}.record-image{grid-column:1/-1}.club-section{padding:47px 0}.club-layout{grid-template-columns:1fr;gap:28px}.club-section h2{font-size:35px}.club-mascots{margin-top:20px}.club-mascots .tino-sprite{width:80px;height:80px}.club-description .club-lead{font-size:16px}.club-description>p{font-size:12px}.club-practices>div{display:grid;grid-template-columns:100px 1fr;gap:12px}.club-practices dd{margin:0;font-size:10px}.club-practices dt{font-size:11px}.arcade-section{padding-bottom:45px}.foot{padding-top:32px}.foot-inner{grid-template-columns:1fr 85px;gap:25px}.foot b{font-size:40px}.foot p{font-size:10px}.foot small{font-size:8px}.foot nav{grid-column:1/-1;grid-row:2;display:flex;flex-wrap:wrap;gap:20px;padding:0}.foot .tino-sprite{width:85px;height:85px}.foot-bottom{font-size:6px;letter-spacing:.5px;margin-top:32px}.loading-screen>div{gap:12px}.loading-screen p{font-size:12px}.loading-screen p span{font-size:9px}}
+@media(max-width:360px){.wrap{width:calc(100% - 32px)}.mast nav{gap:12px}.wordmark{font-size:21px}.mast nav a{font-size:9px}.hero h1{font-size:43px}.story-panel{padding:20px 16px 17px}.story-totals strong{font-size:29px}.story-key{gap:8px;font-size:7px}.stat-card strong{font-size:25px}.stat-card span{font-size:7px}.archive-tabs{gap:12px}.archive-tabs a{font-size:10px}.section-heading h2{font-size:26px}.story-pixels{gap:3px;min-height:130px}.club-practices>div{grid-template-columns:90px 1fr}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.loading-screen{display:none!important}}
+
+html[data-page-visibility=hidden] .tino-sprite{animation-play-state:paused!important}.runner-section{border-top:0;padding:0}.runner-inner{width:100%}.runner-heading{display:none}
+
+.motion-toggle{min-height:28px}.story-transport button{min-height:34px}.story-panel input[type=range]{min-height:30px}.mast nav a,.foot nav a{display:inline-flex;align-items:center;min-height:26px}.story-key>span{line-height:1.6}
+
+.loading-screen .tino-load{background:none}.tino-load svg{display:block;width:100%;height:100%}.runner-canvas{-webkit-tap-highlight-color:transparent}
+
+/* Keep meaningful data readable on phones; only decorative indices stay tiny. */
+@media(max-width:600px){.story-key,.story-caption,.stat-card span,.facts>p,.chart-bar .value,.month,.chart-note,.chart-foot,.link-btn,.records-head>span,.record-date,.record-count,.game-cover>span,.game-details .build-note{font-size:11px}.story-key{gap:8px 14px}.story-key>span:last-child{width:100%;margin-left:0}.story-caption{line-height:1.8;min-height:40px}.story-transport>span{font-size:11px;line-height:1.6}.story-transport button{font-size:11px;min-width:100px}.stat-card{padding-inline:10px}.stat-card span{min-height:32px;line-height:1.5}.facts>p{line-height:1.7}.facts>p br{display:block}.chart{gap:4px}.chart-card header p,.archive-heading p{font-size:11px}.chart-note{line-height:1.8}.record{gap:6px 10px}.revision,.game-photo figcaption,.update-card small,.foot small{font-size:10px}.club-practices dd{font-size:12px}.club-practices>div{grid-template-columns:92px 1fr}.story-totals span:not(.tino-sprite){font-size:10px}.story-totals strong{font-size:31px}.story-totals{gap:10px}.story-totals .tino-sprite{width:38px;height:38px}}
+@media(max-width:360px){.story-totals>div{display:block}.story-totals>div span{display:block;margin-top:4px}.story-totals{gap:12px}.stat-card span{font-size:10px}.story-transport{align-items:start}.story-transport>span{text-align:right;max-width:130px}}
+
+/* A résumé-like activity history: dates, titles and evidence, not invented achievements. */
+.records-list{list-style:none}.records #records-list{position:relative;padding-left:19px;border-left:1px solid var(--line);margin-left:5px}.record{position:relative;padding-top:24px;padding-bottom:24px}.record:before{content:"";position:absolute;width:9px;height:9px;border:2px solid var(--paper);background:var(--blue);left:-24px;top:30px;box-shadow:0 0 0 1px var(--blue)}.record strong{font-size:16px;line-height:1.6;font-weight:800;letter-spacing:-.02em}.record-evidence{grid-column:2/-1;color:var(--muted);font-size:12px;line-height:1.8;margin:1px 0 0}.record-date{font-weight:700}.records-head h4{font-size:17px}.archive .section-heading .section-note{max-width:300px}
+@media(max-width:600px){.record strong{font-size:15px}.record-evidence{grid-column:1/-1;font-size:12px}.records #records-list{padding-left:15px}.record:before{left:-20px;top:22px}.record{padding-top:18px;padding-bottom:18px}}
+
+.source-hook p{margin:0 0 10px;font-size:12px;line-height:1.8}.source-hook b{color:var(--ink);font-weight:700}.source-hook a{overflow-wrap:anywhere}
+
+/* Reviewed public-source credits stay separate from download-build provenance. */
+.project-credits{margin-top:22px;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);min-width:0}.project-credits h3,.project-credits h4{font-size:13px;line-height:1.6;margin:0 0 10px}.contributor-list{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0 0 12px}.contributor-list li{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;border:1px solid var(--line);background:var(--white);padding:5px 10px;max-width:100%;min-width:0}.project-credits a{overflow-wrap:anywhere}.contributor-profile{font:700 12px/1.8 var(--mono)}.credit-evidence{font-size:11px;color:var(--blue)}.contributor-list a{display:inline-flex;align-items:center;min-height:28px}.project-credits .credits-note,.project-credits .credits-source{font-size:11px;line-height:1.8;color:var(--muted);margin:5px 0 0}.project-credits a:focus-visible{outline:3px solid var(--blue);outline-offset:3px}.site-project-credits{margin-top:28px}
+
+/* Discord is a distinct source, not a second name for the photo archive. */
+.discord-section .section-heading .tino-sprite{width:80px;height:80px;flex:0 0 80px}.discord-intro{color:var(--muted);margin:0 0 24px;font-size:14px}.discord-status{display:flex;align-items:baseline;gap:24px;border-block:1px solid var(--line);padding:18px 0;font-size:12px}.discord-status strong{white-space:nowrap;font-weight:700}.discord-status p{margin:0;color:var(--muted);overflow-wrap:anywhere}.discord-tabs{display:flex;gap:28px;flex-wrap:wrap;margin:28px 0 20px}.discord-tabs a{font-size:13px;text-decoration:none;padding:8px 0;border-bottom:2px solid transparent}.discord-tabs a[aria-current]{border-bottom-color:var(--blue);color:var(--blue);font-weight:700}.discord-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}.discord-category{padding:24px 0;border-top:3px solid var(--ink);min-width:0}.discord-category[data-discord-category=news]{border-top-color:var(--orange)}.discord-category[data-discord-category=info]{border-top-color:var(--blue)}.discord-category-heading{display:flex;align-items:baseline;justify-content:space-between;gap:20px}.discord-category h3{font:700 24px/1.4 var(--mono);margin:0}.discord-number{font:700 36px/1 var(--mono)}.discord-purpose{font-size:14px;margin:7px 0}.discord-last,.discord-scope{font-size:12px;color:var(--muted)}.discord-empty{font-size:13px;color:var(--muted);padding:24px 0 10px}.discord-items{list-style:none;padding:0;margin:25px 0 0}.discord-items li{border-top:1px solid var(--line);padding:20px 0;overflow-wrap:anywhere}.discord-items time{font:11px var(--mono);color:var(--muted)}.discord-items h4{font-size:17px;margin:7px 0}.discord-items p{font-size:13px;margin:0}.discord-scope{margin:20px 0 0;padding-top:20px;border-top:1px solid var(--line)}
+@media(max-width:800px){.mast-inner{gap:16px}.mast nav{gap:16px}.discord-columns{gap:25px}.discord-status{display:block}.discord-status p{margin-top:8px}}
+@media(max-width:600px){.discord-columns{grid-template-columns:1fr;gap:15px}.discord-tabs{gap:20px}.discord-tabs a{font-size:12px}.discord-section .section-heading .tino-sprite{width:50px;height:50px;flex-basis:50px}.discord-category h3{font-size:23px}.discord-intro{font-size:13px}.mast nav{gap:13px}.discord-status{font-size:12px}}
+@media(max-width:360px){.mast nav{gap:10px}.mast nav a{font-size:9px}.discord-tabs{gap:16px}}
+/* Keep all destinations visible on phones instead of hiding a positional link. */
+@media(max-width:600px){.mast nav{flex-basis:100%;margin-left:0;justify-content:space-between;gap:12px}.mast nav a:nth-child(3){display:inline-flex}.mast nav a{font-size:11px}.mast .nav-play{font-size:10px}.mast-inner{row-gap:13px}}
+
+/* Real frame borders provide two quiet, reserved landing lanes. */
+.tino-frame:not(.chart-card){position:relative}
+/* The chart stops sticking on tablet/phone, but still owns its absolute lanes. */
+@media(max-width:800px){.chart-card.tino-frame{position:relative;top:auto}}
+.tino-perch{position:absolute;left:0;right:0;height:60px;pointer-events:none;z-index:1}
+.tino-perch[data-tino-edge=top]{top:0}.tino-perch[data-tino-edge=bottom]{bottom:0}
+.tino-perch:after{content:"";position:absolute;top:50px;left:52px;right:8px;border-top:1px solid var(--tino-perch-line,#87978a30)}
+.tino-perch__call{position:absolute;top:8px;left:0;width:44px;min-height:44px;background:none;border:0;color:var(--tino-call,#506258);font:11px/1.4 var(--sans,sans-serif);cursor:pointer;pointer-events:auto;padding:2px}
+.tino-perch__call:hover{color:var(--tino-call-hover,var(--ink,#182821))}.tino-perch__call:focus-visible{outline:2px solid var(--tino-call-focus,var(--blue,#2357dc));outline-offset:1px}
+/* These tokens inherit into the nested introduction panel on the dark section. */
+#club{--tino-call:#c7dccc;--tino-call-hover:#fffef9;--tino-call-focus:#bfe0d0;--tino-perch-line:#718b7d}
+.hero.tino-frame,#games.tino-frame,#updates.tino-frame,#archive.tino-frame,#awesome.tino-frame,#club.tino-frame,.arcade-section.tino-frame{padding-top:70px;padding-bottom:70px}
+#story-panel.tino-frame,.game-card.tino-frame,.update-card.tino-frame,.chart-card.tino-frame,.records.tino-frame,.discord-status.tino-frame,.discord-category.tino-frame,.club-description.tino-frame,.foot-inner.tino-frame,.project-credits.tino-frame{padding-top:64px;padding-bottom:64px}
+#dashboard.tino-frame{padding-top:64px;padding-bottom:64px}
+#runner-game.tino-frame{padding-top:60px;padding-bottom:60px}
+.tino-floor{position:relative;width:calc(100% - 40px);max-width:1180px;height:60px;margin:0 auto}
+.scroll-tino-layer{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:8;contain:strict}
+.scroll-tino{position:absolute;top:0;left:0;display:block;width:var(--tino-size,48px);height:var(--tino-size,48px);padding:0;border:0;border-radius:4px;background:transparent;pointer-events:auto;user-select:none;-webkit-user-select:none;touch-action:none;cursor:grab;contain:layout paint style;will-change:transform;-webkit-tap-highlight-color:transparent}
+.scroll-tino[hidden],.tino-dialog[hidden]{display:none!important}
+.scroll-tino:focus-visible{outline:2px solid var(--blue,#2357dc);outline-offset:-2px;background:#2357dc0d}
+.scroll-tino[data-state=drag]{cursor:grabbing}
+.scroll-tino__sprite{display:block;width:100%;height:100%;background:url("media/tino-sprites.png") 0 0/300% 200% no-repeat;image-rendering:pixelated;pointer-events:none}
+.scroll-tino[data-pose=run1] .scroll-tino__sprite{background-position:50% 0}
+.scroll-tino[data-pose=run2] .scroll-tino__sprite{background-position:100% 0}
+.scroll-tino[data-pose=jump] .scroll-tino__sprite{background-position:0 100%}
+.scroll-tino[data-pose=wave] .scroll-tino__sprite{background-position:50% 100%}
+.scroll-tino[data-pose=think] .scroll-tino__sprite{background-position:100% 100%}
+.tino-launcher{background:none;color:var(--ink,#182821);border:1px solid var(--line,#cbd3c5);font:11px/1.4 var(--sans,sans-serif);padding:6px 10px;min-height:32px;white-space:nowrap;cursor:pointer}
+.tino-launcher:hover{background:#e8ede3}
+.tino-dialog{position:fixed;z-index:45;box-sizing:border-box;width:350px;max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);overflow:auto;overscroll-behavior:contain;scroll-padding-top:64px;scroll-padding-bottom:12px;background:var(--paper,#f5f4ee);color:var(--ink,#182821);border:2px solid var(--ink,#182821);box-shadow:5px 5px 0 #18282126;padding:17px;font-family:var(--sans,sans-serif)}
+.tino-dialog__heading{position:sticky;top:0;z-index:1;background:var(--paper,#f5f4ee);display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line,#cbd3c5);padding-bottom:10px}
+.tino-dialog__heading strong{font:700 11px/1.5 var(--mono,monospace)}
+.tino-dialog__close{background:none;border:0;padding:7px;min-height:36px;font-size:11px;cursor:pointer;color:inherit}
+.tino-dialog__text{font-size:13px;line-height:1.8;margin:14px 0;word-break:keep-all;overflow-wrap:anywhere}
+.tino-dialog__choices{display:grid;gap:7px}
+.tino-dialog__choices button{border:1px solid #bdcbbb;background:#e8ede3;color:inherit;min-height:40px;padding:9px 11px;text-align:left;font:12px/1.5 var(--sans,sans-serif);cursor:pointer;word-break:keep-all}
+.tino-dialog__choices button:hover{border-color:var(--blue,#2357dc);color:var(--blue,#2357dc)}
+.tino-dialog button:focus-visible,.tino-launcher:focus-visible{outline:3px solid var(--blue,#2357dc);outline-offset:2px}
+.tino-dialog__note{display:block;font-size:10px;line-height:1.7;color:#5b6b5e;border-top:1px solid var(--line,#cbd3c5);padding-top:10px;margin-top:12px}
+.scroll-reveal{opacity:.5;transform:translate3d(0,18px,0);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.65,.3,1)}
+.scroll-reveal.is-revealed{opacity:1;transform:none}
+/* A frame may fade in, but its ledge must not slide away from a resting pet. */
+[data-tino-frame].scroll-reveal{transform:none;transition:opacity .6s ease}
+html[data-page-visibility=hidden] .scroll-tino{display:none!important}
+html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-reveal{opacity:1;transform:none;transition:none}
+@media(prefers-reduced-motion:reduce){.scroll-reveal{opacity:1;transform:none;transition:none}}
+@media(max-width:600px){
+  /* Keep the companion beside the brand, with all five links on their own row. */
+  .mast-inner{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:12px;row-gap:15px}
+  .mast-inner>.wordmark{grid-column:1;grid-row:1;justify-self:start}
+  .mast-inner>.tino-launcher{grid-column:2;grid-row:1;font-size:11px;margin-left:0;justify-self:end}
+  .mast-inner>nav{grid-column:1/-1;grid-row:2;width:100%;margin-left:0;justify-content:space-between;gap:8px}
+  .mast-inner>nav a,.mast-inner>nav a:nth-child(3){display:inline-flex}
+  .tino-dialog__note{font-size:11px}.tino-dialog__choices button{min-height:44px}
+}
+@media print{.scroll-tino,.tino-dialog,.tino-launcher,.tino-perch,.tino-floor{display:none!important}.scroll-reveal{opacity:1;transform:none;transition:none}}
+
+.scroll-tino[data-selected=true]{z-index:2}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+<div class="loading-screen" id="loading-screen" hidden aria-hidden="true"><div><span class="tino-sprite tino-load" aria-hidden="true"><svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><path fill="#172b55" d="M12 4h7v3h7v3h4v4h3v13h-3v8h-8v-3h-4v3h-7v-5H5v-5h3V14h3V7h1z"/><path fill="#fffef9" d="M17 8h8v3h4v4h1v12h-3v5h-4v-3h-7v3h-3v-7H8v2H6v-2h5V15h3v-4h3z"/><path fill="#335b9a" d="M11 7h5v4h-5zm-3 7h5v5H8zm-1 8h4v4H7zm9 0h10v7H16z"/><path fill="#172b55" d="M19 13h2v3h-2zm8 0h2v3h-2zm-6 6h7v2h-7z"/><path fill="#335b9a" d="M15 17h3v3h-3zm14 0h3v3h-3z"/><path fill="#bbc7d4" d="M22 22h14l-3 8H19z"/><path fill="#172b55" d="M20 30h15v2H20z"/><path fill="#335b9a" d="M28 24h3v3h-3z"/></svg></span><p>HELLO, PLAYER<span>얼간이들의 기록을 여는 중</span></p></div></div>
+<header class="mast"><div class="wrap mast-inner"><a class="wordmark" href="#main" aria-label="얼간이들 처음으로"><figure class="brand-card"><img src="media/idiots-logo.png" alt="검은 배경의 흰색 IDIOTS 로고"><figcaption>IDIOTS · 함께 만드는 게임</figcaption></figure><span>IDIOTS<small>TUK GAMEDEV CLUB</small></span></a><nav aria-label="메인 메뉴"><a href="#games">게임</a><a href="#archive">현황</a><a href="#awesome">Awesome</a><a href="#club">소개</a><a class="nav-play" href="#runner-game">PLAY ↗</a></nav><button class="motion-toggle" id="motion-toggle" type="button" aria-pressed="false">모션 끄기</button></div></header>
+<main id="main">
+<section class="hero wrap" aria-labelledby="hero-title">
+<div class="hero-copy"><p class="eyebrow"><span class="tiny-square"></span> 얼간이들 · 한국공학대학교 · EST. 2024</p><h1 id="hero-title">얼간이들의<br><em>플레이 로그.</em></h1><p class="hero-description">공부한 것을 게임으로 만들고,<br>함께 플레이하며 다음 아이디어를 찾습니다.</p><div class="hero-links"><a href="#games">우리가 만든 게임 <span>↗</span></a><a href="#club">어떤 모임인가요? <span>↓</span></a></div><div class="field-glimpse"><a class="glimpse-image" href="#updates"><img src="media/gamejam-20261106.jpg" alt="AI_DIOTS 안내판 옆 노트북에 실행된 모두의 카페" fetchpriority="high"></a><div><span class="tino-sprite tino-wave" role="img" aria-label="손을 흔드는 픽셀 티노"></span><p><b>지금, 만드는 중.</b><span>AI_DIOTS · 모두의 카페<br>게임잼 현장에서</span></p></div></div></div>
+<section class="story-panel" id="story-panel" aria-labelledby="story-heading"><div class="story-heading"><p class="eyebrow">ACTIVITY / IN MOTION</p><span class="story-live">기록으로 보는 우리</span></div><h2 id="story-heading">한 칸씩, 우리의 한 해.</h2><p class="story-intro">사진 기록이 시간순으로 쌓이는 모습입니다.<br>재생하거나 아래 타임라인을 직접 움직여 보세요.</p><div class="story-totals"><div><strong id="story-photo-count">190</strong><span>사진 기록</span></div><span class="total-slash">/</span><div><strong id="story-activity-count">98</strong><span>활동 묶음</span></div><span class="tino-sprite tino-think" role="img" aria-label="기록을 살펴보는 픽셀 티노"></span></div><div class="story-pixels" id="story-pixels" aria-hidden="true"><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span></div><div class="story-key"><span><i class="key-news"></i>행사·교류</span><span><i class="key-info"></i>스터디·개발</span><span>1칸 = 사진 기록 1개</span></div><div class="story-transport"><button id="story-play" type="button">▶ 시간순 재생</button><span id="story-date">전체 기록</span></div><label class="sr-only" for="story-range">활동 기록의 시점 선택</label><input id="story-range" type="range" min="0" max="9" value="9" step="1"><p class="story-caption" id="story-caption" aria-live="polite">날짜 미확인 기록을 포함한 전체 활동입니다.</p><noscript><style>.story-transport button,#story-range{display:none}</style><p class="story-caption">시간순 재생은 JavaScript를 켜면 사용할 수 있습니다. 전체 기록은 아래에서 읽을 수 있습니다.</p></noscript></section>
+</section>
+<div class="wrap facts" id="dashboard" aria-label="활동 요약"><a class="stat-card" href="#games"><strong>2</strong><span>만든 게임</span></a><a class="stat-card" href="#activity-all"><strong>98</strong><span>활동 이력</span></a><a class="stat-card" href="#awesome-news"><strong>—</strong><span>Discord 뉴스 메시지</span></a><a class="stat-card" href="#awesome-info"><strong>—</strong><span>Discord 자료 메시지</span></a><p>최근 기록 2026-11-09<br>사진 수는 공개 사진 수와 다릅니다.</p></div>
+<section class="section wrap games-section" id="games" aria-labelledby="games-title"><div class="section-heading"><div><p class="eyebrow">01 / MADE BY US</p><h2 id="games-title">플레이할 수 있는 결과물.</h2></div><p class="section-note">아이디어를 빌드까지.<br>지금은 Windows에서 만나요.</p></div><div class="games"><article class="game-card">
+<header class="game-cover dawn"><h3>CoreDawn</h3><span>Windows / 전체 폴더</span></header>
+<figure class="game-photo"><img src="media/coredawn-icon.png" alt="CoreDawn의 붉게 빛나는 코어 아이콘" loading="lazy"><figcaption>CoreDawn 실제 게임 아이콘</figcaption></figure><div class="game-details"><p>폴더 전체를 받아 Coredawn.exe를 실행합니다. UnityPlayer.dll과 Coredawn_Data를 함께 보관하세요.</p><a class="download" href="https://drive.google.com/drive/folders/1KFvhEhyzMVFFDqa8fuBbDql41y2qUS8k">Drive에서 받기 <span aria-hidden="true">↗</span></a>
+<p class="build-note">현재 Windows 다운로드 제공 · 브라우저 플레이 빌드 준비 전</p><section class="project-credits" aria-labelledby="credits-coredawn"><h4 id="credits-coredawn">공개 소스 기여자</h4><ul class="contributor-list"><li><a class="contributor-profile" href="https://github.com/Arcxion-dev">@Arcxion-dev</a> <a class="credit-evidence" href="https://github.com/Jun1188/CoreDawn/commit/45e4434d77f8c5e883fa8831eb97e85bc2f0630e" aria-label="Arcxion-dev의 공개 기여 커밋 확인">기여 근거 ↗</a></li><li><a class="contributor-profile" href="https://github.com/Jun1188">@Jun1188</a> <a class="credit-evidence" href="https://github.com/Jun1188/CoreDawn/commit/7e2b8413857dcd05322f001dbf8796755a2955b5" aria-label="Jun1188의 공개 기여 커밋 확인">기여 근거 ↗</a></li><li><a class="contributor-profile" href="https://github.com/NiceDayMaker">@NiceDayMaker</a> <a class="credit-evidence" href="https://github.com/Jun1188/CoreDawn/commit/919478dc1328208c20b822282af15256b9cb7c32" aria-label="NiceDayMaker의 공개 기여 커밋 확인">기여 근거 ↗</a></li><li><a class="contributor-profile" href="https://github.com/unknown00707">@unknown00707</a> <a class="credit-evidence" href="https://github.com/Jun1188/CoreDawn/commit/a4347cfc0e9aeb442bcdbf3c307044979690b5ab" aria-label="unknown00707의 공개 기여 커밋 확인">기여 근거 ↗</a></li></ul><p class="credits-note">공개 커밋 작성자 기준 · 다운로드본의 전체 제작진 크레딧은 미확인</p><p class="credits-source"><a href="https://github.com/Jun1188/CoreDawn/commits/7e2b8413857dcd05322f001dbf8796755a2955b5">확인한 기여 기록 7e2b8413</a> · 확인 2026-11-11</p></section><div class="revision source-hook" data-source-repository="Jun1188/CoreDawn"><p><b>연결된 GitHub 프로젝트</b><br><a href="https://github.com/Jun1188/CoreDawn">Jun1188/CoreDawn</a> · Master</p><a href="https://github.com/Jun1188/CoreDawn/tree/7e2b8413857dcd05322f001dbf8796755a2955b5">확인한 소스 7e2b8413</a> · <a href="https://github.com/Jun1188/CoreDawn/commits/Master">변경 이력 ↗</a>
+<br>소스 확인 2026-11-11 · 다운로드본의 빌드 커밋 미확인</div></div></article><article class="game-card">
+<header class="game-cover cafe"><h3>모두의 카페</h3><span>Windows / ZIP · 358 MiB</span></header>
+<figure class="game-photo"><img src="media/cafe-mainmenu.png" alt="모두의 카페 게임 시작 화면" loading="lazy"><figcaption>AI_DIOTS · 모두의 카페 실제 타이틀 아트</figcaption></figure><div class="game-details"><p>전시관의 수정본 ZIP을 모두 풀고 ModuCafe_Build 폴더의 Cafe.exe를 실행합니다.</p><a class="download" href="https://drive.google.com/file/d/1JLrFBByq6o6O8hliYxYYqJAMDFzBPbnm/view?usp=drivesdk">Drive에서 받기 <span aria-hidden="true">↗</span></a>
+<p class="build-note">현재 Windows 다운로드 제공 · 브라우저 플레이 빌드 준비 전</p><section class="project-credits" aria-labelledby="credits-ai-diots"><h4 id="credits-ai-diots">공개 소스 기여자</h4><ul class="contributor-list"><li><a class="contributor-profile" href="https://github.com/Jun1188">@Jun1188</a> <a class="credit-evidence" href="https://github.com/Jun1188/ai-hack-gameJam/commit/4078091f9d08a3e026d8929ac27ec7e28c24f323" aria-label="Jun1188의 공개 기여 커밋 확인">기여 근거 ↗</a></li><li><a class="contributor-profile" href="https://github.com/manju0130">@manju0130</a> <a class="credit-evidence" href="https://github.com/Jun1188/ai-hack-gameJam/commit/a7c99d69322a752760f64e03f9eeaddf9265e903" aria-label="manju0130의 공개 기여 커밋 확인">기여 근거 ↗</a></li></ul><p class="credits-note">공개 커밋 작성자 기준 · 다운로드본의 전체 제작진 크레딧은 미확인</p><p class="credits-source"><a href="https://github.com/Jun1188/ai-hack-gameJam/commits/4078091f9d08a3e026d8929ac27ec7e28c24f323">확인한 기여 기록 4078091f</a> · 확인 2026-11-11</p></section><div class="revision source-hook" data-source-repository="Jun1188/ai-hack-gameJam"><p><b>연결된 GitHub 프로젝트</b><br><a href="https://github.com/Jun1188/ai-hack-gameJam">Jun1188/ai-hack-gameJam</a> · main</p><a href="https://github.com/Jun1188/ai-hack-gameJam/tree/4078091f9d08a3e026d8929ac27ec7e28c24f323">확인한 소스 4078091f</a> · <a href="https://github.com/Jun1188/ai-hack-gameJam/commits/main">변경 이력 ↗</a>
+<br>소스 확인 2026-11-11 · 다운로드본의 빌드 커밋 미확인</div></div></article></div></section>
+<section class="field-section" id="updates" aria-labelledby="updates-title"><div class="wrap"><div class="section-heading"><div><p class="eyebrow">02 / FIELD NOTES</p><h2 id="updates-title">화면 밖에서도, 함께.</h2></div><span class="tino-sprite tino-wave" role="img" aria-label="손을 흔드는 픽셀 티노"></span></div><div class="update-grid"><article class="update-card"><a href="media/gamejam-20261106.jpg"><img src="media/gamejam-20261106.jpg" alt="AI_DIOTS 안내판 옆 노트북에 실행된 모두의 카페" loading="lazy"></a><div><p class="kicker">2026-11-06 · 행사·교류</p><h3>게임잼 참가 팀빌딩</h3><p>게임잼 참가 팀빌딩에서 기록한 모두의 카페와 AI_DIOTS 현장</p><small>26-2 게임잼_참가팀빌딩3_20261106.jpg</small></div></article></div></div></section>
+<section id="archive" class="section wrap archive" aria-labelledby="archive-title"><div class="section-heading"><div><p class="eyebrow">03 / ACTIVITY STATUS</p><h2 id="archive-title">활동 현황.</h2></div><p class="section-note">날짜와 활동을 한눈에.<br>최신순 타임라인에서 확인하세요.</p></div><nav class="archive-tabs" aria-label="활동 카테고리"><a href="#activity-all" id="activity-all">전체 활동</a><a href="#activity-news" id="activity-news">행사·교류</a><a href="#activity-info" id="activity-info">스터디·개발</a></nav><div id="explorer" hidden><div class="archive-heading"><div><h3 id="exhibit-name"></h3><p id="exhibit-description"></p></div><label class="year">기록 연도 <select id="year-filter" aria-label="기록 연도"></select></label></div><div class="explorer-grid"><section class="chart-card" aria-label="월별 사진 기록 그래프"><header><h4>월별 사진 기록</h4><p id="chart-summary"></p></header><div class="chart" id="month-chart" role="group" aria-label="월을 눌러 활동 기록 필터링"></div><div class="chart-foot"><span>막대 높이 = 사진 기록 수</span><button type="button" class="link-btn" id="clear-month">모든 월 보기</button></div><p class="chart-note">카테고리나 연도를 바꾸면 실제 기록 수에 맞춰 그래프가 다시 그려집니다.</p></section><section class="records"><div class="records-head"><h4>현황 타임라인</h4><span id="record-count" aria-live="polite"></span></div><ul id="records-list" aria-label="최신순 활동 이력"></ul><button id="more" class="more" type="button">기록 더 보기 ↓</button></section></div></div><noscript><details open><summary>활동 기록</summary><ul><li>2026-11-09 · 스터디·개발 · OpenGL study · 3 images</li><li>2026-11-07 · 행사·교류 · Unicode internal conference · 6 images</li><li>2026-11-06 · 행사·교류 · Game jam team formation · 6 images</li><li>2026-11-05 · 행사·교류 · Game jam team formation · 4 images</li><li>2026-10-26 · 스터디·개발 · OpenGL mentoring · 1 images</li><li>2026-10-22 · 스터디·개발 · Study session · 2 images</li><li>2026-10-09 · 행사·교류 · AI hackathon game jam meeting · 1 images</li><li>2026-10-08 · 스터디·개발 · Study session · 4 images</li><li>2026-10-06 · 행사·교류 · UNIDEV representatives meeting · 1 images</li><li>2026-10-01 · 스터디·개발 · OpenGL study · 2 images</li><li>2026-09-28 · 스터디·개발 · OpenGL study · 2 images</li><li>2026-09-21 · 스터디·개발 · OpenGL study · 1 images</li><li>2026-09-19 · 행사·교류 · Dev-Commit orientation · 1 images</li><li>2026-09-18 · 스터디·개발 · Mentoring · 1 images</li><li>2026-09-17 · 스터디·개발 · Study session · 2 images</li><li>2026-09-17 · 스터디·개발 · Design lecture presentation · 1 images</li><li>2026-09-16 · 스터디·개발 · Photo record · 1 images</li><li>2026-09-12 · 스터디·개발 · Study orientation · 1 images</li><li>2026-09-10 · 스터디·개발 · Photo record · 2 images</li><li>2026-09-04 · 행사·교류 · Club meetup · 1 images</li><li>2026-09-04 · 행사·교류 · Club dinner · 5 images</li><li>2026-09-03 · 스터디·개발 · WARP mentoring · 1 images</li><li>2026-09-03 · 스터디·개발 · Study session · 2 images</li><li>2026-08-27 · 스터디·개발 · Operating systems mentoring · 1 images</li><li>2026-08-25 · 행사·교류 · Unicon game demo · 10 images</li><li>2026-08-25 · 행사·교류 · Unicon · 2 images</li><li>2026-08-24 · 행사·교류 · Level Up live development · 1 images</li><li>2026-08-21 · 행사·교류 · Level Up build submission · 1 images</li><li>2026-08-19 · 행사·교류 · Level Up session · 2 images</li><li>2026-08-19 · 행사·교류 · Club meetup · 1 images</li><li>2026-08-18 · 스터디·개발 · Graphics mentoring · 1 images</li><li>2026-08-16 · 행사·교류 · Level Up session · 2 images</li><li>2026-08-13 · 스터디·개발 · Operating systems mentoring · 3 images</li><li>2026-08-12 · 행사·교류 · Game demo at the club meetup · 2 images</li><li>2026-08-12 · 행사·교류 · Club meetup · 2 images</li><li>2026-08-08 · 행사·교류 · Unity Networking Day · 3 images</li><li>2026-08-07 · 행사·교류 · Level Up session · 1 images</li><li>2026-08-06 · 스터디·개발 · Operating systems mentoring · 2 images</li><li>2026-08-05 · 행사·교류 · Club meetup · 2 images</li><li>2026-08-04 · 스터디·개발 · Graphics mentoring · 1 images</li><li>2026-07-31 · 행사·교류 · Level Up session · 2 images</li><li>2026-07-30 · 스터디·개발 · Operating systems mentoring · 1 images</li><li>2026-07-29 · 행사·교류 · Club meetup · 1 images</li><li>2026-07-25 · 행사·교류 · Level Up session · 2 images</li><li>2026-07-24 · 행사·교류 · Level Up session · 2 images</li><li>2026-07-23 · 스터디·개발 · Operating systems mentoring · 1 images</li><li>2026-07-22 · 스터디·개발 · Study session · 1 images</li><li>2026-07-21 · 행사·교류 · Social game session · 1 images</li><li>2026-07-18 · 행사·교류 · Level Up session · 2 images</li><li>2026-07-15 · 행사·교류 · NC company visit · 5 images</li><li>2026-07-15 · 행사·교류 · Club meetup · 1 images</li><li>2026-07-12 · 스터디·개발 · Study session · 1 images</li><li>2026-07-10 · 행사·교류 · Level Up session · 2 images</li><li>2026-07-08 · 스터디·개발 · Study orientation · 1 images</li><li>2026-07-06 · 스터디·개발 · Challenge recap · 1 images</li><li>2026-07-04 · 스터디·개발 · Photo record · 1 images</li><li>2026-07-04 · 행사·교류 · IDCON talk · 2 images</li><li>2026-07-03 · 스터디·개발 · Photo record · 1 images</li><li>2026-07-03 · 행사·교류 · Level Up session · 2 images</li><li>2026-07-02 · 스터디·개발 · Club challenge · 1 images</li><li>2026-06-25 · 행사·교류 · Level Up session · 2 images</li><li>2026-06-19 · 행사·교류 · Level Up session · 2 images</li><li>2026-05-31 · 스터디·개발 · Game design activity · 1 images</li><li>2026-05-30 · 스터디·개발 · Mentoring · 1 images</li><li>2026-05-29 · 스터디·개발 · Game engine study · 1 images</li><li>2026-05-26 · 스터디·개발 · Mentoring · 1 images</li><li>2026-05-23 · 행사·교류 · PlayX4 · 17 images</li><li>2026-05-23 · 스터디·개발 · Photo record · 1 images</li><li>2026-05-22 · 스터디·개발 · Photo record · 1 images</li><li>2026-05-16 · 스터디·개발 · Study session · 2 images</li><li>2026-05-08 · 스터디·개발 · Game engine study · 1 images</li><li>2026-05-02 · 스터디·개발 · Mentoring · 1 images</li><li>2026-04-30 · 스터디·개발 · Mentoring · 2 images</li><li>2026-04-12 · 스터디·개발 · Game design activity · 3 images</li><li>2026-04-11 · 스터디·개발 · Mentoring · 1 images</li><li>2026-04-10 · 행사·교류 · Board game meetup · 2 images</li><li>2026-04-09 · 스터디·개발 · Photo record · 2 images</li><li>2026-04-09 · 스터디·개발 · Mentoring · 1 images</li><li>2026-04-05 · 스터디·개발 · Game design activity · 1 images</li><li>2026-04-02 · 스터디·개발 · Mentoring · 1 images</li><li>2026-04-01 · 스터디·개발 · Data structures study · 1 images</li><li>2026-03-31 · 스터디·개발 · Computer science study · 3 images</li><li>2026-03-29 · 스터디·개발 · Game design activity · 1 images</li><li>2026-03-28 · 행사·교류 · UNIDEV general meeting · 2 images</li><li>2026-03-28 · 스터디·개발 · Mentoring materials · 1 images</li><li>2026-03-26 · 스터디·개발 · Mentoring · 1 images</li><li>2026-03-22 · 스터디·개발 · Game design activity · 1 images</li><li>2026-03-17 · 행사·교류 · Club dinner · 3 images</li><li>Undated · 행사·교류 · Neople meetup planning · 1 images</li><li>Undated · 행사·교류 · NC company visit · 2 images</li><li>Undated · 스터디·개발 · Mentoring · 1 images</li><li>Undated · 행사·교류 · IDCON talk · 1 images</li><li>Undated · 스터디·개발 · Graphics mentoring · 1 images</li><li>Undated · 행사·교류 · Graduation project playtest · 2 images</li><li>Undated · 스터디·개발 · Data structures study · 2 images</li><li>Undated · 스터디·개발 · Computer science study orientation · 2 images</li><li>Undated · 스터디·개발 · Computer science study · 1 images</li><li>Undated · 행사·교류 · Club meetup · 1 images</li></ul></details></noscript></section>
+<section class="section wrap discord-section" id="awesome" data-tino-stop aria-labelledby="awesome-title" data-discord-status="not_connected">
+<div class="section-heading"><div><p class="eyebrow">04 / FROM OUR DISCORD</p><h2 id="awesome-title">나누는 소식, 쌓이는 자료.</h2></div><span class="tino-sprite tino-think" role="img" aria-label="자료를 살펴보는 픽셀 티노"></span></div>
+<p class="discord-intro">Awesome은 Discord의 뉴스 업데이트와 자료공유 메시지를 보여 주는 공간입니다.</p>
+<div class="discord-status" role="status"><strong>Discord 연결 확인 전</strong><p>사이트에 반영할 메시지 집계를 아직 확인하지 못했습니다. 기존 PC 봇 연결과 별개로, 뉴스·자료 현황은 사진 활동 수와 나누어 표시합니다.</p></div>
+<nav class="discord-tabs" aria-label="Discord 카테고리"><a href="#awesome-all" id="awesome-all" aria-current="page">전체</a><a href="#awesome-news" id="awesome-news">Awesome News</a><a href="#awesome-info" id="awesome-info">Awesome Info</a></nav>
+<div class="discord-columns"><article class="discord-category" data-discord-category="news" aria-labelledby="discord-news-title"><div class="discord-category-heading"><h3 id="discord-news-title">Awesome News</h3><span class="discord-number" data-discord-count="news" aria-label="Discord 뉴스 업데이트 메시지 확인 전">—</span></div><p class="discord-purpose">Discord 뉴스 업데이트 메시지</p><p class="discord-last">최근 메시지 확인 전</p><p class="discord-empty">현재 이 사이트에 게시된 메시지 요약이 없습니다.</p></article><article class="discord-category" data-discord-category="info" aria-labelledby="discord-info-title"><div class="discord-category-heading"><h3 id="discord-info-title">Awesome Info</h3><span class="discord-number" data-discord-count="info" aria-label="Discord 자료공유 메시지 확인 전">—</span></div><p class="discord-purpose">Discord 자료공유 메시지</p><p class="discord-last">최근 메시지 확인 전</p><p class="discord-empty">현재 이 사이트에 게시된 메시지 요약이 없습니다.</p></article></div>
+<p class="discord-scope">메시지 수와 공개된 글 수는 다릅니다. 공개 검토를 마친 제목·요약만 표시하며 작성자 정보와 내부 대화는 노출하지 않습니다.</p>
+</section>
+<section class="club-section" id="club" aria-labelledby="club-title"><div class="wrap club-layout"><div><p class="eyebrow">05 / ABOUT IDIOTS</p><h2 id="club-title">잘 몰라도,<br>같이 만들면 됩니다.</h2><div class="club-mascots" aria-label="함께 만드는 픽셀 티노들"><span class="tino-sprite tino-think" role="img" aria-label="노트북을 보는 티노"></span><span class="tino-sprite tino-idle" role="img" aria-label="서 있는 티노"></span><span class="tino-sprite tino-jump" role="img" aria-label="점프하는 티노"></span></div></div><div class="club-description"><p class="club-lead">얼간이들은 한국공학대학교 게임공학과의 게임 개발 소모임입니다.</p><p>2024년부터 각자의 진로를 위한 공부와 프로젝트를 함께하고 있습니다. 게임 업계 취업, 인디 창업, 창직까지. 선후배가 서로의 경험을 나누며 배운 것을 실제 게임으로 만들어 봅니다.</p><dl class="club-practices"><div><dt>함께 공부하기</dt><dd>CS·자료구조·운영체제, 그래픽스·셰이더, 기획·서버·엔진.</dd></div><div><dt>직접 만들어 보기</dt><dd>Unity·Unreal 프로젝트, 보드게임, 게임잼과 플레이테스트.</dd></div><div><dt>밖에서도 만나기</dt><dd>행사·컨퍼런스·교류회. 2025년 12월부터 UNIDEV 활동에 참여합니다.</dd></div></dl><a class="text-link" href="https://www.instagram.com/idiots_tuk_gamedev/">Instagram에서 만나요 ↗</a></div></div></section>
+<section class="section wrap arcade-section" aria-label="티노 미니게임"><div class="section-heading"><div><p class="eyebrow">06 / ONE MORE PLAY</p><h2>가기 전에, 한 판?</h2></div><p class="section-note">티노와 함께 뛰는 작은 휴식.<br>직접 만든 픽셀 러너입니다.</p></div><!-- Include runner.css and runner.js (defer). Sprite paths are optional, local build assets. -->
+<section class="runner-section" id="runner" aria-labelledby="runner-title">
+  <div class="runner-inner">
+    <div class="runner-heading">
+      <div>
+        <p class="runner-kicker">BONUS STAGE / 01</p>
+        <h2 class="runner-title" id="runner-title">한 판만 더, 티노.</h2>
+        <p class="runner-intro">공부 끝, 게임 시작. 버그를 뛰어넘고 나만의 기록을 남겨요.</p>
+      </div>
+      <span class="runner-badge">BUILT FOR A LITTLE BREAK</span>
+    </div>
+    <div class="runner-machine" id="runner-game" data-runner-state="ready">
+      <div class="runner-toolbar">
+        <span class="runner-machine-title">TINO RUN / OFFLINE ARCADE</span>
+        <div class="runner-scores" aria-label="게임 기록">
+          <span class="runner-score-item"><span class="runner-score-label">SCORE</span><span class="runner-score-value" id="runner-score">00000</span></span>
+          <span class="runner-score-item"><span class="runner-score-label">BEST</span><span class="runner-score-value" id="runner-best">00000</span></span>
+        </div>
+      </div>
+      <div class="runner-screen">
+        <canvas class="runner-canvas" id="runner-canvas" width="1000" height="300" data-sprite-sheet="media/tino-sprites.png" tabindex="0" role="img" aria-label="티노 달리기 게임. 장애물을 뛰어넘어 기록을 쌓아요." aria-describedby="runner-help runner-status">티노 달리기 게임에는 Canvas를 지원하는 브라우저가 필요해요.</canvas>
+        <div class="runner-overlay" id="runner-overlay" aria-hidden="true">
+          <strong class="runner-overlay-title" id="runner-overlay-title">READY, TINO?</strong>
+          <span class="runner-overlay-copy" id="runner-overlay-copy">시작하고, 장애물을 훌쩍.</span>
+        </div>
+      </div>
+      <div class="runner-bottom">
+        <div class="runner-controls" role="group" aria-label="티노 게임 조작">
+          <button class="runner-button runner-button-primary" id="runner-start" type="button">게임 시작</button>
+          <button class="runner-button" id="runner-pause" type="button" disabled>일시 정지</button>
+          <button class="runner-button" id="runner-restart" type="button" disabled>처음부터</button>
+        </div>
+        <p class="runner-help" id="runner-help"><kbd>Space</kbd> / <kbd>↑</kbd> / 화면 터치로 점프 · <kbd>Esc</kbd> 일시 정지<br>게임을 시작한 뒤 조작해 주세요. 화면을 벗어나면 자동으로 멈추고, 최고 기록은 이 브라우저에 저장돼요.</p>
+        <p class="runner-status" id="runner-status" role="status" aria-live="polite" aria-atomic="true">게임 시작을 누르면 티노가 달려요.</p>
+        <p class="runner-motion-note" id="runner-motion-note" hidden>동작 줄이기가 켜져 있어요. 게임은 직접 시작할 때만 움직여요.</p>
+      </div>
+      <noscript><p class="runner-noscript">게임을 플레이하려면 JavaScript를 켜 주세요.</p></noscript>
+    </div>
+    <section class="project-credits site-project-credits" aria-labelledby="credits-tino-run"><h3 id="credits-tino-run">Tino Run · 제작 안내</h3><p class="credits-note">이 웹사이트를 위해 만든 미니게임입니다. 개인별 기여자 이름은 공개 출처로 확인되지 않았습니다.</p><p class="credits-source">확인 2026-11-11</p></section>
+  </div>
+</section>
+</section>
+</main>
+<footer class="foot"><div class="wrap foot-inner"><div><b>IDIOTS.</b><p>함께 공부하고, 만들고, 플레이합니다.<br>한국공학대학교 게임공학과 소모임</p><small>티노: 한국공학대학교 캐릭터를 바탕으로 만든 픽셀 표현.<br>사이트는 학교의 공식 홈페이지가 아닙니다.</small></div><nav aria-label="관련 자료"><a href="https://www.instagram.com/idiots_tuk_gamedev/">Instagram ↗</a><a href="https://github.com/Jun1188/idiots-web">웹사이트 코드 ↗</a><a href="https://www.tukorea.ac.kr/tukorea/8201/subview.do">티노 소개 ↗</a><a href="#main">맨 위로 ↑</a></nav><span class="tino-sprite tino-run" role="img" aria-label="달리는 픽셀 티노"></span></div><div class="wrap foot-bottom"><span>MADE TOGETHER, PLAYED TOGETHER.</span><span>2024 — NOW</span></div></footer>
+<script type="application/json" id="archive-feed">[{"id":"86f7de6a1bd0d59e1261434e","category":"info","title":"OpenGL study","date":"2026-11-09","count":3},{"id":"5b9f67315eef38c159aa53c5","category":"news","title":"Unicode internal conference","date":"2026-11-07","count":6},{"id":"0067a9a426e4c8bda701f75c","category":"news","title":"Game jam team formation","date":"2026-11-06","count":6,"image":{"src":"media/gamejam-20261106.jpg","alt":"AI_DIOTS 안내판 옆 노트북에 실행된 모두의 카페","caption":"게임잼 참가 팀빌딩에서 기록한 모두의 카페와 AI_DIOTS 현장","sourceName":"26-2 게임잼_참가팀빌딩3_20261106.jpg"}},{"id":"1166b0e617e80888baff6c3f","category":"news","title":"Game jam team formation","date":"2026-11-05","count":4},{"id":"df64033f5828107288ffd0a1","category":"info","title":"OpenGL mentoring","date":"2026-10-26","count":1},{"id":"df5f14a92f5df9fee407203d","category":"info","title":"Study session","date":"2026-10-22","count":2},{"id":"2b2ecd387a76acd90ccf48b4","category":"news","title":"AI hackathon game jam meeting","date":"2026-10-09","count":1},{"id":"79fd06b0529e533824280718","category":"info","title":"Study session","date":"2026-10-08","count":4},{"id":"3999ca0626723df05fd3f17c","category":"news","title":"UNIDEV representatives meeting","date":"2026-10-06","count":1},{"id":"977e683f8936841cc4603376","category":"info","title":"OpenGL study","date":"2026-10-01","count":2},{"id":"e788ccc5009eafaa4bb2aa1d","category":"info","title":"OpenGL study","date":"2026-09-28","count":2},{"id":"889c88de45cd0bb93118b39b","category":"info","title":"OpenGL study","date":"2026-09-21","count":1},{"id":"b232ce0b3e1be1d32a9da1ea","category":"news","title":"Dev-Commit orientation","date":"2026-09-19","count":1},{"id":"13f2ae90277dde91c757d4a9","category":"info","title":"Mentoring","date":"2026-09-18","count":1},{"id":"f481e9dc07dd2815be875421","category":"info","title":"Study session","date":"2026-09-17","count":2},{"id":"17c70aeba55112da6460fbf5","category":"info","title":"Design lecture presentation","date":"2026-09-17","count":1},{"id":"f8606bfb373cf0386be03a8b","category":"info","title":"Photo record","date":"2026-09-16","count":1},{"id":"c71c29eceba7d2ed50fd1a17","category":"info","title":"Study orientation","date":"2026-09-12","count":1},{"id":"7228aa6ed8b3fa3184de0636","category":"info","title":"Photo record","date":"2026-09-10","count":2},{"id":"35cbfbac707b6f84c4a1841b","category":"news","title":"Club meetup","date":"2026-09-04","count":1},{"id":"bdf3b38b633311ec76ae108b","category":"news","title":"Club dinner","date":"2026-09-04","count":5},{"id":"3bbdc4c9346a4a8dc53c3e7b","category":"info","title":"WARP mentoring","date":"2026-09-03","count":1},{"id":"6dbe11a07d97b32cc2393a73","category":"info","title":"Study session","date":"2026-09-03","count":2},{"id":"adaa0d0671b2c4301dc2c0d6","category":"info","title":"Operating systems mentoring","date":"2026-08-27","count":1},{"id":"bc5b54865f2cf59fb02466e4","category":"news","title":"Unicon game demo","date":"2026-08-25","count":10},{"id":"0dcd3de1d7eebc6aff1e36c0","category":"news","title":"Unicon","date":"2026-08-25","count":2},{"id":"3f280ec059fd81509321b259","category":"news","title":"Level Up live development","date":"2026-08-24","count":1},{"id":"0d0baa6b841bd5ce384b7fd0","category":"news","title":"Level Up build submission","date":"2026-08-21","count":1},{"id":"a76f01d33436f38394d03e0a","category":"news","title":"Level Up session","date":"2026-08-19","count":2},{"id":"d770f3dc275acdb44f740fa2","category":"news","title":"Club meetup","date":"2026-08-19","count":1},{"id":"cedff9aa24bd6bd5125b9ab6","category":"info","title":"Graphics mentoring","date":"2026-08-18","count":1},{"id":"92aab58a145f0a3d08ed1007","category":"news","title":"Level Up session","date":"2026-08-16","count":2},{"id":"f26ac0532793f9919de97d8a","category":"info","title":"Operating systems mentoring","date":"2026-08-13","count":3},{"id":"bbe51c4697372bdc12e11c2a","category":"news","title":"Game demo at the club meetup","date":"2026-08-12","count":2},{"id":"5a132864b38d66d1fd3c61c4","category":"news","title":"Club meetup","date":"2026-08-12","count":2},{"id":"33b66d2cffbc8e93e51a7ce4","category":"news","title":"Unity Networking Day","date":"2026-08-08","count":3},{"id":"a6acc8b491992fb251a8fa0b","category":"news","title":"Level Up session","date":"2026-08-07","count":1},{"id":"4344c8240b7d3a7164531e68","category":"info","title":"Operating systems mentoring","date":"2026-08-06","count":2},{"id":"ee5b4c830f4f68d156f91ab5","category":"news","title":"Club meetup","date":"2026-08-05","count":2},{"id":"650db89317b61ea03cc9f3fe","category":"info","title":"Graphics mentoring","date":"2026-08-04","count":1},{"id":"53bfd7dbcbfd2301119aad30","category":"news","title":"Level Up session","date":"2026-07-31","count":2},{"id":"6f7b95168c3666223f0f8a4d","category":"info","title":"Operating systems mentoring","date":"2026-07-30","count":1},{"id":"08f5441f0003e25a0ff22d2f","category":"news","title":"Club meetup","date":"2026-07-29","count":1},{"id":"e7bd90278d45005112c394e1","category":"news","title":"Level Up session","date":"2026-07-25","count":2},{"id":"218da21496204c667433ea25","category":"news","title":"Level Up session","date":"2026-07-24","count":2},{"id":"5ff7274a9af2b5a53a509fb4","category":"info","title":"Operating systems mentoring","date":"2026-07-23","count":1},{"id":"e89903e901a3f640b8b622ea","category":"info","title":"Study session","date":"2026-07-22","count":1},{"id":"981e9b8c8d3401170a42aa28","category":"news","title":"Social game session","date":"2026-07-21","count":1},{"id":"c1f96f2eb20ac0aa2eaabc49","category":"news","title":"Level Up session","date":"2026-07-18","count":2},{"id":"e9c9729b7ed22995e0e6e381","category":"news","title":"NC company visit","date":"2026-07-15","count":5},{"id":"14430857559e0fe7c0be440a","category":"news","title":"Club meetup","date":"2026-07-15","count":1},{"id":"9ba094dd01dcf46f64b16180","category":"info","title":"Study session","date":"2026-07-12","count":1},{"id":"5b60fc293f7cb79727a16512","category":"news","title":"Level Up session","date":"2026-07-10","count":2},{"id":"0634e8a3273a099ab149d68a","category":"info","title":"Study orientation","date":"2026-07-08","count":1},{"id":"b99231178d1268393e5cbf41","category":"info","title":"Challenge recap","date":"2026-07-06","count":1},{"id":"d4b4c408b82bd13d800623e8","category":"info","title":"Photo record","date":"2026-07-04","count":1},{"id":"c769a4c3f12fc4f20036a0d4","category":"news","title":"IDCON talk","date":"2026-07-04","count":2},{"id":"aa4fa8611985024024672bfe","category":"info","title":"Photo record","date":"2026-07-03","count":1},{"id":"97be55cd04892d070311273d","category":"news","title":"Level Up session","date":"2026-07-03","count":2},{"id":"29f4b1ed8ff674ba6846bf31","category":"info","title":"Club challenge","date":"2026-07-02","count":1},{"id":"e7b85a97847aeb116ff4aad6","category":"news","title":"Level Up session","date":"2026-06-25","count":2},{"id":"0d3895e698092ed6270dba5c","category":"news","title":"Level Up session","date":"2026-06-19","count":2},{"id":"f2abeb4023f0a861ba67e371","category":"info","title":"Game design activity","date":"2026-05-31","count":1},{"id":"c60625b534c258c4e4ba935a","category":"info","title":"Mentoring","date":"2026-05-30","count":1},{"id":"09ff0d7c67b436f100b080d2","category":"info","title":"Game engine study","date":"2026-05-29","count":1},{"id":"22e83bd9a73c77c7e2ac3aea","category":"info","title":"Mentoring","date":"2026-05-26","count":1},{"id":"183fc806a41a73912546807f","category":"news","title":"PlayX4","date":"2026-05-23","count":17},{"id":"9764d2c4e40b81c6ad892743","category":"info","title":"Photo record","date":"2026-05-23","count":1},{"id":"b4b7a6e659b840b804331428","category":"info","title":"Photo record","date":"2026-05-22","count":1},{"id":"cff70b6eaf6322abfdae3b07","category":"info","title":"Study session","date":"2026-05-16","count":2},{"id":"6896775f82f21ec3df09b628","category":"info","title":"Game engine study","date":"2026-05-08","count":1},{"id":"afa08b65bfc089ee0e53ba6b","category":"info","title":"Mentoring","date":"2026-05-02","count":1},{"id":"5cd5ef01da797fcb55a8367d","category":"info","title":"Mentoring","date":"2026-04-30","count":2},{"id":"ec03042ac24b411996f417a5","category":"info","title":"Game design activity","date":"2026-04-12","count":3},{"id":"759d3cc4b9b1371bf75b7a3c","category":"info","title":"Mentoring","date":"2026-04-11","count":1},{"id":"06034b88e971d86f2eb408fb","category":"news","title":"Board game meetup","date":"2026-04-10","count":2},{"id":"569863f15cc10852f4e5dff8","category":"info","title":"Photo record","date":"2026-04-09","count":2},{"id":"01b84573dad10cfcdcf8d204","category":"info","title":"Mentoring","date":"2026-04-09","count":1},{"id":"297c2473ef079b72cec914b8","category":"info","title":"Game design activity","date":"2026-04-05","count":1},{"id":"4ff4ee97b74df0aa41aec9fc","category":"info","title":"Mentoring","date":"2026-04-02","count":1},{"id":"18f68f3f9a15fe48023fa5af","category":"info","title":"Data structures study","date":"2026-04-01","count":1},{"id":"da7f9cce761b339721097d38","category":"info","title":"Computer science study","date":"2026-03-31","count":3},{"id":"097a902eb5a61c55dfd026c6","category":"info","title":"Game design activity","date":"2026-03-29","count":1},{"id":"fb16f288fe783c77d42085f9","category":"news","title":"UNIDEV general meeting","date":"2026-03-28","count":2},{"id":"4561121e8ef6e7afc5700695","category":"info","title":"Mentoring materials","date":"2026-03-28","count":1},{"id":"9557d874b37cb1cd07e7882b","category":"info","title":"Mentoring","date":"2026-03-26","count":1},{"id":"c1d0bbe782e5808c2dafbcc5","category":"info","title":"Game design activity","date":"2026-03-22","count":1},{"id":"7f01f7901b9521f65456b642","category":"news","title":"Club dinner","date":"2026-03-17","count":3},{"id":"3ae6de03ea07ab526da0ac51","category":"news","title":"Neople meetup planning","date":null,"count":1},{"id":"f297841295967b9c165eb171","category":"news","title":"NC company visit","date":null,"count":2},{"id":"699a9b6d366e0a1a6b07a4f2","category":"info","title":"Mentoring","date":null,"count":1},{"id":"3cdb7e72bebfee705326d931","category":"news","title":"IDCON talk","date":null,"count":1},{"id":"dba35a73e11af3fe45b26c1e","category":"info","title":"Graphics mentoring","date":null,"count":1},{"id":"a3534621aa0ef797ede9e18e","category":"news","title":"Graduation project playtest","date":null,"count":2},{"id":"01c9204910bf964ad5821e5a","category":"info","title":"Data structures study","date":null,"count":2},{"id":"10e4ee1cb25fc1ebd33bedf8","category":"info","title":"Computer science study orientation","date":null,"count":2},{"id":"f37783619168966a1845b419","category":"info","title":"Computer science study","date":null,"count":1},{"id":"b0e37632efc0050ee55b926a","category":"news","title":"Club meetup","date":null,"count":1}]</script><script>(() => {
+  'use strict';
+  const byId = id => document.getElementById(id);
+  const feed = JSON.parse(byId('archive-feed').textContent);
+  const names = {all: '전체 활동', news: '행사·교류', info: '스터디·개발'};
+  const introductions = {
+    all: '게임잼, 행사, 스터디와 멘토링의 모든 활동 기록.',
+    news: '행사 · 컨퍼런스 · 게임잼 · 교류회 기록.',
+    info: '스터디 · 멘토링 · 게임 개발과 기획 자료.',
+  };
+  const shortMonths = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+  const perPage = 6;
+  let category = 'all', year = 'all', selectedMonth = null, limit = perPage;
+  const element = (tag, text, className) => {
+    const node = document.createElement(tag);
+    if (text !== null) node.textContent = text;
+    if (className) node.className = className;
+    return node;
+  };
+  const images = n => n + (n === 1 ? ' image' : ' images');
+
+  // Motion only changes presentation. The counts always come from real records,
+  // and the final content is present even when animation is unavailable or off.
+  const motionQuery = '(prefers-reduced-motion: reduce)';
+  const reducedMotion = window.matchMedia?.(motionQuery);
+  let motionPaused = false, systemReduced = Boolean(reducedMotion?.matches);
+  let appliedMotionState = null, motionTimer = null;
+  const motionEnabled = () => !motionPaused && !systemReduced;
+  const canAnimate = () => motionEnabled() && !document.hidden && typeof window.requestAnimationFrame === 'function';
+  const pixelAnimations = new Set();
+  let barFrame = null, barRevision = 0, barHeights = Array(12).fill(0), barTargets = Array(12).fill(0), barNodes = [];
+  function cancelBarMotion(settle = false) {
+    barRevision++;
+    if (barFrame !== null) window.cancelAnimationFrame?.(barFrame);
+    barFrame = null;
+    if (settle) {
+      barHeights = [...barTargets];
+      barNodes.forEach((bar, index) => bar.style.setProperty('--height', barHeights[index] + '%'));
+    }
+  }
+  function animateBars() {
+    if (!canAnimate() || barHeights.every((height, index) => height === barTargets[index])) {
+      cancelBarMotion(true);
+      return;
+    }
+    const revision = barRevision, from = [...barHeights];
+    let started = null;
+    const frame = now => {
+      if (revision !== barRevision) return;
+      syncMotion();
+      if (revision !== barRevision) return;
+      if (!canAnimate()) {cancelBarMotion(true); return;}
+      if (started === null) started = now;
+      const progress = Math.min(1, (now - started) / 640);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      barHeights = from.map((height, index) => height + (barTargets[index] - height) * eased);
+      barNodes.forEach((bar, index) => bar.style.setProperty('--height', barHeights[index] + '%'));
+      if (progress < 1) barFrame = window.requestAnimationFrame(frame);
+      else barFrame = null;
+    };
+    barFrame = window.requestAnimationFrame(frame);
+  }
+  function cancelPixelMotion() {
+    for (const animation of pixelAnimations) animation.cancel();
+    pixelAnimations.clear();
+  }
+  function animatePixel(pixel, index) {
+    if (!canAnimate() || typeof pixel.animate !== 'function') return;
+    const animation = pixel.animate([
+      {opacity: .18, transform: 'scale(.35)'},
+      {opacity: 1, transform: 'scale(1)'},
+    ], {duration: 380, delay: Math.min(index * 12, 180), easing: 'cubic-bezier(.2,.75,.25,1)'});
+    pixelAnimations.add(animation);
+    animation.onfinish = animation.oncancel = () => pixelAnimations.delete(animation);
+  }
+
+  // The story deliberately uses the complete archive, independently of filters.
+  // Undated records are a separate final stage, never assigned a guessed date.
+  let story = null;
+  function mountStory() {
+    const panel = byId('story-panel'), matrix = byId('story-pixels'), range = byId('story-range'), play = byId('story-play');
+    if (!panel || !matrix || !range || !play) return;
+    const dated = feed.filter(row => row.date).sort((a, b) => a.date.localeCompare(b.date));
+    const undated = feed.filter(row => !row.date);
+    const months = [...new Set(dated.map(row => row.date.slice(0, 7)))];
+    const stages = months.map(month => ({month, rows: dated.filter(row => row.date.slice(0, 7) === month)}));
+    if (undated.length) stages.push({month: null, rows: undated});
+    if (!stages.length) {play.disabled = true; range.disabled = true; return;}
+    let photos = 0, activities = 0;
+    const pixels = [];
+    stages.forEach((stage, stageIndex) => {
+      stage.photos = stage.rows.reduce((sum, row) => sum + row.count, 0);
+      photos += stage.photos;
+      activities += stage.rows.length;
+      stage.totalPhotos = photos;
+      stage.totalActivities = activities;
+      for (const row of stage.rows) {
+        for (let photo = 0; photo < row.count; photo++) {
+          const pixel = element('span', null, 'pixel-dot is-active');
+          pixel.setAttribute('data-category', row.category);
+          pixel.setAttribute('data-stage', String(stageIndex));
+          pixel.setAttribute('data-undated', String(!row.date));
+          pixel.setAttribute('aria-hidden', 'true');
+          pixel.title = (row.date || '날짜 미상') + ' · ' + row.title + ' · ' + (photo + 1) + '/' + row.count;
+          pixels.push({node: pixel, stage: stageIndex});
+        }
+      }
+    });
+    matrix.replaceChildren(...pixels.map(pixel => pixel.node));
+    panel.setAttribute('data-story-scope', 'all-records');
+    range.min = '0'; range.max = String(stages.length - 1); range.step = '1';
+    range.disabled = false;
+    story = {panel, range, play, stages, pixels, stage: stages.length - 1, playing: false, frame: null, revision: 0};
+    const undatedPhotos = undated.reduce((sum, row) => sum + row.count, 0);
+    function showStage(index, animate = true) {
+      cancelPixelMotion();
+      const previous = story.stage;
+      story.stage = Math.max(0, Math.min(stages.length - 1, index));
+      const stage = stages[story.stage];
+      const label = stage.month ? stage.month.replace('-', '.') + '까지' : '날짜 미상 포함 · 전체 기록';
+      byId('story-date').textContent = label;
+      byId('story-photo-count').textContent = String(stage.totalPhotos);
+      byId('story-activity-count').textContent = String(stage.totalActivities);
+      byId('story-caption').textContent = stage.month ?
+        '한 칸 = 사진 1개 · 이달 ' + stage.photos + '개 / 활동 ' + stage.rows.length + '개' +
+          (undatedPhotos ? ' · 날짜 미상 ' + undatedPhotos + '개는 마지막에 별도 표시' : '') :
+        '한 칸 = 사진 1개 · 빗금 ' + stage.photos + '개 / 활동 ' + stage.rows.length + '개는 날짜 미상이며 연대순 기록과 구분합니다.';
+      range.value = String(story.stage);
+      range.setAttribute('aria-valuetext', label + ', 사진 ' + stage.totalPhotos + '개, 활동 ' + stage.totalActivities + '개');
+      panel.setAttribute('data-story-stage', String(story.stage));
+      let newIndex = 0;
+      for (const pixel of pixels) {
+        const active = pixel.stage <= story.stage;
+        const isNew = active && pixel.stage === story.stage;
+        pixel.node.className = 'pixel-dot' + (active ? ' is-active' : '') + (isNew ? ' is-new' : '');
+        if (animate && active && pixel.stage > previous) animatePixel(pixel.node, newIndex++);
+      }
+      updateStoryButton();
+    }
+    story.show = showStage;
+    play.addEventListener('click', () => {
+      syncMotion();
+      if (story.playing) {pauseStory(); return;}
+      if (!canAnimate()) return;
+      if (story.stage === stages.length - 1) showStage(0, false);
+      story.playing = true;
+      updateStoryButton();
+      const revision = ++story.revision;
+      let previous = null, elapsed = 0;
+      const tick = now => {
+        if (revision !== story.revision || !story.playing) return;
+        syncMotion();
+        if (revision !== story.revision || !story.playing) return;
+        if (!canAnimate()) {pauseStory(); return;}
+        if (previous !== null) elapsed += now - previous;
+        previous = now;
+        if (elapsed >= 850) {
+          elapsed %= 850;
+          showStage(story.stage + 1);
+          if (story.stage === stages.length - 1) {pauseStory(); return;}
+        }
+        story.frame = window.requestAnimationFrame(tick);
+      };
+      story.frame = window.requestAnimationFrame(tick);
+    });
+    range.addEventListener('input', () => {
+      syncMotion();
+      pauseStory();
+      const next = Number(range.value);
+      if (Number.isFinite(next)) showStage(Math.round(next));
+    });
+    showStage(stages.length - 1, false);
+    // Brief entrance, not an invented number count-up or an auto-playing story.
+    pixels.forEach((pixel, index) => animatePixel(pixel.node, index));
+  }
+  function updateStoryButton() {
+    if (!story) return;
+    story.play.textContent = story.playing ? '잠시 멈춤' : story.stage === story.stages.length - 1 ? '처음부터 재생' : '이어서 재생';
+    story.play.setAttribute('aria-pressed', String(story.playing));
+    story.play.disabled = !motionEnabled() || typeof window.requestAnimationFrame !== 'function';
+    story.play.title = motionEnabled() ? '월별 누적 활동 기록 재생' : '모션이 꺼져 있습니다. 슬라이더로 기록을 탐색할 수 있습니다.';
+    story.panel.setAttribute('data-playing', String(story.playing));
+  }
+  function pauseStory() {
+    if (!story) return;
+    story.playing = false;
+    story.revision++;
+    if (story.frame !== null) window.cancelAnimationFrame?.(story.frame);
+    story.frame = null;
+    updateStoryButton();
+  }
+  function syncMotion() {
+    // Read the actual query rather than trusting delivery of a MediaQueryList
+    // change event. Some browsers can omit that event during rapid preference
+    // changes or page restoration. Keep the user's pause independent of the OS.
+    systemReduced = Boolean(window.matchMedia?.(motionQuery)?.matches);
+    const enabled = motionEnabled();
+    const state = String(systemReduced) + '/' + String(motionPaused);
+    if (state === appliedMotionState) return enabled;
+    appliedMotionState = state;
+    document.documentElement.setAttribute('data-motion', enabled ? 'on' : 'off');
+    const toggle = byId('motion-toggle');
+    if (toggle) {
+      toggle.textContent = systemReduced ? '모션 줄이기 적용 중' : enabled ? '모션 끄기' : '모션 켜기';
+      toggle.setAttribute('aria-pressed', String(!enabled));
+      toggle.disabled = systemReduced;
+      toggle.title = systemReduced ? '기기의 모션 줄이기 설정을 따릅니다.' : '페이지 전체 모션 켜기 또는 끄기';
+    }
+    if (!enabled) {pauseStory(); cancelBarMotion(true); cancelPixelMotion();}
+    updateStoryButton();
+    window.dispatchEvent(new CustomEvent('archive-motion-change', {detail: {enabled}}));
+    return enabled;
+  }
+  function stopMotionChecks() {
+    if (motionTimer !== null) window.clearInterval(motionTimer);
+    motionTimer = null;
+  }
+  function startMotionChecks() {
+    if (document.hidden || motionTimer !== null || typeof window.setInterval !== 'function') return;
+    // One cheap query per second while visible. Unchanged state performs no DOM
+    // writes, events, layout reads or RAF work. Hidden pages have no timer.
+    motionTimer = window.setInterval(syncMotion, 1000);
+  }
+  function mount() {
+    const entries = feed.filter(x => category === 'all' || x.category === category);
+    const years = [...new Set(entries.filter(x => x.date).map(x => x.date.slice(0, 4)))].sort().reverse();
+    const yearMenu = byId('year-filter');
+    yearMenu.replaceChildren(new Option('All years', 'all'), ...years.map(y => new Option(y, y)));
+    if (entries.some(x => x.date === null)) yearMenu.add(new Option('Undated', 'undated'));
+    if (![...yearMenu.options].some(o => o.value === year)) year = 'all';
+    yearMenu.value = year;
+    byId('exhibit-name').textContent = names[category];
+    byId('exhibit-description').textContent = introductions[category];
+    for (const key of Object.keys(names)) {
+      const link = byId('activity-' + key);
+      if (key === category) link.setAttribute('aria-current','page');
+      else link.removeAttribute('aria-current');
+    }
+    draw();
+  }
+  function draw(focusMonth = null, focusNewRecord = null) {
+    syncMotion();
+    const entries = feed.filter(x => (category === 'all' || x.category === category) && (year === 'all' ||
+      (year === 'undated' ? x.date === null : x.date?.startsWith(year + '-'))));
+    const counts = Array(12).fill(0);
+    let undated = 0;
+    for (const row of entries) {
+      if (row.date) counts[Number(row.date.slice(5, 7)) - 1] += row.count;
+      else undated += row.count;
+    }
+    const peak = Math.max(1, ...counts);
+    const sum = counts.reduce((a,b) => a+b, 0);
+    byId('chart-summary').textContent = images(sum) + ' dated' + (undated ? ' · ' + undated + ' undated' : '');
+    const chart = byId('month-chart');
+    cancelBarMotion();
+    barTargets = counts.map(count => count ? Math.max(4, count / peak * 100) : 0);
+    barNodes = [];
+    chart.replaceChildren(...counts.map((count, index) => {
+      const btn = element('button', null, 'chart-bar');
+      btn.type = 'button';
+      btn.disabled = count === 0;
+      btn.setAttribute('aria-pressed', String(selectedMonth === index));
+      btn.setAttribute('aria-label', shortMonths[index] + '월, ' + images(count));
+      btn.title = shortMonths[index] + '월 · ' + images(count);
+      const bar = element('i', null);
+      // RAF owns geometry so CSS transitions cannot lag behind rapid filters.
+      bar.style.transition = 'filter .2s';
+      bar.style.setProperty('--height', barHeights[index] + '%');
+      barNodes.push(bar);
+      const plot = element('span', null, 'plot');
+      plot.append(bar);
+      btn.append(element('span', String(count), 'value'), plot, element('span', shortMonths[index], 'month'));
+      btn.addEventListener('click', () => {
+        selectedMonth = selectedMonth === index ? null : index;
+        limit = perPage;
+        draw(index);
+      });
+      return btn;
+    }));
+    animateBars();
+    byId('clear-month').disabled = selectedMonth === null;
+    const filtered = selectedMonth === null ? entries :
+      entries.filter(x => x.date && Number(x.date.slice(5, 7)) === selectedMonth + 1);
+    byId('record-count').textContent = filtered.length + (filtered.length === 1 ? ' entry' : ' entries');
+    const list = byId('records-list');
+    list.replaceChildren(...filtered.slice(0, limit).map(row => {
+      const li = element('li', null, 'record');
+      if (row.date) {
+        const time = element('time', row.date, 'record-date');
+        time.dateTime = row.date;
+        li.append(time);
+      } else li.append(element('span', 'Undated', 'record-date'));
+      li.append(element('strong', row.title), element('span', images(row.count), 'record-count'));
+      if (row.image) {
+        const link = element('a', null, 'record-image');
+        link.href = row.image.src;
+        link.setAttribute('aria-label', row.image.caption + ' · 대표사진 보기');
+        const img = element('img', null);
+        img.src = row.image.src; img.alt = row.image.alt; img.loading = 'lazy';
+        link.append(img); li.append(link);
+      }
+      const evidence = element('p', (row.category === 'news' ? '행사·교류' : '스터디·개발') + ' · 사진 기록 ' + row.count + '개로 남아 있는 활동입니다.', 'record-evidence');
+      li.append(evidence);
+      return li;
+    }));
+    if (!filtered.length) list.append(element('li', 'No entries in this selection.', 'record'));
+    byId('more').hidden = filtered.length <= limit;
+    if (focusMonth !== null) chart.children[focusMonth].focus({preventScroll:true});
+    if (focusNewRecord !== null && list.children[focusNewRecord]) {
+      const first = list.children[focusNewRecord];
+      first.tabIndex = -1;
+      first.focus({preventScroll:true});
+    }
+  }
+  function route() {
+    const hash = location.hash;
+    if (!hash || hash === '#activity-all' || hash === '#activity-news' || hash === '#activity-info') {
+      const next = hash === '#activity-info' ? 'info' : hash === '#activity-news' ? 'news' : 'all';
+      if (next !== category) {category = next; year = 'all'; selectedMonth = null; limit = perPage;}
+    }
+    mount();
+  }
+  byId('year-filter').addEventListener('change', e => {
+    year = e.target.value; selectedMonth = null; limit = perPage; draw();
+  });
+  byId('clear-month').addEventListener('click', () => {
+    const previous = selectedMonth; selectedMonth = null; limit = perPage; draw(previous);
+  });
+  byId('more').addEventListener('click', () => {const previous = limit; limit += perPage; draw(null, previous);});
+  window.addEventListener('hashchange', route);
+  byId('motion-toggle')?.addEventListener('click', () => {
+    syncMotion();
+    if (systemReduced) return; // A stale enabled button must not override the OS.
+    motionPaused = !motionPaused;
+    syncMotion();
+  });
+  if (reducedMotion?.addEventListener) reducedMotion.addEventListener('change', syncMotion);
+  else reducedMotion?.addListener?.(syncMotion);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {stopMotionChecks(); pauseStory(); cancelBarMotion(true); cancelPixelMotion();}
+    else {syncMotion(); startMotionChecks();}
+  });
+  window.addEventListener('pagehide', () => {
+    stopMotionChecks(); pauseStory(); cancelBarMotion(true); cancelPixelMotion();
+  });
+  window.addEventListener('pageshow', () => {syncMotion(); startMotionChecks();});
+  window.addEventListener('focus', syncMotion);
+  const tino = byId('tino');
+  const fallback = () => {tino.hidden = true; tino.nextElementSibling.hidden = false;};
+  if (tino) {
+    tino.addEventListener('error', fallback);
+    if (tino.complete && !tino.naturalWidth) fallback();
+  }
+  syncMotion();
+  mountStory();
+  route();
+  byId('explorer').hidden = false;
+  startMotionChecks();
+})();
+
+</script><script>/* Loading follows real asset readiness. No artificial minimum wait or fake progress. */
+(() => {
+  'use strict';
+  const loader = document.getElementById('loading-screen');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const sprites = [...document.querySelectorAll('.tino-sprite')];
+  const visible = new WeakMap();
+  const sync = () => {
+    document.documentElement.dataset.pageVisibility = document.hidden ? 'hidden' : 'visible';
+    for (const sprite of sprites) sprite.style.animationPlayState = document.hidden || visible.get(sprite) === false ? 'paused' : 'running';
+  };
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {for (const entry of entries) visible.set(entry.target, entry.isIntersecting);sync();});
+    sprites.forEach(sprite => observer.observe(sprite));
+  }
+  document.addEventListener('visibilitychange', sync);
+  sync();
+  let done = false;
+  const finish = () => {if (done) return;done = true;if (loader) loader.hidden = true;};
+  window.addEventListener('archive-motion-change', event => {if (!event.detail.enabled) finish();});
+  reduced.addEventListener?.('change', event => {if (event.matches) finish();});
+  if (!loader || reduced.matches || document.readyState === 'complete') {finish();return;}
+  loader.hidden = false;
+  const sheet = new Image();
+  sheet.src = 'media/tino-sprites.png';
+  const hero = document.querySelector('.glimpse-image img');
+  Promise.all([sheet, hero].filter(Boolean).map(img => img.decode?.().catch(() => {}) || Promise.resolve())).then(finish);
+  // A failed asset may never finish decoding in older browsers. Never trap content.
+  setTimeout(finish, 1800);
+})();
+</script><script>/* Independent frame companions. Shared layout cache/RAF, bounded short motions,
+   native pointer ownership, and a local choice tree using published page facts. */
+(function (root) {
+  'use strict';
+  const clamp = (n, low, high) => Math.max(low, Math.min(high, n));
+  const finite = (n, fallback = 0) => Number.isFinite(n) ? n : fallback;
+  const FRAME_SELECTOR = '.hero, #story-panel, #dashboard, #games, .game-card, #updates, .update-card, #archive, .chart-card, .records, #awesome, .discord-status, .discord-category, #club, .club-description, .arcade-section, #runner-game, .foot-inner, .project-credits';
+  const REVEAL_SELECTOR = '.section-heading, .game-card, .update-card, .club-description, #runner-game';
+  const DRAG_THRESHOLD = 6, WALK_SPEED = 14, WALK_DURATION = 1600, IDLE_DELAY = 7000, MAX_PETS = 8;
+  const GRAVITY = 1800, MAX_FALL_TIME = 1800;
+
+  // Layout containers are not solid panels: their blank middle must remain air.
+  // They still offer the same broad, two-edge landing lanes as enclosed cards.
+  function frameDropMode(node) {
+    if (node.id === 'tino-floor') return 'floor';
+    return ['games', 'updates', 'archive', 'awesome', 'club'].includes(node.id) ||
+      ['hero', 'arcade-section', 'foot-inner'].some(name => node.classList.contains(name)) ? 'edges' : 'body';
+  }
+
+  function railBounds(rect, size, viewport) {
+    if (!rect || rect.width < size + 64 || rect.height < 1) return null;
+    const low = Math.max(8, rect.left + 52), high = Math.min(viewport.width - size - 8, rect.right - size - 8);
+    if (high < low) return null;
+    const y = rect.top + 50 - size * .86;
+    return { low, high, y, top: rect.top, bottom: rect.bottom, visible: y >= 0 && y + size <= viewport.height };
+  }
+  function railPoint(rail, ratio) { return { x: rail.low + (rail.high - rail.low) * clamp(finite(ratio, .7), 0, 1), y: rail.y }; }
+  function ratioAt(rail, x) { return clamp((x - rail.low) / Math.max(1, rail.high - rail.low), 0, 1); }
+  function edgeRail(item, edge = 'top') { return item?.rails?.[edge] || (edge === 'top' ? item?.rail : null); }
+  // Cards accept their whole useful surface. Outer sections accept only their
+  // broad ledge bands, leaving whitespace between nested cards available to fall.
+  function dropTarget(frames, point, size) {
+    let result = null, bestInside = -1, bestArea = Infinity, bestDistance = Infinity;
+    const x = point.x + size / 2, feet = point.y + size * .86;
+    for (const item of frames) {
+      const box = item.box;
+      if (!box || item.floor || x < box.left - 24 || x > box.right + 24 || feet < box.top - 20 || feet > box.bottom + 8) continue;
+      for (const edge of ['top', 'bottom']) {
+        const rail = edgeRail(item, edge);
+        if (!rail?.visible) continue;
+        if (item.dropMode === 'edges' && (feet < rail.top - 20 || feet > rail.bottom + 8)) continue;
+        // A child's generous halo must not steal the parent's actual ledge:
+        // e.g. 70px reserved padding and a 20px halo meet at the 50px baseline.
+        const inside = Number(x >= box.left && x <= box.right && feet >= box.top && feet <= box.bottom);
+        const area = box.width * box.height, distance = Math.abs(point.y - rail.y);
+        if (inside > bestInside || (inside === bestInside && (area < bestArea || (area === bestArea && distance < bestDistance)))) {
+          result = { frame: item, edge, rail }; bestInside = inside; bestArea = area; bestDistance = distance;
+        }
+      }
+    }
+    return result;
+  }
+  // Compare document-space feet: an air release can never return to a rail above
+  // it, or to the bottom rail of the frame just left. A final floor is explicit.
+  function fallTarget(frames, point, size, scroll = 0) {
+    const feet = point.y + size * .86, center = point.x + size / 2;
+    const candidates = [];
+    for (const item of frames) {
+      const rail = edgeRail(item, 'top'); if (!rail) continue;
+      const y = rail.y + scroll; if (y + size * .86 < feet + 2) continue;
+      const x = clamp(point.x, rail.low, rail.high), overlap = item.box ? center >= item.box.left && center <= item.box.right : point.x >= rail.low && point.x <= rail.high;
+      candidates.push({ frame: item, edge: 'top', rail, x, y, overlap, correction: Math.abs(point.x - x) });
+    }
+    candidates.sort((a, b) => Number(b.overlap) - Number(a.overlap) ||
+      (a.overlap ? a.y - b.y || a.correction - b.correction : a.correction - b.correction || a.y - b.y));
+    if (candidates.length) return candidates[0];
+    const floor = frames.find(item => item.floor && edgeRail(item, 'top'));
+    return floor ? { frame: floor, edge: 'top', rail: floor.rail, x: clamp(point.x, floor.rail.low, floor.rail.high), y: floor.rail.y + scroll } : null;
+  }
+  function dialogArea(viewport, header) {
+    const width = Math.max(0, finite(viewport.width)), height = Math.max(0, finite(viewport.height));
+    const top = header && header.top < height && header.bottom > 0 ? Math.max(12, header.bottom + 12) : 12;
+    const available = height - top - 12;
+    if (available < 144 || width < 96) return null;
+    return { left: 12, right: width - 12, top, bottom: height - 12, height: available };
+  }
+  function placeDialog(anchor, box, area) {
+    if (!area) return null;
+    const width = Math.min(box.width, area.right - area.left), height = Math.min(box.height, area.height);
+    const left = clamp(anchor.left - 18, area.left, Math.max(area.left, area.right - width));
+    const below = Math.max(area.top, anchor.bottom + 10);
+    const top = below + height <= area.bottom ? below : clamp(anchor.top - height - 10, area.top, Math.max(area.top, area.bottom - height));
+    return { left, top, width, height, maxHeight: area.height };
+  }
+  function mount(window, options = {}) {
+    const document = window.document, main = document.getElementById('main');
+    if (!main || !window.requestAnimationFrame || document.getElementById('tino-companions') || document.getElementById('tino-dialog')) return null;
+    const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    const create = (tag, className, text) => { const node = document.createElement(tag); if (className) node.className = className; if (text) node.textContent = text; return node; };
+    const textOf = (selector, fallback = '') => document.querySelector(selector)?.textContent.trim() || fallback;
+    const floorNode = create('div', 'tino-floor'); floorNode.id = 'tino-floor'; document.body.appendChild(floorNode);
+    const nodes = [...document.querySelectorAll(FRAME_SELECTOR), floorNode];
+    const frames = nodes.map((node, index) => {
+      const key = node.id || 'frame-' + index;
+      const label = node.id === 'story-panel' ? '활동 기록 창' : node.id === 'runner-game' ? 'Tino Run 게임 창' : node === floorNode ? '페이지 바닥' :
+        node.getAttribute('aria-label') || node.querySelector('h1, h2, h3, h4')?.textContent.trim() || ({ dashboard: '활동 요약', updates: '근황', club: '동아리 소개' })[node.id] ||
+        (node.classList.contains('records') ? '활동 타임라인' : node.classList.contains('discord-status') ? 'Discord 연결 현황' : node.classList.contains('club-description') ? '동아리 소개 글' : node.classList.contains('foot-inner') ? '하단 안내' : '안내 프레임 ' + (index + 1));
+      const dropMode = frameDropMode(node);
+      node.dataset.tinoFrame = key; node.dataset.tinoLabel = label; node.dataset.tinoDrop = dropMode; node.classList.add('tino-frame');
+      const perches = {}, calls = {}, floor = node === floorNode;
+      for (const edge of floor ? ['top'] : ['top', 'bottom']) {
+        const perch = create('div', 'tino-perch'); perch.dataset.tinoEdge = edge;
+        const call = create('button', 'tino-perch__call', edge === 'top' ? '↑ 티노' : '↓ 티노'); call.type = 'button';
+        call.setAttribute('aria-label', label + ' ' + (edge === 'top' ? '위' : '아래') + '로 선택한 티노 부르기');
+        perch.appendChild(call); edge === 'top' ? node.insertBefore(perch, node.firstChild) : node.appendChild(perch);
+        perches[edge] = perch; calls[edge] = call;
+      }
+      return { key, label, node, floor, dropMode, perches, calls, perch: perches.top, call: calls.top, rails: {}, rail: null, box: null };
+    });
+    if (!frames.length) return null;
+    const layer = create('div', 'scroll-tino-layer'); layer.id = 'tino-companions'; document.body.appendChild(layer);
+    const status = create('p', 'sr-only'); status.id = 'tino-status'; status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite'); document.body.appendChild(status);
+    const launcher = create('button', 'tino-launcher', '티노 4명'); launcher.type = 'button'; launcher.setAttribute('aria-haspopup', 'dialog'); launcher.setAttribute('aria-controls', 'tino-dialog');
+    (document.querySelector('.mast-inner') || frames[0].node).appendChild(launcher);
+    const dialog = create('section', 'tino-dialog'); dialog.id = 'tino-dialog'; dialog.hidden = true; dialog.setAttribute('role', 'dialog'); dialog.setAttribute('aria-modal', 'false');
+    dialog.setAttribute('aria-labelledby', 'tino-dialog-title'); dialog.setAttribute('aria-describedby', 'tino-dialog-text tino-dialog-note');
+    const heading = create('div', 'tino-dialog__heading'), title = create('strong', '', 'TINO / 작은 안내원'); title.id = 'tino-dialog-title';
+    const close = create('button', 'tino-dialog__close', '닫기 ×'); close.id = 'tino-dialog-close'; close.type = 'button'; heading.appendChild(title); heading.appendChild(close); dialog.appendChild(heading);
+    const answer = create('p', 'tino-dialog__text'); answer.id = 'tino-dialog-text'; answer.setAttribute('aria-live', 'polite'); dialog.appendChild(answer);
+    const choices = create('div', 'tino-dialog__choices'); choices.id = 'tino-dialog-choices'; dialog.appendChild(choices);
+    const note = create('small', 'tino-dialog__note', '공개 정보와 정해진 선택지로만 동작해요. 외부 서버·AI 호출이나 대화 전송은 없어요.'); note.id = 'tino-dialog-note'; dialog.appendChild(note); document.body.appendChild(dialog);
+    const pets = [], cleanup = [];
+    let selected = null, dialogPet = null, nextPet = 1, pointer = null, size = 48, raf = null, dirty = true, disposed = false, suspended = false;
+    let motionAllowed = document.documentElement.dataset.motion !== 'off', returnFocus = launcher, dialogSource = launcher, dialogScrollX = 0, dialogScrollY = 0;
+    const listen = (node, type, fn, opts) => { node?.addEventListener(type, fn, opts); cleanup.push(() => node?.removeEventListener(type, fn, opts)); };
+    const announce = text => { status.textContent = text; };
+    const canAnimate = pet => motionAllowed && document.documentElement.dataset.motion !== 'off' && !reduced?.matches && !pet.quiet;
+    const railOf = pet => edgeRail(pet.current, pet.edge);
+    const state = (pet, name, pose = 'idle') => {
+      const values = { state: name, pose, frame: pet.current?.key || '', edge: pet.edge, paused: String(!canAnimate(pet)), selected: String(pet === selected) };
+      for (const [key, value] of Object.entries(values)) if (pet.actor.dataset[key] !== value) pet.actor.dataset[key] = value;
+    };
+    function clearTimer(pet) { if (pet.timer !== null) window.clearTimeout(pet.timer); pet.timer = null; }
+    function stopMotion(pet) { clearTimer(pet); if (pet.walk || pet.reaction) { pet.rest = 'idle'; pet.pose = 'idle'; } pet.walk = null; pet.reaction = null; }
+    function cancelFrame() { if (raf !== null) window.cancelAnimationFrame(raf); raf = null; }
+    function request() { if (!disposed && !suspended && !document.hidden && raf === null) raf = window.requestAnimationFrame(paint); }
+    function invalidate() { dirty = true; request(); }
+    function updateCount() { launcher.textContent = '티노 ' + pets.length + '명'; launcher.setAttribute('aria-label', '티노 ' + pets.length + '명 관리 및 대화'); }
+    function measure() {
+      const viewport = { width: document.documentElement.clientWidth || window.innerWidth, height: window.innerHeight };
+      size = viewport.width <= 600 ? 44 : 48;
+      for (const item of frames) {
+        item.box = item.node.isConnected && item.node.getClientRects().length ? item.node.getBoundingClientRect() : null;
+        for (const edge of ['top', 'bottom']) item.rails[edge] = item.box && item.perches[edge]?.getClientRects().length ? railBounds(item.perches[edge].getBoundingClientRect(), size, viewport) : null;
+        item.rail = item.rails.top;
+      }
+      for (const pet of pets) {
+        pet.actor.style.setProperty('--tino-size', size + 'px');
+        if (!railOf(pet)) { pet.current = frames.find(item => item.rail) || null; pet.edge = 'top'; pet.ratio = .6; stopMotion(pet); }
+      }
+      dirty = false;
+    }
+    function scheduleIdle(pet) {
+      if (pet.timer !== null || pet.walk || pet.reaction || pet.fall || pointer?.pet === pet || !dialog.hidden || pet.actor.hidden || pet.hover || document.activeElement === pet.actor || !canAnimate(pet) || !railOf(pet)) return;
+      pet.timer = window.setTimeout(() => {
+        pet.timer = null;
+        if (!pets.includes(pet) || !canAnimate(pet) || suspended || document.hidden || pet.actor.hidden || pointer?.pet === pet || !dialog.hidden || pet.hover || document.activeElement === pet.actor) return;
+        const rail = railOf(pet), start = railPoint(rail, pet.ratio).x;
+        if (rail.high - rail.low < 8) return;
+        pet.facing = start + 22.4 > rail.high ? -1 : start - 22.4 < rail.low ? 1 : -pet.facing;
+        let end = clamp(start + pet.facing * WALK_SPEED * WALK_DURATION / 1000, rail.low, rail.high);
+        for (const other of pets) if (other !== pet && other.current === pet.current && other.edge === pet.edge && !other.fall) {
+          const x = railPoint(rail, other.ratio).x;
+          if (x > start) end = Math.min(end, Math.max(start, x - size - 6));
+          else end = Math.max(end, Math.min(start, x + size + 6));
+        }
+        pet.walk = { start: null, x: start, end }; request();
+      }, IDLE_DELAY + pet.number * 350);
+    }
+    function react(pet, name, duration = 600) {
+      stopMotion(pet); pet.rest = name; pet.pose = name === 'think' ? 'think' : name === 'land' ? 'idle' : 'wave';
+      if (canAnimate(pet)) pet.reaction = { name, duration, start: null }; else state(pet, pet.rest, pet.pose);
+      request();
+    }
+    function availableX(pet, target, preferred) {
+      const rail = target.rail, gap = size + 6;
+      const occupied = pets.filter(other => other !== pet && !other.fall && pointer?.pet !== other && other.current === target.frame && other.edge === target.edge)
+        .map(other => railPoint(rail, other.ratio).x);
+      const candidates = [clamp(preferred, rail.low, rail.high), rail.low, rail.high];
+      for (let x = rail.low; x <= rail.high; x += gap) candidates.push(x);
+      candidates.sort((a, b) => Math.abs(a - preferred) - Math.abs(b - preferred));
+      return candidates.find(x => occupied.every(other => Math.abs(x - other) >= gap));
+    }
+    function allocate(pet, target, x) {
+      const falling = Number.isFinite(target.y);
+      const candidates = [target];
+      for (const edge of ['top', 'bottom']) { const rail = edgeRail(target.frame, edge); if (rail && (!falling || edge === 'top')) candidates.push({ frame: target.frame, edge, rail }); }
+      for (const item of frames) for (const edge of ['top', 'bottom']) { const rail = edgeRail(item, edge); if (rail?.visible && (!falling || (edge === 'top' && rail.y >= target.rail.y))) candidates.push({ frame: item, edge, rail }); }
+      for (const item of frames) for (const edge of ['top', 'bottom']) { const rail = edgeRail(item, edge); if (rail && (!falling || (edge === 'top' && rail.y >= target.rail.y))) candidates.push({ frame: item, edge, rail }); }
+      if (falling) {
+        const center = x + size / 2;
+        candidates.sort((a, b) => {
+          if (a === target) return -1; if (b === target) return 1;
+          const overlapA = center >= a.frame.box.left && center <= a.frame.box.right;
+          const overlapB = center >= b.frame.box.left && center <= b.frame.box.right;
+          const dxA = Math.abs(x - clamp(x, a.rail.low, a.rail.high)), dxB = Math.abs(x - clamp(x, b.rail.low, b.rail.high));
+          return Number(overlapB) - Number(overlapA) || (overlapA ? a.rail.y - b.rail.y || dxA - dxB : dxA - dxB || a.rail.y - b.rail.y);
+        });
+      }
+      for (const candidate of candidates) {
+        const free = availableX(pet, candidate, x);
+        if (free !== undefined) { pet.current = candidate.frame; pet.edge = candidate.edge; pet.ratio = ratioAt(candidate.rail, free); return candidate; }
+      }
+      // Extremely narrow/custom layouts may provide no usable slot at all.
+      pet.current = target.frame; pet.edge = target.edge; pet.ratio = ratioAt(target.rail, x); return target;
+    }
+    function seat(pet, target, x, animate = true) {
+      pet.fall = null; allocate(pet, target, x);
+      if (animate) react(pet, 'land', 420); else { stopMotion(pet); pet.rest = 'idle'; pet.pose = 'idle'; state(pet, 'idle'); }
+    }
+    function startFall(pet, point) {
+      stopMotion(pet);
+      const start = { x: point.x, y: point.y + finite(window.scrollY) };
+      const target = fallTarget(frames, start, size, finite(window.scrollY));
+      if (!target) { pet.fall = null; return; }
+      if (!canAnimate(pet) || target.y <= start.y) { seat(pet, target, target.x, false); return; }
+      pet.fall = { from: start, point: { ...start }, target, elapsed: 0, previous: null, velocity: 0 };
+      state(pet, 'fall', 'jump'); request();
+    }
+    function settleFall(pet) {
+      if (!pet.fall) return;
+      const target = fallTarget(frames, pet.fall.point, size, finite(window.scrollY)) || pet.fall.target;
+      seat(pet, target, target.x, false);
+    }
+    function paint(now = 0) {
+      raf = null; if (document.hidden || disposed || suspended) return;
+      if (dirty) measure(); let moving = false;
+      for (const pet of pets) {
+        const rail = railOf(pet); if (!rail) { pet.actor.hidden = true; stopMotion(pet); continue; }
+        if (pointer?.pet === pet && pointer.dragging) {
+          pet.point = { x: clamp(pointer.x - pointer.dx, 0, window.innerWidth - size), y: clamp(pointer.y - pointer.dy, 0, window.innerHeight - size) };
+          const target = dropTarget(frames, pet.point, size); pet.actor.dataset.target = target ? target.frame.key + ':' + target.edge : '';
+          pet.actor.hidden = false; state(pet, 'drag', 'jump');
+        } else if (pointer?.pet === pet) {
+          pet.actor.hidden = false; state(pet, 'idle', pointer.wasFalling ? 'jump' : pet.pose);
+        } else if (pet.fall) {
+          if (!canAnimate(pet)) settleFall(pet);
+          else {
+            const fall = pet.fall, dt = fall.previous === null ? 0 : clamp((now - fall.previous) / 1000, 0, .05); fall.previous = now; fall.elapsed += dt * 1000;
+            // Target coordinates are re-read from the shared cache after reflow.
+            const targetRail = edgeRail(fall.target.frame, 'top');
+            if (!targetRail) { settleFall(pet); }
+            else {
+              fall.target.rail = targetRail; fall.target.y = targetRail.y + finite(window.scrollY); fall.target.x = clamp(fall.from.x, targetRail.low, targetRail.high);
+              fall.velocity = Math.min(1400, fall.velocity + GRAVITY * dt); fall.point.y += fall.velocity * dt;
+              const progress = clamp((fall.point.y - fall.from.y) / Math.max(1, fall.target.y - fall.from.y), 0, 1);
+              fall.point.x = fall.from.x + (fall.target.x - fall.from.x) * progress;
+              pet.point = { x: fall.point.x, y: fall.point.y - finite(window.scrollY) };
+              if (fall.point.y >= fall.target.y || fall.elapsed >= MAX_FALL_TIME || pet.point.y > window.innerHeight + size || pet.point.y + size < 0) seat(pet, fall.target, fall.target.x, pet.point.y >= -size && pet.point.y <= window.innerHeight);
+              else { pet.actor.hidden = pet.point.y + size < 0; state(pet, 'fall', 'jump'); moving = true; }
+            }
+          }
+        }
+        if (!pet.fall && pointer?.pet !== pet) {
+          const currentRail = railOf(pet); pet.actor.hidden = !currentRail?.visible;
+          if (pet.actor.hidden) { stopMotion(pet); state(pet, pet.rest, pet.pose); continue; }
+          if (!canAnimate(pet)) stopMotion(pet);
+          if (pet.walk) {
+            const walk = pet.walk; if (walk.start === null) walk.start = now;
+            const elapsed = clamp(now - walk.start, 0, WALK_DURATION), progress = elapsed / WALK_DURATION;
+            pet.ratio = ratioAt(currentRail, walk.x + (walk.end - walk.x) * progress); state(pet, 'walk', Math.floor(elapsed / 220) % 2 ? 'run2' : 'run1');
+            if (progress === 1) { pet.walk = null; pet.rest = 'idle'; pet.pose = 'idle'; state(pet, 'idle'); }
+          } else if (pet.reaction) {
+            const reaction = pet.reaction; if (reaction.start === null) reaction.start = now;
+            const elapsed = now - reaction.start;
+            state(pet, reaction.name, reaction.name === 'think' ? 'think' : reaction.name === 'land' && elapsed < 160 ? 'jump' : 'wave');
+            if (elapsed >= reaction.duration) { pet.reaction = null; pet.rest = 'idle'; pet.pose = 'idle'; state(pet, 'idle'); }
+          } else state(pet, pet.rest, pet.pose);
+          pet.point = railPoint(currentRail, pet.ratio);
+        }
+        pet.actor.style.transform = 'translate3d(' + pet.point.x.toFixed(2) + 'px,' + pet.point.y.toFixed(2) + 'px,0)'; pet.sprite.style.transform = 'scaleX(' + pet.facing + ')';
+        if (pet.walk || pet.reaction || pet.fall) moving = true; else scheduleIdle(pet);
+      }
+      if (!dialog.hidden) positionDialog(); if (moving) request();
+    }
+    function releaseCapture(pet, id) { try { if (pet.actor.hasPointerCapture?.(id)) pet.actor.releasePointerCapture(id); } catch (_) {} }
+    function endPointer(cancelled) {
+      if (!pointer) return;
+      const previous = pointer, pet = pointer.pet; pointer = null; releaseCapture(pet, previous.id);
+      if (!previous.dragging) { if (previous.wasFalling && !cancelled) startFall(pet, pet.point); request(); return; }
+      pet.suppressClick = true; pet.actor.dataset.target = ''; dirty = true; measure();
+      const point = { x: clamp(previous.x - previous.dx, 0, window.innerWidth - size), y: clamp(previous.y - previous.dy, 0, window.innerHeight - size) };
+      if (cancelled) {
+        if (edgeRail(previous.home, previous.edge)) { pet.current = previous.home; pet.edge = previous.edge; }
+        pet.ratio = previous.ratio; react(pet, 'land', 420); announce(pet.name + ' 이동을 취소했어요.');
+      } else {
+        const target = dropTarget(frames, point, size);
+        if (target) { seat(pet, target, point.x); announce(pet.name + '을 ' + pet.current.label + ' ' + (pet.edge === 'top' ? '위' : '아래') + '에 놓았어요.'); }
+        else { startFall(pet, point); announce(pet.name + '이 아래 프레임으로 내려가요.'); }
+      }
+      request();
+    }
+    function createPet(homeFrame, edge = 'top') {
+      if (pets.length >= MAX_PETS) return null;
+      const number = nextPet++, actor = create('button', 'scroll-tino'); actor.id = number === 1 ? 'scroll-tino' : 'scroll-tino-' + number; actor.type = 'button'; actor.hidden = true; actor.dataset.tinoPet = 'tino-' + number; actor.title = '티노 ' + number + ' · 클릭해서 대화 · 끌어서 옮기기';
+      actor.setAttribute('aria-label', '티노 ' + number + '와 대화. 끌어서 옮기거나 프레임을 선택할 수 있어요.'); actor.setAttribute('aria-haspopup', 'dialog'); actor.setAttribute('aria-controls', 'tino-dialog'); actor.setAttribute('aria-expanded', 'false');
+      const sprite = create('span', 'scroll-tino__sprite'); sprite.setAttribute('aria-hidden', 'true'); actor.appendChild(sprite); layer.appendChild(actor);
+      const pet = { number, id: 'tino-' + number, name: '티노 ' + number, actor, sprite, current: homeFrame, edge, ratio: .3 + (number % 3) * .23, point: { x: 0, y: 0 }, facing: 1,
+        timer: null, walk: null, reaction: null, fall: null, hover: false, quiet: false, suppressClick: false, rest: 'idle', pose: 'idle' };
+      if (dirty) measure();
+      pet.listeners = [];
+      const on = (type, fn, opts) => { actor.addEventListener(type, fn, opts); pet.listeners.push(() => actor.removeEventListener(type, fn, opts)); };
+      pets.push(pet); if (!selected) selected = pet;
+      actor.style.setProperty('--tino-size', size + 'px');
+      const rail = railOf(pet); if (rail) allocate(pet, { frame: pet.current, edge: pet.edge, rail }, railPoint(rail, pet.ratio).x);
+      updateCount();
+      on('pointerdown', event => {
+        if (pointer || event.isPrimary === false || (event.button !== undefined && event.button !== 0) || !dialog.hidden) return;
+        const wasFalling = Boolean(pet.fall); selected = pet; stopMotion(pet); pet.fall = null; pet.suppressClick = false; if (dirty) measure(); if (!railOf(pet)) return;
+        pointer = { pet, id: event.pointerId, x: event.clientX, y: event.clientY, startX: event.clientX, startY: event.clientY, dx: event.clientX - pet.point.x, dy: event.clientY - pet.point.y,
+          home: pet.current, edge: pet.edge, ratio: pet.ratio, wasFalling, dragging: false };
+        try { actor.setPointerCapture(event.pointerId); } catch (_) {} request();
+      });
+      on('lostpointercapture', event => { if (pointer?.pet === pet && pointer.id === event.pointerId) endPointer(true); });
+      on('dragstart', event => event.preventDefault());
+      on('pointerenter', () => { pet.hover = true; stopMotion(pet); request(); }); on('pointerleave', () => { pet.hover = false; request(); });
+      on('focus', () => { stopMotion(pet); request(); }); on('blur', request);
+      on('click', event => {
+        if (pet.suppressClick && event.detail !== 0) { pet.suppressClick = false; event.preventDefault(); return; }
+        if (!dialog.hidden && dialogPet === pet) closeDialog(); else openDialog(actor, pet);
+      });
+      request(); return pet;
+    }
+    function removePet(pet) {
+      if (pets.length <= 1) return;
+      if (pointer?.pet === pet) endPointer(true); stopMotion(pet); pet.fall = null;
+      if (dialogPet === pet) closeDialog(false); pets.splice(pets.indexOf(pet), 1); pet.listeners.forEach(dispose => dispose()); pet.actor.remove();
+      if (selected === pet) selected = pets[0]; updateCount(); launcher.focus({ preventScroll: true }); announce(pet.name + '을 쉬게 했어요.'); request();
+    }
+    listen(window, 'pointermove', event => {
+      if (!pointer || event.pointerId !== pointer.id) return;
+      if (event.pointerType === 'mouse' && event.buttons === 0) { endPointer(true); return; }
+      pointer.x = event.clientX; pointer.y = event.clientY;
+      if (!pointer.dragging && Math.hypot(pointer.x - pointer.startX, pointer.y - pointer.startY) >= DRAG_THRESHOLD) pointer.dragging = true;
+      if (pointer.dragging) { event.preventDefault(); request(); }
+    }, { passive: false });
+    listen(window, 'pointerup', event => { if (!pointer || event.pointerId !== pointer.id) return; pointer.x = event.clientX; pointer.y = event.clientY; endPointer(false); });
+    listen(window, 'pointercancel', event => { if (pointer?.id === event.pointerId) endPointer(true); });
+    function positionDialog() {
+      const area = dialogArea({ width: document.documentElement.clientWidth || window.innerWidth, height: window.innerHeight }, document.querySelector('.mast')?.getBoundingClientRect());
+      if (!area) { closeDialog(false); announce('화면의 세로 공간이 좁아 말풍선을 닫았어요. 화면을 넓힌 뒤 다시 열어 주세요.'); return false; }
+      dialog.style.maxHeight = area.height + 'px';
+      const anchor = dialogSource === dialogPet?.actor ? { left: dialogPet.point.x, top: dialogPet.point.y, bottom: dialogPet.point.y + size } : dialogSource.getBoundingClientRect();
+      const position = placeDialog(anchor, dialog.getBoundingClientRect(), area); dialog.style.left = position.left + 'px'; dialog.style.top = position.top + 'px'; return true;
+    }
+    function closeDialog(restore = true) {
+      if (dialog.hidden) return; dialog.hidden = true;
+      for (const pet of pets) pet.actor.setAttribute('aria-expanded', 'false'); launcher.setAttribute('aria-expanded', 'false');
+      if (restore) (returnFocus?.isConnected && !returnFocus.hidden ? returnFocus : launcher).focus({ preventScroll: true }); request();
+    }
+    function jumpTo(selector) {
+      closeDialog(false); const node = document.querySelector(selector);
+      if (node) { node.scrollIntoView({ behavior: 'instant', block: 'start' }); if (!node.hasAttribute('tabindex')) node.setAttribute('tabindex', '-1'); node.focus({ preventScroll: true }); } invalidate();
+    }
+    function relocate(pet, item, edge = 'top') {
+      if (!item.node.isConnected || !item.perches[edge]?.getClientRects().length) { if (!dialog.hidden) renderDialog('frames'); return; }
+      closeDialog(false); selected = pet; pet.current = item; pet.edge = edge; pet.ratio = .6; pet.fall = null;
+      item.perches[edge].scrollIntoView({ behavior: 'instant', block: 'center' }); stopMotion(pet); cancelFrame(); dirty = true; measure();
+      const rail = railOf(pet); if (rail) allocate(pet, { frame: item, edge, rail }, railPoint(rail, pet.ratio).x);
+      if (pet.current !== item || pet.edge !== edge) { pet.current.perches[pet.edge].scrollIntoView({ behavior: 'instant', block: 'center' }); dirty = true; measure(); }
+      paint(window.performance?.now() || 0);
+      pet.actor.focus({ preventScroll: true }); announce(pet.name + '을 ' + pet.current.label + ' ' + (pet.edge === 'top' ? '위' : '아래') + '로 옮겼어요.'); react(pet, 'land', 420);
+    }
+    function addChoice(key, label, action, target, edge) {
+      const button = create('button', '', label); button.type = 'button'; button.dataset.tinoChoice = key;
+      if (target) button.dataset.tinoTarget = target; if (edge) button.dataset.tinoEdge = edge;
+      button.addEventListener('click', action); choices.appendChild(button); return button;
+    }
+    function renderDialog(branch = 'home', focus = true) {
+      const pet = dialogPet || selected, current = pet.current;
+      for (const friend of pets) friend.actor.setAttribute('aria-expanded', String(friend === pet && !dialog.hidden));
+      dialog.dataset.branch = branch; dialog.dataset.pet = pet.id; title.textContent = pet.name + ' / ' + pets.length + '명의 작은 안내원'; choices.replaceChildren(); dialog.scrollTop = 0;
+      const choice = (key, label) => addChoice(key, label, () => renderDialog(key));
+      const visit = (key, label, selector) => addChoice(key, label, () => jumpTo(selector));
+      if (branch === 'about') {
+        answer.textContent = textOf('.club-description .club-lead', '동아리 소개는 아래 소개 섹션에서 확인해 주세요.') + ' ' +
+          (document.querySelector('.club-description > .club-lead + p')?.textContent.trim() || '');
+        visit('visit-club', '동아리 소개 보러 가기', '#club');
+      } else if (branch === 'games') {
+        const cards = [...document.querySelectorAll('.game-card')];
+        const names = cards.map(card => card.querySelector('h3')?.textContent.trim()).filter(Boolean);
+        const web = cards.filter(card => card.querySelector('.download.play'));
+        answer.textContent = '현재 전시된 게임은 ' + cards.length + '개' + (names.length ? ', ' + names.join('와 ') : '') + '예요. ' +
+          (web.length ? '브라우저 플레이가 표시된 작품은 해당 버튼으로 실행할 수 있어요.' :
+            '현재 작품은 Windows 다운로드로 안내되어 있고, 브라우저용 WebGL 빌드는 게시되어 있지 않아요. Windows EXE는 이 사이트에서 바로 실행할 수 없어요.') +
+          (names.some(name => /coredawn/i.test(name)) ? ' CoreDawn은 실행 파일뿐 아니라 게임 데이터 폴더도 함께 받아야 해요.' : '') + ' 아래 각 게임의 안내와 다운로드를 확인해 주세요.';
+        visit('visit-games', '게임과 다운로드 보기', '#games'); visit('visit-runner', '여기서 Tino Run 해보기', '#runner-game');
+      } else if (branch === 'activity') {
+        // The story counters can be scrubbed. Totals in the published JSON stay authoritative.
+        let feed; try { feed = JSON.parse(document.getElementById('archive-feed')?.textContent || '{}'); } catch (_) { feed = {}; }
+        const records = Array.isArray(feed) ? feed : Array.isArray(feed.items) ? feed.items : null;
+        const valid = records?.every(item => Number.isFinite(item.count) && item.count >= 0);
+        const photos = valid ? String(records.reduce((sum, item) => sum + item.count, 0)) : '확인되지 않은 수의';
+        const groups = valid ? String(records.length) : '확인되지 않은 수의';
+        answer.textContent = '공개 활동 현황은 사진 기록 ' + photos + '개와 활동 묶음 ' + groups + '개를 기준으로 보여 줘요. ' +
+          '사진 수는 참석 인원이나 공개 사진 수가 아니에요. 현황에서는 카테고리·연도·월을 골라 최신순 이력과 근거를 볼 수 있어요.';
+        visit('visit-activity', '활동 현황 보기', '#archive');
+      } else if (branch === 'discord') {
+        const summary = textOf('.discord-status strong', '연결 상태를 확인할 수 없어요.');
+        const detail = textOf('.discord-status p');
+        answer.textContent = 'Awesome Discord 현황: ' + summary + '. ' + detail +
+          ' 과거 PC 봇 연결 기록과 이 사이트의 메시지 수집·집계 상태는 별개예요. 확인되지 않은 메시지 수를 0으로 단정하거나 사진 기록 수로 대신하지 않아요.';
+        visit('visit-discord', 'Awesome 현황 보기', '#awesome');
+      } else if (branch === 'frames') {
+        answer.textContent = pet.name + '이 앉을 프레임의 위·아래를 골라 주세요. 화면을 끌지 않고도 원하는 곳으로 옮길 수 있어요.';
+        for (const item of frames) if (item.node.isConnected && item.node.getClientRects().length)
+          for (const edge of item.floor ? ['top'] : ['top', 'bottom']) addChoice('move-' + item.key + '-' + edge, item.label + ' · ' + (edge === 'top' ? '위' : '아래') + (item === current && edge === pet.edge ? ' · 지금 여기' : ''), () => relocate(pet, item, edge), item.key, edge);
+      } else if (branch === 'pets') {
+        answer.textContent = '지금 ' + pets.length + '명, 최대 ' + MAX_PETS + '명까지 함께할 수 있어요. 선택한 티노만 옮기거나 쉬게 할 수 있어요. 새로 열면 기본 4명으로 시작해요.';
+        for (const friend of pets) {
+          const button = addChoice('select-' + friend.id, friend.name + (friend === pet ? ' · 선택됨' : '') + ' · ' + (friend.current?.label || '이동 중'), () => { selected = friend; dialogPet = friend; renderDialog('home'); request(); }); button.dataset.tinoPetTarget = friend.id;
+        }
+        const add = addChoice('add-pet', '티노 한 명 더 부르기', () => {
+          const friend = createPet(pet.current, pet.edge); if (friend) { selected = friend; dialogPet = friend; renderDialog('pets'); announce(friend.name + '이 왔어요.'); }
+        }); add.disabled = pets.length >= MAX_PETS;
+        const remove = addChoice('remove-pet', pet.name + ' 쉬러 보내기', () => removePet(pet)); remove.disabled = pets.length <= 1;
+      } else if (branch === 'actions') {
+        answer.textContent = pet.name + '만 인사하거나 쉴 수 있어요. 모션 끄기와 동작 줄이기에서는 정지 자세로 반응하고, 낙하도 같은 목적지에 바로 도착해요.';
+        addChoice('wave', '손 흔들어 줘', () => { closeDialog(); react(pet, 'wave', 900); announce(pet.name + '이 손을 흔들어요.'); });
+        addChoice('think', '같이 생각하기', () => { closeDialog(); react(pet, 'think', 1400); announce(pet.name + '이 생각하고 있어요.'); });
+        addChoice('pause', pet.quiet ? '천천히 걷기 다시 켜기' : '여기서 쉬기 · 자동 걷기 끄기', () => { pet.quiet = !pet.quiet; stopMotion(pet); settleFall(pet); pet.rest = pet.quiet ? 'think' : 'idle'; pet.pose = pet.rest; renderDialog('actions'); request(); });
+      } else if (branch === 'unknown') {
+        answer.textContent = '사이트에 공개된 정보만 알고 있어요. 게시되지 않은 일정, 가입 조건, Discord 메시지 내용이나 게임의 최신 빌드 상태는 확인할 수 없어요. 동아리 소개의 Instagram 링크에서 직접 확인해 주세요.';
+        visit('visit-club', '동아리 연락처 보기', '#club');
+      } else {
+        answer.textContent = '안녕! 난 ' + pet.name + '이야. 프레임 위·아래에서 쉬고, 허공에 놓으면 아래 프레임 위로 내려가. 누구와 어디서 놀지 골라 줘!';
+        choice('about', '얼간이들은 어떤 모임이야?'); choice('games', '어떤 게임을 할 수 있어?'); choice('activity', '활동 숫자는 무슨 뜻이야?'); choice('discord', 'Awesome Discord는 연결됐어?');
+        choice('frames', '프레임의 위·아래로 가자'); choice('pets', '티노 선택 · 추가 · 쉬러 보내기'); choice('actions', '인사하거나 쉬어 가자'); choice('unknown', '그 밖의 정보는?');
+      }
+      if (branch !== 'home') choice('home', '처음 질문으로'); if (positionDialog() && focus) choices.querySelector('button')?.focus();
+    }
+    function openDialog(source, pet = selected) {
+      if (pointer?.dragging) return;
+      if (pointer) { const owner = pointer.pet; endPointer(true); owner.suppressClick = true; }
+      if (!dialog.hidden) closeDialog(false); selected = pet; dialogPet = pet;
+      for (const friend of pets) stopMotion(friend); settleFall(pet);
+      returnFocus = source; dialogSource = source; dialog.hidden = false; dialogScrollX = finite(window.scrollX); dialogScrollY = finite(window.scrollY);
+      pet.actor.setAttribute('aria-expanded', 'true'); launcher.setAttribute('aria-expanded', 'true'); renderDialog('home', false);
+      if (dialog.hidden) return; close.focus({ preventScroll: true }); pet.rest = 'wave'; pet.pose = 'wave'; state(pet, 'wave', 'wave');
+    }
+    const initial = clamp(Math.floor(finite(options.initialCount, 4)), 1, MAX_PETS);
+    const story = frames.find(item => item.key === 'story-panel') || frames[0];
+    const gameFrames = frames.filter(item => item.node.classList.contains('game-card'));
+    for (let i = 0; i < initial; i++) createPet(i < 2 ? story : gameFrames[(i - 2) % Math.max(1, gameFrames.length)] || story, i === 1 ? 'bottom' : 'top');
+    for (const item of frames) for (const edge of item.floor ? ['top'] : ['top', 'bottom']) listen(item.calls[edge], 'click', () => relocate(selected, item, edge));
+    listen(launcher, 'click', () => { if (!dialog.hidden) closeDialog(); else openDialog(launcher); }); listen(close, 'click', () => closeDialog());
+    listen(document, 'pointerdown', event => { if (!dialog.hidden && !dialog.contains(event.target) && !pets.some(pet => pet.actor.contains(event.target)) && event.target !== launcher) closeDialog(false); });
+    listen(document, 'keydown', event => { if (event.key === 'Escape') { if (pointer) { event.preventDefault(); endPointer(true); } if (!dialog.hidden) { event.preventDefault(); closeDialog(); } } });
+    listen(document, 'focusin', event => { if (!dialog.hidden && !dialog.contains(event.target) && event.target !== dialogPet?.actor && event.target !== launcher) closeDialog(false); });
+    function changeMotion(event) {
+      if (typeof event?.detail?.enabled === 'boolean') motionAllowed = event.detail.enabled;
+      for (const pet of pets) { stopMotion(pet); if (!canAnimate(pet)) settleFall(pet); } if (!canAnimate(selected)) settleReveals(); request();
+    }
+    listen(window, 'scroll', () => {
+      if (!dialog.hidden && (Math.abs(finite(window.scrollY) - dialogScrollY) > .5 || Math.abs(finite(window.scrollX) - dialogScrollX) > .5)) closeDialog(false); invalidate();
+    }, { passive: true });
+    listen(window, 'resize', () => { endPointer(true); dirty = true; measure();
+      // Re-space crowded pets after a narrow reflow, reserving the selected
+      // companion's place until the others have found a free edge.
+      for (const pet of [...pets.filter(p => p !== selected), selected]) if (pet && !pet.fall && railOf(pet)) allocate(pet, { frame: pet.current, edge: pet.edge, rail: railOf(pet) }, railPoint(railOf(pet), pet.ratio).x);
+      for (const pet of pets) { stopMotion(pet); settleFall(pet); } invalidate(); if (!dialog.hidden) positionDialog(); }, { passive: true });
+    listen(window, 'archive-motion-change', changeMotion);
+    listen(window, 'pageshow', () => { suspended = false; invalidate(); }); listen(window, 'focus', () => { suspended = false; invalidate(); });
+    function suspend(hide) { suspended = true; endPointer(true); closeDialog(false); for (const pet of pets) { stopMotion(pet); settleFall(pet); if (hide) pet.actor.hidden = true; } cancelFrame(); }
+    listen(window, 'pagehide', () => suspend(true)); listen(window, 'blur', () => suspend(false));
+    listen(document, 'load', invalidate, true);
+    listen(document, 'visibilitychange', () => { if (document.hidden) { suspend(true); settleReveals(); } else { suspended = false; invalidate(); } });
+    if (reduced?.addEventListener) listen(reduced, 'change', changeMotion); else if (reduced?.addListener) { reduced.addListener(changeMotion); cleanup.push(() => reduced.removeListener?.(changeMotion)); }
+    let resize, mutations, revealObserver;
+    if (window.ResizeObserver) { resize = new window.ResizeObserver(invalidate); resize.observe(main); for (const item of frames) resize.observe(item.node); }
+    if (window.MutationObserver) { mutations = new window.MutationObserver(invalidate); mutations.observe(main, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] }); }
+    const reveals = [...document.querySelectorAll(REVEAL_SELECTOR)];
+    function settleReveals() { revealObserver?.disconnect(); for (const node of reveals) node.classList.add('is-revealed'); }
+    if (canAnimate(selected) && window.IntersectionObserver) {
+      revealObserver = new window.IntersectionObserver(entries => { for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add('is-revealed'); revealObserver.unobserve(entry.target); } }, { threshold: 0, rootMargin: '0px 0px -24px 0px' });
+      for (const node of reveals) { node.classList.add('scroll-reveal'); revealObserver.observe(node); }
+    } else settleReveals();
+    document.fonts?.ready.then(invalidate); request();
+    return { actor: pets[0].actor, pets, dialog, frames, invalidate, destroy() {
+      endPointer(true); disposed = true; for (const pet of pets) { stopMotion(pet); pet.fall = null; pet.listeners.forEach(dispose => dispose()); } cancelFrame(); cleanup.forEach(fn => fn()); resize?.disconnect(); mutations?.disconnect(); revealObserver?.disconnect();
+      for (const item of frames) { Object.values(item.perches).forEach(perch => perch.remove()); delete item.node.dataset.tinoFrame; delete item.node.dataset.tinoLabel; delete item.node.dataset.tinoDrop; item.node.classList.remove('tino-frame'); }
+      floorNode.remove(); layer.remove(); dialog.remove(); status.remove(); launcher.remove();
+    } };
+  }
+  if (typeof module === 'object' && module.exports) module.exports = { railBounds, railPoint, ratioAt, frameDropMode, dropTarget, fallTarget, dialogArea, placeDialog, mount, WALK_SPEED, WALK_DURATION, IDLE_DELAY, MAX_PETS, GRAVITY };
+  else if (root?.document) { if (root.document.readyState === 'loading') root.document.addEventListener('DOMContentLoaded', () => mount(root), { once: true }); else mount(root); }
+})(typeof window !== 'undefined' ? window : null);
+</script><script>/* Separate Discord navigation: photo activity filters never supply these counts. */
+(() => {
+  'use strict';
+  const root = document.getElementById('awesome');
+  if (!root) return;
+  const links = ['all', 'news', 'info'].map(key => ({key, node: document.getElementById('awesome-' + key)}));
+  function route() {
+    const value = location.hash.replace(/^#awesome-/, '');
+    const category = value === 'news' || value === 'info' ? value : 'all';
+    for (const {key, node} of links) {
+      if (key === category) node.setAttribute('aria-current', 'page');
+      else node.removeAttribute('aria-current');
+    }
+    for (const panel of root.querySelectorAll('[data-discord-category]'))
+      panel.hidden = category !== 'all' && panel.dataset.discordCategory !== category;
+    root.dataset.discordFilter = category;
+  }
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script><script>/* Tino Run: original, dependency-free runner. Physics are exported for Node tests. */
+(function (root) {
+  'use strict';
+
+  var WORLD_HEIGHT = 300;
+  var GROUND = 232;
+  var PLAYER_X = 100;
+  var PLAYER_WIDTH = 64;
+  var PLAYER_HEIGHT = 72;
+  var GRAVITY = 1800;
+  var JUMP_SPEED = 650;
+  var BASE_SPEED = 330;
+  var MAX_STEP = 1 / 120;
+  var SHEET_WIDTH = 1536;
+  var SHEET_HEIGHT = 1024;
+  // Tino's generated 3 × 2 sheet: per-cell opaque bounds, translated to sheet space.
+  // Cropping the artwork itself keeps padding out of the physics/body alignment.
+  var SHEET_FRAMES = {
+    idle: { x: 87, y: 57, width: 334, height: 379 },
+    run1: { x: 590, y: 58, width: 336, height: 375 },
+    run2: { x: 1106, y: 57, width: 341, height: 379 },
+    jump: { x: 98, y: 543, width: 343, height: 361 }
+  };
+
+  function spriteFrame(key) {
+    return Object.assign({}, SHEET_FRAMES[key] || SHEET_FRAMES.idle);
+  }
+
+  function spritePlacement(width, height, playerY) {
+    var scale = Math.min(PLAYER_WIDTH / width, PLAYER_HEIGHT / height);
+    var drawnWidth = Math.round(width * scale);
+    var drawnHeight = Math.round(height * scale);
+    return {
+      x: Math.round(PLAYER_X + (PLAYER_WIDTH - drawnWidth) / 2),
+      y: Math.round(playerY + PLAYER_HEIGHT - drawnHeight),
+      width: drawnWidth, height: drawnHeight
+    };
+  }
+
+  function random(seed) {
+    var next = (Math.imul(seed >>> 0, 1664525) + 1013904223) >>> 0;
+    return { seed: next, value: next / 4294967296 };
+  }
+
+  function createState(options) {
+    options = options || {};
+    var seed = Number.isFinite(options.seed) ? options.seed >>> 0 : 117;
+    return {
+      mode: 'ready',
+      width: Math.max(480, Math.min(1400, Number(options.width) || 1000)),
+      seed: seed,
+      initialSeed: seed,
+      elapsed: 0,
+      distance: 0,
+      score: 0,
+      best: Math.max(0, Math.floor(Number(options.best) || 0)),
+      speed: BASE_SPEED,
+      untilSpawn: 0.9,
+      player: { y: GROUND - PLAYER_HEIGHT, velocity: 0, grounded: true },
+      obstacles: []
+    };
+  }
+
+  function start(state) {
+    var next = createState({ seed: state.initialSeed, width: state.width, best: state.best });
+    next.mode = 'running';
+    return next;
+  }
+
+  function jump(state) {
+    if (state.mode !== 'running' || !state.player.grounded) return state;
+    return Object.assign({}, state, {
+      player: Object.assign({}, state.player, { velocity: -JUMP_SPEED, grounded: false })
+    });
+  }
+
+  function pause(state) {
+    return state.mode === 'running' ? Object.assign({}, state, { mode: 'paused' }) : state;
+  }
+
+  function resume(state) {
+    return state.mode === 'paused' ? Object.assign({}, state, { mode: 'running' }) : state;
+  }
+
+  function overlaps(a, b) {
+    return a.x < b.x + b.width && a.x + a.width > b.x &&
+      a.y < b.y + b.height && a.y + a.height > b.y;
+  }
+
+  function playerBounds(player) {
+    // Forgiving body bounds exclude the decorative antenna and trailing feet.
+    return { x: PLAYER_X + 13, y: player.y + 13, width: PLAYER_WIDTH - 26, height: PLAYER_HEIGHT - 16 };
+  }
+
+  function step(state, dt) {
+    var elapsed = state.elapsed + dt;
+    var speed = BASE_SPEED + Math.min(270, elapsed * 4);
+    var distance = state.distance + speed * dt;
+    var player = Object.assign({}, state.player);
+    if (!player.grounded) {
+      player.velocity += GRAVITY * dt;
+      player.y += player.velocity * dt;
+      if (player.y >= GROUND - PLAYER_HEIGHT) {
+        player.y = GROUND - PLAYER_HEIGHT;
+        player.velocity = 0;
+        player.grounded = true;
+      }
+    }
+    var obstacles = state.obstacles.map(function (obstacle) {
+      return Object.assign({}, obstacle, { x: obstacle.x - speed * dt });
+    }).filter(function (obstacle) { return obstacle.x + obstacle.width > -20; });
+    var untilSpawn = state.untilSpawn - dt;
+    var seed = state.seed;
+    if (untilSpawn <= 0) {
+      var shape = random(seed);
+      var spacing = random(shape.seed);
+      seed = spacing.seed;
+      var kind = Math.floor(shape.value * 3);
+      var heights = [34, 46, 58];
+      var widths = [34, 42, 32];
+      // A viewport shrink must not spawn a new block in front of an older one.
+      var spawnX = obstacles.reduce(function (furthest, obstacle) {
+        return Math.max(furthest, obstacle.x + obstacle.width + speed * 1.15);
+      }, state.width + 32);
+      obstacles.push({ x: spawnX, y: GROUND - heights[kind], width: widths[kind], height: heights[kind], kind: kind });
+      untilSpawn += 1.25 + spacing.value * 0.8;
+    }
+    var score = Math.floor(distance / 15);
+    var collided = obstacles.some(function (obstacle) { return overlaps(playerBounds(player), obstacle); });
+    return Object.assign({}, state, {
+      mode: collided ? 'over' : 'running',
+      seed: seed,
+      elapsed: elapsed,
+      speed: speed,
+      distance: distance,
+      score: score,
+      best: Math.max(state.best, score),
+      untilSpawn: untilSpawn,
+      player: player,
+      obstacles: obstacles
+    });
+  }
+
+  function advance(state, seconds) {
+    if (state.mode !== 'running' || !Number.isFinite(seconds) || seconds <= 0) return state;
+    // Ignore a long suspended frame; this is a game clock, not wall-clock catch-up.
+    var remaining = Math.min(seconds, 0.1);
+    var next = state;
+    while (remaining > 0.000001 && next.mode === 'running') {
+      var dt = Math.min(MAX_STEP, remaining);
+      next = step(next, dt);
+      remaining -= dt;
+    }
+    return next;
+  }
+
+  var physics = {
+    createState: createState, start: start, jump: jump, pause: pause, resume: resume,
+    advance: advance, overlaps: overlaps, playerBounds: playerBounds,
+    spriteFrame: spriteFrame, spritePlacement: spritePlacement,
+    constants: { height: WORLD_HEIGHT, ground: GROUND, playerX: PLAYER_X,
+      playerWidth: PLAYER_WIDTH, playerHeight: PLAYER_HEIGHT, baseSpeed: BASE_SPEED }
+  };
+  if (typeof module !== 'undefined' && module.exports) module.exports = physics;
+  if (!root || !root.document) return;
+
+  function mount() {
+    var doc = root.document;
+    var game = doc.getElementById('runner-game');
+    var canvas = doc.getElementById('runner-canvas');
+    if (!game || !canvas || game.dataset.runnerMounted) return;
+    var context = canvas.getContext && canvas.getContext('2d');
+    var status = doc.getElementById('runner-status');
+    if (!context) {
+      if (status) status.textContent = '이 브라우저에서는 게임 화면을 열 수 없어요. 다른 브라우저에서 다시 시도해 주세요.';
+      return;
+    }
+    game.dataset.runnerMounted = 'true';
+
+    var startButton = doc.getElementById('runner-start');
+    var pauseButton = doc.getElementById('runner-pause');
+    var restartButton = doc.getElementById('runner-restart');
+    var scoreLabel = doc.getElementById('runner-score');
+    var bestLabel = doc.getElementById('runner-best');
+    var overlayTitle = doc.getElementById('runner-overlay-title');
+    var overlayCopy = doc.getElementById('runner-overlay-copy');
+    var overlay = doc.getElementById('runner-overlay');
+    var motionNote = doc.getElementById('runner-motion-note');
+    var reduceMotion = root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)');
+    var images = {};
+    var spriteSheet = null;
+    var best = 0;
+    // Storage may be unavailable in private browsing or local-file previews.
+    try { best = Math.min(999999, Math.max(0, Number(root.localStorage.getItem('idiots-tino-best-v1')) || 0)); } catch (_) { /* Optional. */ }
+    var state = createState({ best: best });
+    var frame = null;
+    var lastTime = null;
+    var visible = true;
+    var lastDisplayedScore = -1;
+    var lastDisplayedBest = -1;
+    var lastAnnouncedMilestone = 0;
+    var pauseReason = '';
+
+    function announce(message) {
+      if (status && status.textContent !== message) status.textContent = message;
+    }
+
+    function formatScore(value) { return String(Math.min(value, 999999)).padStart(5, '0'); }
+
+    function syncControls() {
+      var running = state.mode === 'running';
+      var paused = state.mode === 'paused';
+      var ready = state.mode === 'ready';
+      game.dataset.runnerState = state.mode;
+      if (startButton) {
+        startButton.disabled = running;
+        startButton.textContent = running ? '달리는 중' : paused ? '계속 달리기' : ready ? '게임 시작' : '다시 달리기';
+      }
+      if (pauseButton) pauseButton.disabled = !running;
+      if (restartButton) restartButton.disabled = ready;
+      if (overlay) overlay.hidden = running;
+      if (overlayTitle) overlayTitle.textContent = ready ? 'READY, TINO?' : paused ? '잠깐 쉬는 중' : 'NICE RUN!';
+      if (overlayCopy) overlayCopy.textContent = ready ? '시작하고, 장애물을 훌쩍.' : paused ? (pauseReason || '준비되면 계속 달려요.') : '기록 ' + state.score + '점. 한 번 더 달려볼까요?';
+      updateScore();
+    }
+
+    function updateScore() {
+      if (scoreLabel && state.score !== lastDisplayedScore) {
+        lastDisplayedScore = state.score;
+        scoreLabel.textContent = formatScore(state.score);
+      }
+      if (bestLabel && state.best !== lastDisplayedBest) {
+        lastDisplayedBest = state.best;
+        bestLabel.textContent = formatScore(state.best);
+      }
+      var milestone = Math.floor(state.score / 100);
+      if (state.mode === 'running' && milestone > lastAnnouncedMilestone) {
+        lastAnnouncedMilestone = milestone;
+        announce('달리는 중. ' + state.score + '점.');
+      }
+    }
+
+    function stopFrame() {
+      if (frame !== null) root.cancelAnimationFrame(frame);
+      frame = null;
+      lastTime = null;
+    }
+
+    function pauseGame(reason) {
+      if (state.mode !== 'running') return;
+      state = pause(state);
+      pauseReason = reason || '준비되면 계속 달려요.';
+      stopFrame();
+      syncControls();
+      draw();
+      announce('일시 정지. ' + pauseReason);
+    }
+
+    function finishGame() {
+      stopFrame();
+      try { root.localStorage.setItem('idiots-tino-best-v1', String(state.best)); } catch (_) { /* Optional. */ }
+      syncControls();
+      announce('게임 끝. 기록 ' + state.score + '점, 최고 기록 ' + state.best + '점. 다시 달리기를 선택해 재시작하세요.');
+    }
+
+    function tick(time) {
+      frame = null;
+      if (state.mode !== 'running') return;
+      if (doc.hidden || !visible) {
+        pauseGame('화면을 벗어나 자동으로 멈췄어요.');
+        return;
+      }
+      if (lastTime !== null) state = advance(state, Math.max(0, (time - lastTime) / 1000));
+      lastTime = time;
+      updateScore();
+      draw();
+      if (state.mode === 'over') finishGame();
+      else frame = root.requestAnimationFrame(tick);
+    }
+
+    function startGame(restart) {
+      if (doc.hidden || !visible) return;
+      stopFrame();
+      if (!restart && state.mode === 'paused') state = resume(state);
+      else {
+        state = start(state);
+        lastAnnouncedMilestone = 0;
+      }
+      pauseReason = '';
+      syncControls();
+      announce('달리는 중. 스페이스, 위쪽 화살표 또는 게임 화면 터치로 점프하세요. Esc 키로 일시 정지할 수 있어요.');
+      canvas.focus({ preventScroll: true });
+      draw();
+      frame = root.requestAnimationFrame(tick);
+    }
+
+    function rect(x, y, width, height, color) {
+      context.fillStyle = color;
+      context.fillRect(Math.round(x), Math.round(y), width, height);
+    }
+
+    function drawFallbackTino(x, y, runningFrame) {
+      // Original block mascot, used only while optional Tino artwork is unavailable.
+      var ink = '#14233b';
+      var mint = '#74dcc6';
+      var blue = '#3459e6';
+      rect(x + 24, y, 8, 10, ink);
+      rect(x + 20, y, 16, 5, mint);
+      rect(x + 8, y + 10, 48, 40, ink);
+      rect(x + 4, y + 18, 56, 24, ink);
+      rect(x + 12, y + 14, 40, 30, '#fffdf2');
+      rect(x + 8, y + 21, 48, 16, '#fffdf2');
+      rect(x + 30, y + 25, 5, 6, ink);
+      rect(x + 44, y + 25, 5, 6, ink);
+      rect(x + 37, y + 36, 8, 3, ink);
+      rect(x + 13, y + 46, 39, 18, blue);
+      rect(x + 8, y + 48, 8, 11, ink);
+      rect(x + 50, y + 46, 9, 10, mint);
+      rect(x + 30, y + 50, 9, 9, mint);
+      rect(x + 17, y + 63, 11, runningFrame === 1 ? 5 : 9, ink);
+      rect(x + 39, y + 63, 11, runningFrame === 2 ? 5 : 9, ink);
+    }
+
+    function drawTino() {
+      var runFrame = Math.floor(state.elapsed * 9) % 2 + 1;
+      var key = !state.player.grounded ? 'jump' : state.mode === 'running' ? 'run' + runFrame : 'idle';
+      var sprite = images[key] || images.idle;
+      if (sprite) {
+        // Separate optional images still take precedence over a supplied sprite sheet.
+        var placement = spritePlacement(sprite.naturalWidth, sprite.naturalHeight, state.player.y);
+        context.drawImage(sprite, placement.x, placement.y, placement.width, placement.height);
+      } else if (spriteSheet) {
+        var source = spriteFrame(key);
+        var target = spritePlacement(source.width, source.height, state.player.y);
+        context.drawImage(spriteSheet, source.x, source.y, source.width, source.height,
+          target.x, target.y, target.width, target.height);
+      } else drawFallbackTino(PLAYER_X, state.player.y, state.mode === 'running' ? runFrame : 0);
+    }
+
+    function drawObstacle(obstacle) {
+      var x = obstacle.x;
+      var y = obstacle.y;
+      var w = obstacle.width;
+      var h = obstacle.height;
+      rect(x, y, w, h, '#14233b');
+      rect(x + 4, y + 4, w - 8, h - 8, obstacle.kind === 1 ? '#8acdbd' : '#f2a28b');
+      rect(x + 8, y + 10, 4, 12, '#14233b');
+      rect(x + w - 12, y + 10, 4, 12, '#14233b');
+      rect(x + 12, y + h - 12, w - 24, 4, '#14233b');
+    }
+
+    function draw() {
+      var width = state.width;
+      context.clearRect(0, 0, width, WORLD_HEIGHT);
+      rect(0, 0, width, WORLD_HEIGHT, '#f5f3e9');
+      rect(0, GROUND + 3, width, WORLD_HEIGHT - GROUND - 3, '#ecebdd');
+      // Quiet, original pixel skyline, deliberately free of flashing and parallax.
+      var skyline = Math.max(1, Math.ceil(width / 260));
+      for (var i = 0; i < skyline; i++) {
+        var x = i * 260 + 190;
+        rect(x, GROUND - 68, 34, 67, '#e2e4da');
+        rect(x + 34, GROUND - 44, 50, 43, '#e2e4da');
+        rect(x + 9, GROUND - 56, 6, 7, '#f5f3e9');
+        rect(x + 21, GROUND - 56, 6, 7, '#f5f3e9');
+      }
+      rect(width - 115, 45, 24, 24, '#74dcc6');
+      rect(width - 108, 38, 10, 38, '#74dcc6');
+      rect(0, GROUND, width, 3, '#14233b');
+      var offset = state.distance % 80;
+      for (var d = -80; d < width; d += 80) {
+        rect(d - offset, GROUND + 15, 16, 3, '#c2c8bc');
+        rect(d + 31 - offset, GROUND + 30, 5, 3, '#c2c8bc');
+      }
+      state.obstacles.forEach(drawObstacle);
+      drawTino();
+      context.fillStyle = '#647064';
+      context.font = '11px Consolas, monospace';
+      context.textAlign = 'left';
+      context.fillText('IDIOTS / AFTER HOURS', 20, WORLD_HEIGHT - 16);
+    }
+
+    function resize() {
+      var box = canvas.getBoundingClientRect();
+      if (!box.width || !box.height) return;
+      var ratio = Math.max(1, Math.min(root.devicePixelRatio || 1, 3));
+      canvas.width = Math.round(box.width * ratio);
+      canvas.height = Math.round(box.height * ratio);
+      var width = Math.max(480, Math.min(1400, Math.round(box.width / box.height * WORLD_HEIGHT)));
+      var changedWidth = Math.abs(state.width - width) > 1;
+      state = Object.assign({}, state, { width: width });
+      context.setTransform(canvas.width / width, 0, 0, canvas.height / WORLD_HEIGHT, 0, 0);
+      context.imageSmoothingEnabled = false;
+      if (changedWidth) pauseGame('화면 크기가 바뀌어 멈췄어요. 준비되면 계속 달려요.');
+      draw();
+    }
+
+    function loadSprites() {
+      var configured = root.TINO_RUNNER_SPRITES || {};
+      var sheetSource = canvas.dataset.spriteSheet || configured.sheet;
+      if (typeof sheetSource === 'string' && sheetSource) {
+        var sheet = new root.Image();
+        sheet.onload = function () {
+          // Do not slice an unrelated or incomplete image with this sheet's coordinates.
+          if (sheet.naturalWidth === SHEET_WIDTH && sheet.naturalHeight === SHEET_HEIGHT) {
+            spriteSheet = sheet;
+            draw();
+          }
+        };
+        // Loading failure leaves the locally drawn original mascot playable.
+        sheet.src = sheetSource;
+      }
+      ['idle', 'run1', 'run2', 'jump'].forEach(function (key) {
+        var attribute = 'sprite' + key.charAt(0).toUpperCase() + key.slice(1);
+        var source = canvas.dataset[attribute] || configured[key] || canvas.dataset.sprite;
+        if (typeof source !== 'string' || !source) return;
+        var img = new root.Image();
+        img.onload = function () {
+          if (img.naturalWidth && img.naturalHeight) { images[key] = img; draw(); }
+        };
+        img.src = source;
+      });
+    }
+
+    if (startButton) startButton.addEventListener('click', function () { if (state.mode !== 'running') startGame(false); });
+    if (pauseButton) pauseButton.addEventListener('click', function () { pauseGame(); });
+    if (restartButton) restartButton.addEventListener('click', function () { startGame(true); });
+    canvas.addEventListener('pointerdown', function (event) {
+      if (event.button !== undefined && event.button !== 0) return;
+      canvas.focus({ preventScroll: true });
+      // Pointer input only jumps. Starting/resuming always requires an explicit control.
+      if (state.mode === 'running') state = jump(state);
+    });
+    canvas.addEventListener('keydown', function (event) {
+      if (event.code === 'Space' || event.code === 'ArrowUp' || event.key === ' ' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        if (!event.repeat && state.mode === 'running') state = jump(state);
+      } else if (event.key === 'Escape') {
+        if (state.mode === 'running') { event.preventDefault(); pauseGame(); }
+      }
+    });
+    game.addEventListener('focusout', function (event) {
+      if (!game.contains(event.relatedTarget)) pauseGame('게임 밖으로 이동해 멈췄어요.');
+    });
+    doc.addEventListener('visibilitychange', function () {
+      if (doc.hidden) pauseGame('다른 탭으로 이동해 멈췄어요.');
+    });
+    root.addEventListener('archive-motion-change', function (event) {
+      syncMotionPreference();
+      if (event.detail && event.detail.enabled === false) pauseGame('움직임을 꺼서 멈췄어요. 원하면 직접 다시 시작할 수 있어요.');
+    });
+    root.addEventListener('blur', function () { pauseGame('창을 벗어나 멈췄어요.'); });
+    root.addEventListener('pagehide', function () { pauseGame('페이지를 벗어나 멈췄어요.'); });
+    if (root.IntersectionObserver) {
+      var observer = new root.IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          visible = entry.isIntersecting && entry.intersectionRatio >= 0.2;
+          if (!visible) pauseGame('화면을 벗어나 자동으로 멈췄어요.');
+        });
+      }, { threshold: [0, 0.2] });
+      observer.observe(canvas);
+    }
+    if (root.ResizeObserver) new root.ResizeObserver(resize).observe(canvas);
+    else root.addEventListener('resize', resize);
+    function syncMotionPreference() {
+      var reducedNow = root.matchMedia ? root.matchMedia('(prefers-reduced-motion: reduce)').matches : !!(reduceMotion && reduceMotion.matches);
+      if (motionNote) motionNote.hidden = !reducedNow;
+      if (reducedNow) pauseGame('동작 줄이기 설정을 적용했어요. 원하면 직접 다시 시작할 수 있어요.');
+    }
+    if (reduceMotion) {
+      if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', syncMotionPreference);
+      else if (reduceMotion.addListener) reduceMotion.addListener(syncMotionPreference);
+    }
+    syncMotionPreference();
+    syncControls();
+    resize();
+    loadSprites();
+    announce('준비 완료. 게임 시작을 누르면 티노가 달려요.');
+  }
+
+  if (root.document.readyState === 'loading') root.document.addEventListener('DOMContentLoaded', mount, { once: true });
+  else mount();
+})(typeof window !== 'undefined' ? window : null);
+</script>
+</body></html>
