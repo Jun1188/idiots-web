@@ -196,6 +196,15 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
 @media print{.scroll-tino,.tino-dialog,.tino-launcher,.tino-perch,.tino-floor{display:none!important}.scroll-reveal{opacity:1;transform:none;transition:none}}
 
 .scroll-tino[data-selected=true]{z-index:2}
+
+/* A static, lazy-loaded link. The standalone game does not run on this page. */
+.campus-launcher{display:grid;grid-template-columns:minmax(0,240px) minmax(0,1fr);align-items:center;gap:24px;margin-top:32px;padding:18px;border:1px solid var(--line,#cdd0c8);background:var(--paper,#f5f4ee);color:var(--ink,#202624);text-decoration:none;min-width:0;min-height:44px}
+.campus-launcher>img{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:contain}
+.campus-launcher-copy{min-width:0}.campus-launcher-label{font:600 10px/1.6 var(--mono,monospace);letter-spacing:.08em;margin:0 0 8px;color:var(--muted,#646b65)}
+.campus-launcher-copy h3{font-size:23px;line-height:1.4;margin:0 0 8px}.campus-launcher-copy>p:not(.campus-launcher-label){font-size:13px;line-height:1.8;margin:0 0 14px}.campus-launcher-action{font-size:12px;font-weight:700;text-decoration:underline;text-underline-offset:4px}
+.campus-launcher-copy>.campus-launcher-credit{font-size:11px;line-height:1.8;margin:14px 0 0;color:var(--muted,#646b65)}
+.campus-launcher:focus-visible{outline:3px solid #214bc0;outline-offset:4px}.campus-launcher:hover .campus-launcher-action{text-decoration-thickness:2px}
+@media(max-width:600px){.campus-launcher{grid-template-columns:minmax(0,1fr);gap:16px;padding:14px}.campus-launcher-copy h3{font-size:21px}}
 </style>
 </head>
 <body><div id="scroll-world" class="scroll-world" aria-hidden="true"><i class="world-orbit"></i><i class="world-pixels"></i><span class="world-chapter">01 / PLAY</span><i class="world-progress"></i></div>
@@ -269,6 +278,10 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
     <section class="project-credits site-project-credits" aria-labelledby="credits-tino-run"><h3 id="credits-tino-run">Tino Run · 제작 안내</h3><p class="credits-note">이 웹사이트를 위해 만든 미니게임입니다. 개인별 기여자 이름은 공개 출처로 확인되지 않았습니다.</p><p class="credits-source">확인 2026-11-11</p></section>
   </div>
 </section>
+<a class="campus-launcher" id="campus-launcher" href="games/tino-campus-defense/" aria-labelledby="campus-launcher-title" aria-describedby="campus-launcher-description campus-launcher-credit">
+  <img src="games/tino-campus-defense/art/campus-battlefield.png" width="1774" height="887" loading="lazy" decoding="async" alt="해 질 무렵 가상의 공학 캠퍼스, 왼쪽 작업실과 오른쪽 기계 기지를 그린 게임 배경">
+  <div class="campus-launcher-copy"><p class="campus-launcher-label">ANOTHER SMALL PLAY</p><h3 id="campus-launcher-title">티노: 캠퍼스 라인</h3><p id="campus-launcher-description">가드로 지키고, 펄스로 지원하고, 메카로 돌파하는 작은 공방전.</p><span class="campus-launcher-action">별도 게임 페이지에서 시작 <span aria-hidden="true">↗</span></span><p class="campus-launcher-credit" id="campus-launcher-credit">기획·요청: Jun1188 · 구현·이미지 제작: AI 지원</p></div>
+</a>
 </section>
 </main>
 <footer class="foot"><div class="wrap foot-inner"><div><b>IDIOTS.</b><p>함께 공부하고, 만들고, 플레이합니다.<br>한국공학대학교 게임공학과 소모임</p><small>티노: 한국공학대학교 캐릭터를 바탕으로 만든 픽셀 표현.<br>사이트는 학교의 공식 홈페이지가 아닙니다.</small></div><nav aria-label="관련 자료"><a href="https://www.instagram.com/idiots_tuk_gamedev/">Instagram ↗</a><a href="https://github.com/Jun1188/idiots-web">웹사이트 코드 ↗</a><a href="https://www.tukorea.ac.kr/tukorea/8201/subview.do">티노 소개 ↗</a><a href="#main">맨 위로 ↑</a></nav><span class="tino-sprite tino-run" role="img" aria-label="달리는 픽셀 티노"></span></div><div class="wrap foot-bottom"><span>MADE TOGETHER, PLAYED TOGETHER.</span><span>2024 — NOW</span></div></footer>

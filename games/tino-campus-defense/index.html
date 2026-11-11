@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101f2a">
+  <title>티노: 캠퍼스 라인 · IDIOTS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="game" tabindex="-1">
+  <header class="masthead"><a href="../../#runner-game" class="back">← IDIOTS 돌아가기</a><button id="help" aria-expanded="false" aria-controls="guide">플레이 안내</button></header>
+  <section class="heading"><div><p class="eyebrow">한국공학대학교 티노와 함께하는 작은 공방전</p><h1>티노<span>: 캠퍼스 라인</span></h1></div><p class="tagline">작업실의 불을 지켜라.<br>가드를 세우고, 펄스를 모아, 한 걸음 앞으로.</p></section>
+  <section class="game-shell" aria-label="캠퍼스 라인 게임">
+    <div class="statusbar">
+      <div class="base-status"><span>우리 작업실</span><meter id="ally-hp" min="0" max="1100" value="1100">1100</meter><small id="ally-value">1100 / 1100</small></div>
+      <div class="mission"><span id="phase-label">준비</span><strong id="clock">00:00</strong></div>
+      <div class="base-status enemy"><span>기계 소굴</span><meter id="enemy-hp" min="0" max="1500" value="1500">1500</meter><small id="enemy-value">1500 / 1500</small></div>
+    </div>
+    <div class="stage-wrap">
+      <canvas id="stage" width="960" height="480" aria-label="아군과 적의 전투 장면. 아래 버튼으로 유닛을 소환합니다."></canvas>
+      <div class="stage-note" id="wave-note" aria-hidden="true">공방을 밝힐 시간</div>
+      <div id="cover" class="cover">
+        <p class="eyebrow" id="cover-kicker">전투 안내</p>
+        <h2 id="cover-title">함께, 한 걸음 앞으로.</h2>
+        <p id="cover-description">가드로 앞을 지키고 펄스로 뒤에서 지원하세요.<br>에너지를 모아 메카를 투입하고, 오른쪽 기지를 무너뜨리세요.</p>
+        <button id="start" class="primary" disabled>아트 불러오는 중…</button>
+        <p class="cover-meta" id="cover-meta">보통 3~5분 · 직접 시작 · 저장 / 과금 없음</p>
+      </div>
+    </div>
+    <div class="command-deck">
+      <div class="resource-line"><div><span class="energy-symbol" aria-hidden="true">ϟ</span> <strong id="energy">150</strong><span id="capacity"> / 400</span><small id="income">+9 / 초</small></div><span id="population">팀 0 / 12</span><button id="pause" disabled>일시정지 <kbd>P</kbd></button></div>
+      <div class="unit-buttons">
+        <button data-unit="melee" disabled><img alt="" data-portrait="melee"><span class="unit-copy"><strong>가드 티노 <kbd>1</kbd></strong><span>전열 보호 · 50</span><small class="role-count">전장 0</small><small class="availability">시작 후 소환</small></span></button>
+        <button data-unit="ranged" disabled><img alt="" data-portrait="ranged"><span class="unit-copy"><strong>펄스 티노 <kbd>2</kbd></strong><span>원거리 지원 · 100</span><small class="role-count">전장 0</small><small class="availability">시작 후 소환</small></span></button>
+        <button data-unit="tank" disabled><img alt="" data-portrait="tank"><span class="unit-copy"><strong>메카 티노 <kbd>3</kbd></strong><span>범위 돌파 · 180</span><small class="role-count">전장 0</small><small class="availability">시작 후 소환</small></span></button>
+      </div>
+      <div class="utility-buttons"><button id="upgrade" disabled><strong>공학 업그레이드 <kbd>U</kbd></strong><span>160 · 수입 +3 / 초</span></button><button id="support" disabled><strong>동아리 펄스 <kbd>E</kbd></strong><span>우리 진영 55% 안의 적을 밀어내기</span></button></div>
+      <p id="battle-summary" class="battle-summary">오른쪽 기계를 멈추세요. 소환과 업그레이드에 같은 에너지를 사용합니다.</p>
+      <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+  <section id="guide" class="guide" hidden><div><h2>세 역할, 하나의 전선</h2><button id="close-help" aria-label="플레이 안내 닫기">닫기 ×</button></div><ol><li><strong>가드가 먼저.</strong> 튼튼한 가드가 시간을 벌면, 펄스가 뒤에서 공격합니다.</li><li><strong>모을까, 투입할까?</strong> 160 에너지로 공학을 개선하면 이후 수입이 늘어납니다. 전선이 위험하면 지원이 먼저예요.</li><li><strong>메카로 돌파.</strong> 느리지만 모여 있는 적에게 강합니다. 동아리 펄스는 우리 쪽 55% 안의 적에게만 닿아요.</li></ol><p>1 / 2 / 3 소환 · U 업그레이드 · E 지원 · P 또는 Space 일시정지 · Escape 안내 닫기 / 일시정지. 이 게임 영역에서만 단축키가 작동합니다.</p><p>탭을 벗어나면 자동으로 멈춥니다. 모션 감소 설정을 따릅니다. 전투는 시각 정보를 사용하며 화면 낭독기에는 주요 상황 요약을 제공합니다.</p></section>
+  <footer>기획·요청: Jun1188 · 구현·이미지 제작: AI 지원<br>티노에서 영감을 받은 비공식 팬 게임. 실제 학교 사건을 묘사하지 않습니다.<br>외부 전송·광고·계정·자동 저장 없음.</footer>
+  <noscript><style>.cover{display:none}.notice{position:fixed;top:16px;left:16px;right:16px;z-index:10;border:2px solid #f5cf75}</style><p class="notice" role="alert">이 게임은 JavaScript가 필요합니다. <a href="../../">IDIOTS 사이트로 돌아가기</a></p></noscript>
+</main>
+<script type="module" src="app.mjs"></script>
+</body></html>

@@ -1,0 +1,630 @@
+{
+  "version": 1,
+  "background": {
+    "file": "campus-battlefield.png",
+    "width": 1774,
+    "height": 887,
+    "groundY": 0.8,
+    "basesIncluded": true,
+    "friendlyBaseX": 0.07,
+    "enemyBaseX": 0.93
+  },
+  "sheets": {
+    "tino-units.png": {
+      "width": 1536,
+      "height": 1024,
+      "columns": 4,
+      "rows": 3,
+      "facing": "right",
+      "alpha": true
+    },
+    "tino-actions.png": {
+      "width": 1536,
+      "height": 1024,
+      "columns": 4,
+      "rows": 3,
+      "facing": "right",
+      "alpha": true
+    },
+    "scrap-enemies.png": {
+      "width": 1254,
+      "height": 1254,
+      "columns": 4,
+      "rows": 4,
+      "facing": "left",
+      "alpha": true
+    }
+  },
+  "units": {
+    "mecha": {
+      "frames": {
+        "idle": {
+          "file": "tino-units.png",
+          "rect": [
+            0,
+            0,
+            384,
+            341
+          ],
+          "anchor": [
+            192,
+            324
+          ]
+        },
+        "walkA": {
+          "file": "tino-units.png",
+          "rect": [
+            384,
+            0,
+            384,
+            341
+          ],
+          "anchor": [
+            192,
+            324
+          ]
+        },
+        "attack": {
+          "file": "tino-units.png",
+          "rect": [
+            768,
+            0,
+            384,
+            341
+          ],
+          "anchor": [
+            192,
+            324
+          ]
+        },
+        "hurt": {
+          "file": "tino-units.png",
+          "rect": [
+            1152,
+            0,
+            384,
+            341
+          ],
+          "anchor": [
+            192,
+            324
+          ]
+        },
+        "walkB": {
+          "file": "tino-actions.png",
+          "rect": [
+            0,
+            0,
+            384,
+            341
+          ],
+          "anchor": [
+            192,
+            324
+          ]
+        },
+        "anticipation": {
+          "file": "tino-actions.png",
+          "rect": [
+            384,
+            0,
+            384,
+            341
+          ],
+          "anchor": [
+            192,
+            324
+          ]
+        },
+        "impact": {
+          "file": "tino-actions.png",
+          "rect": [
+            768,
+            0,
+            384,
+            341
+          ],
+          "anchor": [
+            192,
+            324
+          ]
+        },
+        "victory": {
+          "file": "tino-actions.png",
+          "rect": [
+            1152,
+            0,
+            384,
+            341
+          ],
+          "anchor": [
+            192,
+            324
+          ]
+        }
+      }
+    },
+    "guard": {
+      "frames": {
+        "idle": {
+          "file": "tino-units.png",
+          "rect": [
+            0,
+            341,
+            384,
+            342
+          ],
+          "anchor": [
+            192,
+            314
+          ]
+        },
+        "walkA": {
+          "file": "tino-units.png",
+          "rect": [
+            384,
+            341,
+            384,
+            342
+          ],
+          "anchor": [
+            192,
+            314
+          ]
+        },
+        "attack": {
+          "file": "tino-units.png",
+          "rect": [
+            768,
+            341,
+            384,
+            342
+          ],
+          "anchor": [
+            192,
+            314
+          ]
+        },
+        "hurt": {
+          "file": "tino-units.png",
+          "rect": [
+            1152,
+            341,
+            384,
+            342
+          ],
+          "anchor": [
+            192,
+            314
+          ]
+        },
+        "walkB": {
+          "file": "tino-actions.png",
+          "rect": [
+            0,
+            341,
+            384,
+            342
+          ],
+          "anchor": [
+            192,
+            314
+          ]
+        },
+        "anticipation": {
+          "file": "tino-actions.png",
+          "rect": [
+            384,
+            341,
+            384,
+            342
+          ],
+          "anchor": [
+            192,
+            314
+          ]
+        },
+        "impact": {
+          "file": "tino-actions.png",
+          "rect": [
+            768,
+            341,
+            384,
+            342
+          ],
+          "anchor": [
+            192,
+            314
+          ]
+        },
+        "victory": {
+          "file": "tino-actions.png",
+          "rect": [
+            1152,
+            341,
+            384,
+            342
+          ],
+          "anchor": [
+            192,
+            314
+          ]
+        }
+      }
+    },
+    "pulse": {
+      "frames": {
+        "idle": {
+          "file": "tino-units.png",
+          "rect": [
+            0,
+            683,
+            384,
+            341
+          ],
+          "anchor": [
+            192,
+            307
+          ]
+        },
+        "walkA": {
+          "file": "tino-units.png",
+          "rect": [
+            384,
+            683,
+            384,
+            341
+          ],
+          "anchor": [
+            192,
+            307
+          ]
+        },
+        "attack": {
+          "file": "tino-units.png",
+          "rect": [
+            768,
+            683,
+            384,
+            341
+          ],
+          "anchor": [
+            192,
+            307
+          ]
+        },
+        "hurt": {
+          "file": "tino-units.png",
+          "rect": [
+            1172,
+            683,
+            364,
+            341
+          ],
+          "anchor": [
+            172,
+            307
+          ]
+        },
+        "walkB": {
+          "file": "tino-actions.png",
+          "rect": [
+            0,
+            683,
+            384,
+            341
+          ],
+          "anchor": [
+            192,
+            307
+          ]
+        },
+        "anticipation": {
+          "file": "tino-actions.png",
+          "rect": [
+            384,
+            683,
+            384,
+            341
+          ],
+          "anchor": [
+            192,
+            307
+          ]
+        },
+        "impact": {
+          "file": "tino-actions.png",
+          "rect": [
+            768,
+            683,
+            384,
+            341
+          ],
+          "anchor": [
+            192,
+            307
+          ]
+        },
+        "victory": {
+          "file": "tino-actions.png",
+          "rect": [
+            1172,
+            683,
+            364,
+            341
+          ],
+          "anchor": [
+            172,
+            307
+          ]
+        }
+      }
+    },
+    "runner": {
+      "frames": {
+        "idle": {
+          "file": "scrap-enemies.png",
+          "rect": [
+            0,
+            0,
+            314,
+            314
+          ],
+          "anchor": [
+            157,
+            287
+          ]
+        },
+        "walk": {
+          "file": "scrap-enemies.png",
+          "rect": [
+            314,
+            0,
+            313,
+            314
+          ],
+          "anchor": [
+            156,
+            287
+          ]
+        },
+        "attack": {
+          "file": "scrap-enemies.png",
+          "rect": [
+            627,
+            0,
+            313,
+            314
+          ],
+          "anchor": [
+            157,
+            287
+          ]
+        },
+        "hurt": {
+          "file": "scrap-enemies.png",
+          "rect": [
+            940,
+            0,
+            314,
+            314
+          ],
+          "anchor": [
+            157,
+            287
+          ]
+        }
+      }
+    },
+    "hauler": {
+      "frames": {
+        "idle": {
+          "file": "scrap-enemies.png",
+          "rect": [
+            0,
+            314,
+            314,
+            313
+          ],
+          "anchor": [
+            157,
+            277
+          ]
+        },
+        "walk": {
+          "file": "scrap-enemies.png",
+          "rect": [
+            314,
+            314,
+            313,
+            313
+          ],
+          "anchor": [
+            156,
+            277
+          ]
+        },
+        "attack": {
+          "file": "scrap-enemies.png",
+          "rect": [
+            627,
+            314,
+            313,
+            313
+          ],
+          "anchor": [
+            157,
+            277
+          ]
+        },
+        "hurt": {
+          "file": "scrap-enemies.png",
+          "rect": [
+            940,
+            314,
+            314,
+            313
+          ],
+          "anchor": [
+            157,
+            277
+          ]
+        }
+      }
+    },
+    "drone": {
+      "frames": {
+        "idle": {
+          "file": "scrap-enemies.png",
+          "rect": [
+            0,
+            627,
+            314,
+            313
+          ],
+          "anchor": [
+            157,
+            240
+          ]
+        },
+        "walk": {
+          "file": "scrap-enemies.png",
+          "rect": [
+            314,
+            627,
+            313,
+            313
+          ],
+          "anchor": [
+            156,
+            240
+          ]
+        },
+        "attack": {
+          "file": "scrap-enemies.png",
+          "rect": [
+            627,
+            627,
+            313,
+            313
+          ],
+          "anchor": [
+            157,
+            240
+          ]
+        },
+        "hurt": {
+          "file": "scrap-enemies.png",
+          "rect": [
+            940,
+            627,
+            314,
+            313
+          ],
+          "anchor": [
+            157,
+            240
+          ]
+        }
+      }
+    },
+    "boss": {
+      "frames": {
+        "idle": {
+          "file": "scrap-enemies.png",
+          "rect": [
+            0,
+            940,
+            314,
+            314
+          ],
+          "anchor": [
+            157,
+            272
+          ]
+        },
+        "walk": {
+          "file": "scrap-enemies.png",
+          "rect": [
+            314,
+            940,
+            313,
+            314
+          ],
+          "anchor": [
+            156,
+            272
+          ]
+        },
+        "attack": {
+          "file": "scrap-enemies.png",
+          "rect": [
+            627,
+            940,
+            313,
+            314
+          ],
+          "anchor": [
+            157,
+            272
+          ]
+        },
+        "hurt": {
+          "file": "scrap-enemies.png",
+          "rect": [
+            940,
+            940,
+            314,
+            314
+          ],
+          "anchor": [
+            157,
+            272
+          ]
+        }
+      }
+    }
+  },
+  "notes": [
+    "Use imageSmoothingEnabled=false. No raster edits were applied.",
+    "Sprite frames use full row height with stable body/foot anchors, not independent tight-fit scaling.",
+    "Attack beam ornaments touch the third-column boundary; crop guards on following ranged cell omit that neighboring effect.",
+    "Background depicts a fictional engineering campus, not an exact architectural rendering of TU Korea."
+  ],
+  "effects": {
+    "allyPulse": {
+      "file": "tino-units.png",
+      "rect": [
+        1122,
+        848,
+        42,
+        46
+      ],
+      "anchor": [
+        21,
+        23
+      ],
+      "displaySize": [
+        18,
+        20
+      ]
+    },
+    "enemyPulse": {
+      "file": "scrap-enemies.png",
+      "rect": [
+        636,
+        779,
+        58,
+        58
+      ],
+      "anchor": [
+        29,
+        29
+      ],
+      "displaySize": [
+        20,
+        20
+      ]
+    }
+  }
+}
