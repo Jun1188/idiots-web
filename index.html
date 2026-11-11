@@ -42,6 +42,19 @@
 @media(max-width:640px){.runner-section{padding:42px 0 50px}.runner-heading{display:block}.runner-badge{display:inline-block;margin-top:16px}.runner-toolbar{padding:11px 12px;align-items:start;gap:10px}.runner-machine-title{font-size:9px;margin-top:3px}.runner-scores{gap:10px}.runner-score-item{display:block;text-align:right}.runner-score-label{display:block;font-size:8px}.runner-score-value{font-size:14px}.runner-canvas{aspect-ratio:2/1}.runner-overlay{top:29%;padding:8px 13px}.runner-overlay-copy{font-size:10px;line-height:1.5;max-width:230px}.runner-bottom{padding:14px 12px}.runner-controls{display:grid;grid-template-columns:1fr 1fr}.runner-button-primary{grid-column:1/-1}.runner-button{padding:9px 10px}.runner-machine{box-shadow:4px 4px 0 var(--runner-ink)}}
 @media(prefers-reduced-motion:reduce){.runner-section *{scroll-behavior:auto}}
 
+/* Original small games; no animated decoration or automatic playback. */
+.tino-arcade{min-width:0}.arcade-navigation{display:flex;align-items:center;justify-content:space-between;gap:12px;border-block:1px solid var(--line,#ccd0c8);padding:12px 0}.arcade-navigation[hidden],[data-arcade-panel][hidden]{display:none!important}
+.arcade-navigation button,.arcade-control-area button,.arcade-control-area select{min-height:44px;border:1px solid var(--ink,#202624);background:var(--paper,#f5f4ee);color:var(--ink,#202624);font:600 13px/1.5 var(--sans,sans-serif);padding:9px 13px;cursor:pointer}
+.arcade-navigation p{font:700 13px/1.6 var(--mono,monospace);text-align:center;margin:0}.arcade-navigation-help,.arcade-note{font-size:12px;line-height:1.8;color:var(--muted,#646b65)}
+.arcade-panel{padding:24px 0;min-width:0}.arcade-heading h3{font-size:32px;line-height:1.3;margin:8px 0}.arcade-heading>p:last-child{font-size:14px;line-height:1.8;color:var(--muted,#646b65);max-width:680px}
+.arcade-machine{border:2px solid #20344b;background:#f5f3e9;color:#20344b;min-width:0}.arcade-score{font:700 13px/1.6 var(--mono,monospace);padding:12px 16px;margin:0;background:#bfe0d0;border-bottom:1px solid #20344b}
+.arcade-canvas{display:block;width:100%;height:auto;aspect-ratio:2/1;background:#f5f3e9;touch-action:pan-y;cursor:crosshair}.arcade-machine[data-game-state=playing] #angry-canvas{touch-action:none}
+.arcade-control-area{padding:16px}.arcade-controls,.arcade-aim-controls,.arcade-build-controls{display:flex;align-items:end;flex-wrap:wrap;gap:10px;margin-bottom:14px}.arcade-control-area label{display:grid;gap:5px;font-size:12px;min-width:140px;flex:1}.arcade-control-area input[type=range]{min-height:44px;width:100%;accent-color:#214bc0}.arcade-control-area output{display:inline;font:700 13px var(--mono,monospace)}
+.arcade-control-area select{max-width:100%;width:100%;min-width:0}.arcade-control-area button:disabled{opacity:.5;cursor:not-allowed}.arcade-control-area button:not(:disabled):hover,.arcade-navigation button:hover{background:#dfe9df}.arcade-control-area button:focus-visible,.arcade-navigation button:focus-visible,.arcade-canvas:focus-visible,.arcade-control-area select:focus-visible,.arcade-control-area input:focus-visible{outline:3px solid #214bc0;outline-offset:3px}
+.arcade-help,.arcade-status{font-size:12px;line-height:1.85;margin:10px 0 0}.arcade-status{font-weight:700;min-height:24px}.arcade-panel noscript p{font-size:13px}
+@media(max-width:600px){.arcade-navigation{gap:7px}.arcade-navigation button{font-size:11px;padding:9px 8px}.arcade-navigation p{font-size:11px}.arcade-heading h3{font-size:27px}.arcade-control-area{padding:12px}.arcade-score{font-size:11px;padding:10px}.arcade-controls button{flex:1;min-width:95px}.arcade-aim-controls label{min-width:100px}.arcade-build-controls label{flex-basis:100%}.arcade-note,.arcade-help{font-size:11px}}
+@media print{.arcade-navigation,.arcade-control-area{display:none}.arcade-panel{break-inside:avoid}}
+
 :root{color-scheme:light;--paper:#f5f4ee;--white:#fffef9;--ink:#202624;--muted:#646b65;--line:#cdcec4;--blue:#214bc0;--orange:#e48647;--mint:#bfe0d0;--mono:"Courier New",monospace;--sans:"Noto Sans CJK KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:28px}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.75 var(--sans);word-break:keep-all}a{color:inherit;text-underline-offset:4px}button,input,select{font:inherit;color:inherit}button,a,select,input{-webkit-tap-highlight-color:transparent}button:not(:disabled),select{cursor:pointer}button:disabled{cursor:default}[hidden]{display:none!important}:focus-visible{outline:3px solid var(--blue);outline-offset:5px}img{max-width:100%;height:auto}.wrap{width:min(1200px,calc(100% - 96px));margin:auto}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.skip{position:absolute;top:-100px;left:20px;z-index:50;background:var(--ink);color:#fff;padding:12px 20px}.skip:focus{top:10px}
 .mast{border-bottom:1px solid var(--line)}.mast-inner{display:flex;align-items:center;gap:30px;min-height:100px}.wordmark{display:flex;gap:12px;align-items:center;text-decoration:none;font:900 27px/.9 var(--mono);letter-spacing:-1.5px}.wordmark small{display:block;font:8px var(--mono);letter-spacing:1px;margin-top:10px}.brand-card{margin:0;width:42px;height:43px;overflow:hidden}.brand-card img{display:block;width:42px;height:43px;object-fit:cover}.brand-card figcaption{display:none}.mast nav{display:flex;gap:28px;margin-left:auto;align-items:center;font-size:12px;font-weight:700}.mast nav a{text-decoration:none}.mast nav a:hover{color:var(--blue)}.nav-play{background:var(--ink);color:var(--white);padding:7px 13px;font:700 11px var(--mono)}.motion-toggle{font-size:10px;padding:7px 0;border:0;border-bottom:1px solid var(--muted);background:none;color:var(--muted);white-space:nowrap}
@@ -94,6 +107,40 @@ html[data-motion=off] .scroll-world,.scroll-world[data-static=true]{--scene-colo
 .scroll-world[data-static=true] .world-progress{display:none}
 @media(prefers-reduced-motion:reduce){.scroll-world{--scene-color:rgb(232,241,248)!important;--scene-soft:rgb(234.6,241.6,246)!important}.world-progress{display:none}}
 
+/* The production team is primary; commit accounts remain a native disclosure. */
+.production-creator-list .creator-name{font-size:13px;font-weight:700}.source-credit-details{margin-top:12px}.source-credit-details>summary{min-height:44px;padding:10px 0;font-size:12px;line-height:2;cursor:pointer}.source-credit-details>summary:focus-visible{outline:3px solid var(--blue);outline-offset:3px}.source-credit-details[open]>summary{margin-bottom:8px}
+
+/* One stable Tino frame contains every reviewed photograph. Without JS every
+   slide remains readable; only the navigation controls start hidden. */
+.update-card.field-notes{display:block;min-width:0}
+.field-note-slide{display:grid;grid-template-columns:1.5fr 1fr;gap:55px;align-items:center;min-width:0}
+.field-note-slide+.field-note-slide{margin-top:40px}
+.field-notes[data-enhanced=true] .field-note-slide{margin-top:0}
+.field-notes[data-enhanced=true] .field-notes-slides{min-height:var(--field-notes-height,0px);touch-action:pan-y pinch-zoom}
+.field-note-media{display:block;position:relative;width:100%;aspect-ratio:3/2;max-height:390px;background:#d9ded3;overflow:hidden}
+.field-notes .field-note-media img{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center}
+.field-note-media[data-load-state=loading] img{opacity:0}
+.field-note-open{position:absolute;bottom:15px;right:15px;padding:7px 10px;color:var(--paper);background:#182821d9;font-size:10px;line-height:1.5}
+.field-note-loading,.field-note-error{position:absolute;inset:0;display:grid;place-content:center;padding:30px;text-align:center;font-size:13px;line-height:1.8;color:#405044}
+.field-note-copy{min-width:0}
+.field-note-copy h3,.field-note-copy p{overflow-wrap:anywhere}
+.field-notes .field-notes-controls{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:25px;padding-top:18px;border-top:1px solid #bec7b9}
+.field-notes .field-notes-help{max-width:470px;margin:0;font-size:11px;line-height:1.7;color:#526755}
+.field-notes-transport{display:flex;align-items:center;gap:17px;flex-shrink:0}
+.field-notes-transport button{min-height:44px;padding:9px 14px;border:1px solid #7d8d7d;background:transparent;color:#24382a;font:600 12px/1.5 var(--sans);white-space:nowrap}
+.field-notes-transport button:not(:disabled):hover{background:#d7ded1}
+.field-notes-transport button:disabled{opacity:.45;cursor:default}
+#field-notes-count{min-width:55px;font:12px/1.5 var(--mono);text-align:center;font-variant-numeric:tabular-nums;color:#405044}
+.field-notes-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;margin:0;padding:0}
+/* A synchronous measurement reserves the tallest caption without a visible
+   resize during navigation. Inactive slides stay inert and aria-hidden. */
+.field-notes[data-measuring] .field-notes-slides{display:grid;min-height:0;align-items:start}
+.field-notes[data-measuring] .field-note-slide{display:grid!important;grid-area:1/1;visibility:hidden}
+@media(max-width:1100px){.field-note-slide{gap:35px}}
+@media(max-width:800px){.field-note-slide{gap:25px;grid-template-columns:1.3fr 1fr}.field-note-media{max-height:330px}.field-notes .field-notes-controls{align-items:start}.field-notes-transport{gap:10px}}
+@media(max-width:600px){.field-note-slide{grid-template-columns:1fr;gap:25px}.field-note-media{max-height:none}.field-notes .field-notes-controls{flex-direction:column;align-items:stretch;gap:12px;margin-top:22px}.field-notes-transport{justify-content:space-between}.field-notes-transport button{min-width:105px}.field-note-open{bottom:10px;right:10px;font-size:10px}.field-notes .field-notes-help{font-size:11px}.field-note-loading,.field-note-error{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.field-notes *{animation:none!important;transition:none!important}}
+
 /* Discord is a distinct source, not a second name for the photo archive. */
 .discord-section .section-heading .tino-sprite{width:80px;height:80px;flex:0 0 80px}.discord-intro{color:var(--muted);margin:0 0 24px;font-size:14px}.discord-status{display:flex;align-items:baseline;gap:24px;border-block:1px solid var(--line);padding:18px 0;font-size:12px}.discord-status strong{white-space:nowrap;font-weight:700}.discord-status p{margin:0;color:var(--muted);overflow-wrap:anywhere}.discord-tabs{display:flex;gap:28px;flex-wrap:wrap;margin:28px 0 20px}.discord-tabs a{font-size:13px;text-decoration:none;padding:8px 0;border-bottom:2px solid transparent}.discord-tabs a[aria-current]{border-bottom-color:var(--blue);color:var(--blue);font-weight:700}.discord-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}.discord-category{padding:24px 0;border-top:3px solid var(--ink);min-width:0}.discord-category[data-discord-category=news]{border-top-color:var(--orange)}.discord-category[data-discord-category=info]{border-top-color:var(--blue)}.discord-category-heading{display:flex;align-items:baseline;justify-content:space-between;gap:20px}.discord-category h3{font:700 24px/1.4 var(--mono);margin:0}.discord-number{font:700 36px/1 var(--mono)}.discord-purpose{font-size:14px;margin:7px 0}.discord-last,.discord-scope{font-size:12px;color:var(--muted)}.discord-empty{font-size:13px;color:var(--muted);padding:24px 0 10px}.discord-items{list-style:none;padding:0;margin:25px 0 0}.discord-items li{border-top:1px solid var(--line);padding:20px 0;overflow-wrap:anywhere}.discord-items time{font:11px var(--mono);color:var(--muted)}.discord-items h4{font-size:17px;margin:7px 0}.discord-items p{font-size:13px;margin:0}.discord-scope{margin:20px 0 0;padding-top:20px;border-top:1px solid var(--line)}
 @media(max-width:800px){.mast-inner{gap:16px}.mast nav{gap:16px}.discord-columns{gap:25px}.discord-status{display:block}.discord-status p{margin-top:8px}}
@@ -116,7 +163,7 @@ html[data-motion=off] .scroll-world,.scroll-world[data-static=true]{--scene-colo
 .hero.tino-frame,#games.tino-frame,#updates.tino-frame,#archive.tino-frame,#awesome.tino-frame,#club.tino-frame,.arcade-section.tino-frame{padding-top:70px;padding-bottom:70px}
 #story-panel.tino-frame,.game-card.tino-frame,.update-card.tino-frame,.chart-card.tino-frame,.records.tino-frame,.discord-status.tino-frame,.discord-category.tino-frame,.club-description.tino-frame,.foot-inner.tino-frame,.project-credits.tino-frame{padding-top:64px;padding-bottom:64px}
 #dashboard.tino-frame{padding-top:64px;padding-bottom:64px}
-#runner-game.tino-frame{padding-top:60px;padding-bottom:60px}
+#runner-game.tino-frame,#angry-game.tino-frame,#defense-game.tino-frame{padding-top:60px;padding-bottom:60px}
 .tino-floor{position:relative;box-sizing:border-box;width:100%;max-width:none;height:60px;margin:0}
 /* The final floor catches every release column, including page margins. */
 .tino-floor .tino-perch:after{left:0;right:0}
@@ -171,7 +218,7 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
 <main id="main">
 <section class="hero wrap" aria-labelledby="hero-title">
 <div class="hero-copy"><p class="eyebrow"><span class="tiny-square"></span> IDIOTS · 한국공학대학교 · EST. 2024</p><h1 id="hero-title">IDIOTS의<br><em>플레이 로그.</em></h1><p class="hero-description">공부한 것을 게임으로 만들고,<br>함께 플레이하며 다음 아이디어를 찾습니다.</p><div class="hero-links"><a href="#games">우리가 만든 게임 <span>↗</span></a><a href="#club">어떤 모임인가요? <span>↓</span></a></div><div class="field-glimpse"><a class="glimpse-image" href="#updates"><img src="media/gamejam-20261106.jpg" alt="AI_DIOTS 안내판 옆 노트북에 실행된 모두의 카페" fetchpriority="high"></a><div><span class="tino-sprite tino-wave" role="img" aria-label="손을 흔드는 픽셀 티노"></span><p><b>지금, 만드는 중.</b><span>AI_DIOTS · 모두의 카페<br>게임잼 현장에서</span></p></div></div></div>
-<section class="story-panel" id="story-panel" aria-labelledby="story-heading"><div class="story-heading"><p class="eyebrow">ACTIVITY / IN MOTION</p><span class="story-live">기록으로 보는 우리</span></div><h2 id="story-heading">한 칸씩, 우리의 한 해.</h2><p class="story-intro">사진 기록이 시간순으로 쌓이는 모습입니다.<br>재생하거나 아래 타임라인을 직접 움직여 보세요.</p><div class="story-totals"><div><strong id="story-photo-count">190</strong><span>사진 기록</span></div><span class="total-slash">/</span><div><strong id="story-activity-count">98</strong><span>활동 묶음</span></div><span class="tino-sprite tino-think" role="img" aria-label="기록을 살펴보는 픽셀 티노"></span></div><div class="story-pixels" id="story-pixels" aria-hidden="true"><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span></div><div class="story-key"><span><i class="key-news"></i>행사·교류</span><span><i class="key-info"></i>스터디·개발</span><span>1칸 = 사진 기록 1개</span></div><div class="story-transport"><button id="story-play" type="button">▶ 시간순 재생</button><span id="story-date">전체 기록</span></div><label class="sr-only" for="story-range">활동 기록의 시점 선택</label><input id="story-range" type="range" min="0" max="9" value="9" step="1"><p class="story-caption" id="story-caption" aria-live="polite">날짜 미확인 기록을 포함한 전체 활동입니다.</p><noscript><style>.story-transport button,#story-range{display:none}</style><p class="story-caption">시간순 재생은 JavaScript를 켜면 사용할 수 있습니다. 전체 기록은 아래에서 읽을 수 있습니다.</p></noscript></section>
+<section class="story-panel" id="story-panel" aria-labelledby="story-heading"><div class="story-heading"><p class="eyebrow">ACTIVITY / IN MOTION</p><span class="story-live">기록으로 보는 우리</span></div><h2 id="story-heading">한 칸씩, 우리의 한 해.</h2><p class="story-intro">사진 기록이 처음부터 시간순으로 쌓입니다.<br>잠시 멈추거나 아래 타임라인을 직접 움직여 보세요.</p><div class="story-totals"><div><strong id="story-photo-count">190</strong><span>사진 기록</span></div><span class="total-slash">/</span><div><strong id="story-activity-count">98</strong><span>활동 묶음</span></div><span class="tino-sprite tino-think" role="img" aria-label="기록을 살펴보는 픽셀 티노"></span></div><div class="story-pixels" id="story-pixels" aria-hidden="true"><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="info" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="false"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="news" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span><span class="pixel-dot is-active" data-category="info" data-undated="true"></span></div><div class="story-key"><span><i class="key-news"></i>행사·교류</span><span><i class="key-info"></i>스터디·개발</span><span>1칸 = 사진 기록 1개</span></div><div class="story-transport"><button id="story-play" type="button">▶ 시간순 재생</button><span id="story-date">전체 기록</span></div><label class="sr-only" for="story-range">활동 기록의 시점 선택</label><input id="story-range" type="range" min="0" max="9" value="9" step="1"><p class="story-caption" id="story-caption" aria-live="polite">날짜 미확인 기록을 포함한 전체 활동입니다.</p><noscript><style>.story-transport button,#story-range{display:none}</style><p class="story-caption">시간순 재생은 JavaScript를 켜면 사용할 수 있습니다. 전체 기록은 아래에서 읽을 수 있습니다.</p></noscript></section>
 </section>
 <div class="wrap facts" id="dashboard" aria-label="활동 요약"><a class="stat-card" href="#games"><strong>2</strong><span>만든 게임</span></a><a class="stat-card" href="#activity-all"><strong>98</strong><span>활동 이력</span></a><a class="stat-card" href="#awesome-news"><strong>—</strong><span>Discord 뉴스 메시지</span></a><a class="stat-card" href="#awesome-info"><strong>—</strong><span>Discord 자료 메시지</span></a><p>최근 기록 2026-11-09<br>사진 수는 공개 사진 수와 다릅니다.</p></div>
 <section class="section wrap games-section" id="games" aria-labelledby="games-title"><div class="section-heading"><div><p class="eyebrow">01 / MADE BY US</p><h2 id="games-title">플레이할 수 있는 결과물.</h2></div><p class="section-note">아이디어를 빌드까지.<br>지금은 Windows에서 만나요.</p></div><div class="games"><article class="game-card">
@@ -181,9 +228,9 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
 <br>소스 확인 2026-11-11 · 다운로드본의 빌드 커밋 미확인</div></div></article><article class="game-card">
 <header class="game-cover cafe"><h3>모두의 카페</h3><span>Windows / ZIP · 358 MiB</span></header>
 <figure class="game-photo"><img src="media/cafe-mainmenu.png" alt="모두의 카페 게임 시작 화면" loading="lazy"><figcaption>AI_DIOTS · 모두의 카페 실제 타이틀 아트</figcaption></figure><div class="game-details"><p>전시관의 수정본 ZIP을 모두 풀고 ModuCafe_Build 폴더의 Cafe.exe를 실행합니다.</p><a class="download" href="https://drive.google.com/file/d/1JLrFBByq6o6O8hliYxYYqJAMDFzBPbnm/view?usp=drivesdk">Drive에서 받기 <span aria-hidden="true">↗</span></a>
-<p class="build-note">현재 Windows 다운로드 제공 · 브라우저 플레이 빌드 준비 전</p><section class="project-credits" aria-labelledby="credits-ai-diots"><h4 id="credits-ai-diots">공개 소스 기여자</h4><ul class="contributor-list"><li><a class="contributor-profile" href="https://github.com/Jun1188">@Jun1188</a> <a class="credit-evidence" href="https://github.com/Jun1188/ai-hack-gameJam/commit/4078091f9d08a3e026d8929ac27ec7e28c24f323" aria-label="Jun1188의 공개 기여 커밋 확인">기여 근거 ↗</a></li><li><a class="contributor-profile" href="https://github.com/manju0130">@manju0130</a> <a class="credit-evidence" href="https://github.com/Jun1188/ai-hack-gameJam/commit/a7c99d69322a752760f64e03f9eeaddf9265e903" aria-label="manju0130의 공개 기여 커밋 확인">기여 근거 ↗</a></li></ul><p class="credits-note">공개 커밋 작성자 기준 · 다운로드본의 전체 제작진 크레딧은 미확인</p><p class="credits-source"><a href="https://github.com/Jun1188/ai-hack-gameJam/commits/4078091f9d08a3e026d8929ac27ec7e28c24f323">확인한 기여 기록 4078091f</a> · 확인 2026-11-11</p></section><div class="revision source-hook" data-source-repository="Jun1188/ai-hack-gameJam"><p><b>연결된 GitHub 프로젝트</b><br><a href="https://github.com/Jun1188/ai-hack-gameJam">Jun1188/ai-hack-gameJam</a> · main</p><a href="https://github.com/Jun1188/ai-hack-gameJam/tree/4078091f9d08a3e026d8929ac27ec7e28c24f323">확인한 소스 4078091f</a> · <a href="https://github.com/Jun1188/ai-hack-gameJam/commits/main">변경 이력 ↗</a>
+<p class="build-note">현재 Windows 다운로드 제공 · 브라우저 플레이 빌드 준비 전</p><section class="project-credits" aria-labelledby="credits-ai-diots"><h4 id="credits-ai-diots">게임 제작진</h4><ul class="contributor-list production-creator-list"><li><span class="creator-name">김다니엘</span></li><li><span class="creator-name">김선웅</span></li><li><span class="creator-name">변준영</span></li><li><span class="creator-name">하준호</span></li></ul><p class="credits-note">공개 게임 소스의 크레딧에 적힌 제작진입니다.</p><p class="credits-source"><a href="https://github.com/Jun1188/ai-hack-gameJam/blob/4078091f9d08a3e026d8929ac27ec7e28c24f323/ai-hack-test/Assets/MainMenu/MainMenuController.cs#L119-L121">제작진 명단 근거</a> · <a href="https://github.com/Jun1188/ai-hack-gameJam/blob/4078091f9d08a3e026d8929ac27ec7e28c24f323/ai-hack-test/Assets/MainMenu/MainMenuController.cs#L199-L201">게임 크레딧 표시 코드</a> · 확인 2026-11-11</p><details class="source-credit-details"><summary>공개 소스 커밋 작성자</summary><p class="credits-note">게임 제작진과 중복될 수 있는 커밋 작성 계정입니다. 이름과 계정을 임의로 연결하지 않았습니다.</p><ul class="contributor-list"><li><a class="contributor-profile" href="https://github.com/Jun1188">@Jun1188</a> <a class="credit-evidence" href="https://github.com/Jun1188/ai-hack-gameJam/commit/4078091f9d08a3e026d8929ac27ec7e28c24f323" aria-label="Jun1188의 공개 기여 커밋 확인">기여 근거 ↗</a></li><li><a class="contributor-profile" href="https://github.com/manju0130">@manju0130</a> <a class="credit-evidence" href="https://github.com/Jun1188/ai-hack-gameJam/commit/a7c99d69322a752760f64e03f9eeaddf9265e903" aria-label="manju0130의 공개 기여 커밋 확인">기여 근거 ↗</a></li></ul><p class="credits-source"><a href="https://github.com/Jun1188/ai-hack-gameJam/commits/4078091f9d08a3e026d8929ac27ec7e28c24f323">확인한 기여 기록 4078091f</a> · 확인 2026-11-11</p></details></section><div class="revision source-hook" data-source-repository="Jun1188/ai-hack-gameJam"><p><b>연결된 GitHub 프로젝트</b><br><a href="https://github.com/Jun1188/ai-hack-gameJam">Jun1188/ai-hack-gameJam</a> · main</p><a href="https://github.com/Jun1188/ai-hack-gameJam/tree/4078091f9d08a3e026d8929ac27ec7e28c24f323">확인한 소스 4078091f</a> · <a href="https://github.com/Jun1188/ai-hack-gameJam/commits/main">변경 이력 ↗</a>
 <br>소스 확인 2026-11-11 · 다운로드본의 빌드 커밋 미확인</div></div></article></div></section>
-<section class="field-section" id="updates" aria-labelledby="updates-title"><div class="wrap"><div class="section-heading"><div><p class="eyebrow">02 / FIELD NOTES</p><h2 id="updates-title">화면 밖에서도, 함께.</h2></div><span class="tino-sprite tino-wave" role="img" aria-label="손을 흔드는 픽셀 티노"></span></div><div class="update-grid"><article class="update-card"><a href="media/gamejam-20261106.jpg"><img src="media/gamejam-20261106.jpg" alt="AI_DIOTS 안내판 옆 노트북에 실행된 모두의 카페" loading="lazy"></a><div><p class="kicker">2026-11-06 · 행사·교류</p><h3>게임잼 참가 팀빌딩</h3><p>게임잼 참가 팀빌딩에서 기록한 모두의 카페와 AI_DIOTS 현장</p><small>26-2 게임잼_참가팀빌딩3_20261106.jpg</small></div></article></div></div></section>
+<section class="field-section" id="updates" aria-labelledby="updates-title"><div class="wrap"><div class="section-heading"><div><p class="eyebrow">02 / FIELD NOTES</p><h2 id="updates-title">화면 밖에서도, 함께.</h2></div><span class="tino-sprite tino-wave" role="img" aria-label="손을 흔드는 픽셀 티노"></span></div><div class="update-grid"><div class="update-card field-notes" id="field-notes" aria-label="활동 대표사진"><div class="field-notes-slides" id="field-notes-slides"><article class="field-note-slide" data-field-note="0067a9a426e4c8bda701f75c"><a class="field-note-media" href="media/gamejam-20261106.jpg" aria-label="게임잼 참가 팀빌딩 · 사진 크게 보기"><img src="media/gamejam-20261106.jpg" alt="AI_DIOTS 안내판 옆 노트북에 실행된 모두의 카페" loading="lazy" decoding="async"><span class="field-note-loading" hidden>사진을 불러오는 중입니다.</span><span class="field-note-error" hidden>사진을 불러오지 못했습니다.<br>사진 링크를 다시 열어 보세요.</span><span class="field-note-open" aria-hidden="true">사진 크게 보기 ↗</span></a><div class="field-note-copy"><p class="kicker"><time datetime="2026-11-06">2026-11-06</time> · 행사·교류</p><h3>게임잼 참가 팀빌딩</h3><p class="field-note-caption">게임잼 참가 팀빌딩에서 기록한 모두의 카페와 AI_DIOTS 현장</p><small>26-2 게임잼_참가팀빌딩3_20261106.jpg</small></div></article><article class="field-note-slide" data-field-note="35cbfbac707b6f84c4a1841b"><a class="field-note-media" href="media/meetup-20260904.jpg" aria-label="Club meetup · 사진 크게 보기"><img src="media/meetup-20260904.jpg" alt="야외에서 함께 촬영한 동아리 교류회 단체사진" loading="lazy" decoding="async"><span class="field-note-loading" hidden>사진을 불러오는 중입니다.</span><span class="field-note-error" hidden>사진을 불러오지 못했습니다.<br>사진 링크를 다시 열어 보세요.</span><span class="field-note-open" aria-hidden="true">사진 크게 보기 ↗</span></a><div class="field-note-copy"><p class="kicker"><time datetime="2026-09-04">2026-09-04</time> · 행사·교류</p><h3>Club meetup</h3><p class="field-note-caption">2026.09.04 · 동아리 교류회 단체사진</p><small></small></div></article><article class="field-note-slide" data-field-note="e9c9729b7ed22995e0e6e381"><a class="field-note-media" href="media/nc-20260715.jpg" aria-label="NC company visit · 사진 크게 보기"><img src="media/nc-20260715.jpg" alt="NC 전시물 앞에서 함께 촬영한 동아리 단체사진" loading="lazy" decoding="async"><span class="field-note-loading" hidden>사진을 불러오는 중입니다.</span><span class="field-note-error" hidden>사진을 불러오지 못했습니다.<br>사진 링크를 다시 열어 보세요.</span><span class="field-note-open" aria-hidden="true">사진 크게 보기 ↗</span></a><div class="field-note-copy"><p class="kicker"><time datetime="2026-07-15">2026-07-15</time> · 행사·교류</p><h3>NC company visit</h3><p class="field-note-caption">2026.07.15 · NC 기업탐방 단체사진</p><small></small></div></article><article class="field-note-slide" data-field-note="183fc806a41a73912546807f"><a class="field-note-media" href="media/playx4-20260523.jpg" aria-label="PlayX4 · 사진 크게 보기"><img src="media/playx4-20260523.jpg" alt="PlayX4 전시장 로비에서 촬영한 동아리 단체사진" loading="lazy" decoding="async"><span class="field-note-loading" hidden>사진을 불러오는 중입니다.</span><span class="field-note-error" hidden>사진을 불러오지 못했습니다.<br>사진 링크를 다시 열어 보세요.</span><span class="field-note-open" aria-hidden="true">사진 크게 보기 ↗</span></a><div class="field-note-copy"><p class="kicker"><time datetime="2026-05-23">2026-05-23</time> · 행사·교류</p><h3>PlayX4</h3><p class="field-note-caption">2026.05.23 · PlayX4 방문 단체사진</p><small></small></div></article></div><div class="field-notes-controls" id="field-notes-controls" hidden><p class="field-notes-help" id="field-notes-help">이전·다음 버튼 또는 이 영역에서 ← → 키로 사진을 탐색합니다. Home: 첫 사진 · End: 마지막 사진</p><div class="field-notes-transport"><button type="button" id="field-notes-prev" aria-controls="field-notes-slides" aria-label="이전 대표사진">← Previous</button><span id="field-notes-count" aria-live="off"></span><button type="button" id="field-notes-next" aria-controls="field-notes-slides" aria-label="다음 대표사진">Next →</button></div></div><p class="field-notes-status" id="field-notes-status" role="status" aria-live="polite" aria-atomic="true"></p></div></div></div></section>
 <section id="archive" class="section wrap archive" aria-labelledby="archive-title"><div class="section-heading"><div><p class="eyebrow">03 / ACTIVITY STATUS</p><h2 id="archive-title">활동 현황.</h2></div><p class="section-note">사진 기록 기반의 연월별 현황.<br>같은 활동명의 기록을 묶었습니다.</p></div><nav class="archive-tabs" aria-label="활동 카테고리"><a href="#activity-all" id="activity-all">전체 활동</a><a href="#activity-news" id="activity-news">행사·교류</a><a href="#activity-info" id="activity-info">스터디·개발</a></nav><div id="explorer" hidden><div class="archive-heading"><div><h3 id="exhibit-name"></h3><p id="exhibit-description"></p></div><label class="year">기록 연도 <select id="year-filter" aria-label="기록 연도"></select></label></div><div class="explorer-grid"><section class="chart-card" aria-label="월별 사진 기록 그래프"><header><h4>월별 사진 기록</h4><p id="chart-summary"></p></header><div class="chart" id="month-chart" role="group" aria-label="월을 눌러 활동 기록 필터링"></div><div class="chart-foot"><span>막대 높이 = 사진 기록 수</span><button type="button" class="link-btn" id="clear-month">모든 월 보기</button></div><p class="chart-note">카테고리나 연도를 바꾸면 실제 기록 수에 맞춰 그래프가 다시 그려집니다.</p></section><section class="records"><div class="records-head"><h4>연월별 현황</h4><span id="record-count" aria-live="polite"></span></div><ul id="records-list" aria-label="연월별 활동 기록"></ul><button id="more" class="more" type="button">이전 달 더 보기 ↓</button></section></div></div><noscript><details open><summary>활동 기록</summary><ul><li class="activity-month"><h5 class="activity-month-heading">2026년 · 11월</h5><details class="activity-cluster"><summary><strong>OpenGL study</strong><span class="cluster-count">스터디·개발 · 사진 3개 · 기록 1묶음</span></summary><ul><li>2026-11-09 · 스터디·개발 · OpenGL study · 3 images</li></ul></details><details class="activity-cluster"><summary><strong>Unicode internal conference</strong><span class="cluster-count">행사·교류 · 사진 6개 · 기록 1묶음</span></summary><ul><li>2026-11-07 · 행사·교류 · Unicode internal conference · 6 images</li></ul></details><details class="activity-cluster"><summary><strong>Game jam team formation</strong><span class="cluster-count">행사·교류 · 사진 10개 · 기록 2묶음</span></summary><ul><li>2026-11-06 · 행사·교류 · Game jam team formation · 6 images</li><li>2026-11-05 · 행사·교류 · Game jam team formation · 4 images</li></ul></details></li><li class="activity-month"><h5 class="activity-month-heading">2026년 · 10월</h5><details class="activity-cluster"><summary><strong>OpenGL mentoring</strong><span class="cluster-count">스터디·개발 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-10-26 · 스터디·개발 · OpenGL mentoring · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Study session</strong><span class="cluster-count">스터디·개발 · 사진 6개 · 기록 2묶음</span></summary><ul><li>2026-10-22 · 스터디·개발 · Study session · 2 images</li><li>2026-10-08 · 스터디·개발 · Study session · 4 images</li></ul></details><details class="activity-cluster"><summary><strong>AI hackathon game jam meeting</strong><span class="cluster-count">행사·교류 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-10-09 · 행사·교류 · AI hackathon game jam meeting · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>UNIDEV representatives meeting</strong><span class="cluster-count">행사·교류 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-10-06 · 행사·교류 · UNIDEV representatives meeting · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>OpenGL study</strong><span class="cluster-count">스터디·개발 · 사진 2개 · 기록 1묶음</span></summary><ul><li>2026-10-01 · 스터디·개발 · OpenGL study · 2 images</li></ul></details></li><li class="activity-month"><h5 class="activity-month-heading">2026년 · 9월</h5><details class="activity-cluster"><summary><strong>OpenGL study</strong><span class="cluster-count">스터디·개발 · 사진 3개 · 기록 2묶음</span></summary><ul><li>2026-09-28 · 스터디·개발 · OpenGL study · 2 images</li><li>2026-09-21 · 스터디·개발 · OpenGL study · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Dev-Commit orientation</strong><span class="cluster-count">행사·교류 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-09-19 · 행사·교류 · Dev-Commit orientation · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Mentoring</strong><span class="cluster-count">스터디·개발 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-09-18 · 스터디·개발 · Mentoring · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Study session</strong><span class="cluster-count">스터디·개발 · 사진 4개 · 기록 2묶음</span></summary><ul><li>2026-09-17 · 스터디·개발 · Study session · 2 images</li><li>2026-09-03 · 스터디·개발 · Study session · 2 images</li></ul></details><details class="activity-cluster"><summary><strong>Design lecture presentation</strong><span class="cluster-count">스터디·개발 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-09-17 · 스터디·개발 · Design lecture presentation · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Photo record</strong><span class="cluster-count">스터디·개발 · 사진 3개 · 기록 2묶음</span></summary><ul><li>2026-09-16 · 스터디·개발 · Photo record · 1 images</li><li>2026-09-10 · 스터디·개발 · Photo record · 2 images</li></ul></details><details class="activity-cluster"><summary><strong>Study orientation</strong><span class="cluster-count">스터디·개발 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-09-12 · 스터디·개발 · Study orientation · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Club meetup</strong><span class="cluster-count">행사·교류 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-09-04 · 행사·교류 · Club meetup · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Club dinner</strong><span class="cluster-count">행사·교류 · 사진 5개 · 기록 1묶음</span></summary><ul><li>2026-09-04 · 행사·교류 · Club dinner · 5 images</li></ul></details><details class="activity-cluster"><summary><strong>WARP mentoring</strong><span class="cluster-count">스터디·개발 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-09-03 · 스터디·개발 · WARP mentoring · 1 images</li></ul></details></li><li class="activity-month"><h5 class="activity-month-heading">2026년 · 8월</h5><details class="activity-cluster"><summary><strong>Operating systems mentoring</strong><span class="cluster-count">스터디·개발 · 사진 6개 · 기록 3묶음</span></summary><ul><li>2026-08-27 · 스터디·개발 · Operating systems mentoring · 1 images</li><li>2026-08-13 · 스터디·개발 · Operating systems mentoring · 3 images</li><li>2026-08-06 · 스터디·개발 · Operating systems mentoring · 2 images</li></ul></details><details class="activity-cluster"><summary><strong>Unicon game demo</strong><span class="cluster-count">행사·교류 · 사진 10개 · 기록 1묶음</span></summary><ul><li>2026-08-25 · 행사·교류 · Unicon game demo · 10 images</li></ul></details><details class="activity-cluster"><summary><strong>Unicon</strong><span class="cluster-count">행사·교류 · 사진 2개 · 기록 1묶음</span></summary><ul><li>2026-08-25 · 행사·교류 · Unicon · 2 images</li></ul></details><details class="activity-cluster"><summary><strong>Level Up live development</strong><span class="cluster-count">행사·교류 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-08-24 · 행사·교류 · Level Up live development · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Level Up build submission</strong><span class="cluster-count">행사·교류 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-08-21 · 행사·교류 · Level Up build submission · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Level Up session</strong><span class="cluster-count">행사·교류 · 사진 5개 · 기록 3묶음</span></summary><ul><li>2026-08-19 · 행사·교류 · Level Up session · 2 images</li><li>2026-08-16 · 행사·교류 · Level Up session · 2 images</li><li>2026-08-07 · 행사·교류 · Level Up session · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Club meetup</strong><span class="cluster-count">행사·교류 · 사진 6개 · 기록 4묶음</span></summary><ul><li>2026-08-19 · 행사·교류 · Club meetup · 1 images</li><li>2026-08-12 · 행사·교류 · Club meetup · 2 images</li><li>2026-08-05 · 행사·교류 · Club meetup · 2 images</li><li>2026-08 · 일자 미상 · 행사·교류 · Club meetup · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Graphics mentoring</strong><span class="cluster-count">스터디·개발 · 사진 2개 · 기록 2묶음</span></summary><ul><li>2026-08-18 · 스터디·개발 · Graphics mentoring · 1 images</li><li>2026-08-04 · 스터디·개발 · Graphics mentoring · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Game demo at the club meetup</strong><span class="cluster-count">행사·교류 · 사진 2개 · 기록 1묶음</span></summary><ul><li>2026-08-12 · 행사·교류 · Game demo at the club meetup · 2 images</li></ul></details><details class="activity-cluster"><summary><strong>Unity Networking Day</strong><span class="cluster-count">행사·교류 · 사진 3개 · 기록 1묶음</span></summary><ul><li>2026-08-08 · 행사·교류 · Unity Networking Day · 3 images</li></ul></details></li><li class="activity-month"><h5 class="activity-month-heading">2026년 · 7월</h5><details class="activity-cluster"><summary><strong>Level Up session</strong><span class="cluster-count">행사·교류 · 사진 12개 · 기록 6묶음</span></summary><ul><li>2026-07-31 · 행사·교류 · Level Up session · 2 images</li><li>2026-07-25 · 행사·교류 · Level Up session · 2 images</li><li>2026-07-24 · 행사·교류 · Level Up session · 2 images</li><li>2026-07-18 · 행사·교류 · Level Up session · 2 images</li><li>2026-07-10 · 행사·교류 · Level Up session · 2 images</li><li>2026-07-03 · 행사·교류 · Level Up session · 2 images</li></ul></details><details class="activity-cluster"><summary><strong>Operating systems mentoring</strong><span class="cluster-count">스터디·개발 · 사진 2개 · 기록 2묶음</span></summary><ul><li>2026-07-30 · 스터디·개발 · Operating systems mentoring · 1 images</li><li>2026-07-23 · 스터디·개발 · Operating systems mentoring · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Club meetup</strong><span class="cluster-count">행사·교류 · 사진 2개 · 기록 2묶음</span></summary><ul><li>2026-07-29 · 행사·교류 · Club meetup · 1 images</li><li>2026-07-15 · 행사·교류 · Club meetup · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Study session</strong><span class="cluster-count">스터디·개발 · 사진 2개 · 기록 2묶음</span></summary><ul><li>2026-07-22 · 스터디·개발 · Study session · 1 images</li><li>2026-07-12 · 스터디·개발 · Study session · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Social game session</strong><span class="cluster-count">행사·교류 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-07-21 · 행사·교류 · Social game session · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>NC company visit</strong><span class="cluster-count">행사·교류 · 사진 5개 · 기록 1묶음</span></summary><ul><li>2026-07-15 · 행사·교류 · NC company visit · 5 images</li></ul></details><details class="activity-cluster"><summary><strong>Study orientation</strong><span class="cluster-count">스터디·개발 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-07-08 · 스터디·개발 · Study orientation · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Challenge recap</strong><span class="cluster-count">스터디·개발 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-07-06 · 스터디·개발 · Challenge recap · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Photo record</strong><span class="cluster-count">스터디·개발 · 사진 2개 · 기록 2묶음</span></summary><ul><li>2026-07-04 · 스터디·개발 · Photo record · 1 images</li><li>2026-07-03 · 스터디·개발 · Photo record · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>IDCON talk</strong><span class="cluster-count">행사·교류 · 사진 2개 · 기록 1묶음</span></summary><ul><li>2026-07-04 · 행사·교류 · IDCON talk · 2 images</li></ul></details><details class="activity-cluster"><summary><strong>Club challenge</strong><span class="cluster-count">스터디·개발 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-07-02 · 스터디·개발 · Club challenge · 1 images</li></ul></details></li><li class="activity-month"><h5 class="activity-month-heading">2026년 · 6월</h5><details class="activity-cluster"><summary><strong>Level Up session</strong><span class="cluster-count">행사·교류 · 사진 4개 · 기록 2묶음</span></summary><ul><li>2026-06-25 · 행사·교류 · Level Up session · 2 images</li><li>2026-06-19 · 행사·교류 · Level Up session · 2 images</li></ul></details></li><li class="activity-month"><h5 class="activity-month-heading">2026년 · 5월</h5><details class="activity-cluster"><summary><strong>Game design activity</strong><span class="cluster-count">스터디·개발 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-05-31 · 스터디·개발 · Game design activity · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Mentoring</strong><span class="cluster-count">스터디·개발 · 사진 3개 · 기록 3묶음</span></summary><ul><li>2026-05-30 · 스터디·개발 · Mentoring · 1 images</li><li>2026-05-26 · 스터디·개발 · Mentoring · 1 images</li><li>2026-05-02 · 스터디·개발 · Mentoring · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Game engine study</strong><span class="cluster-count">스터디·개발 · 사진 2개 · 기록 2묶음</span></summary><ul><li>2026-05-29 · 스터디·개발 · Game engine study · 1 images</li><li>2026-05-08 · 스터디·개발 · Game engine study · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>PlayX4</strong><span class="cluster-count">행사·교류 · 사진 17개 · 기록 1묶음</span></summary><ul><li>2026-05-23 · 행사·교류 · PlayX4 · 17 images</li></ul></details><details class="activity-cluster"><summary><strong>Photo record</strong><span class="cluster-count">스터디·개발 · 사진 2개 · 기록 2묶음</span></summary><ul><li>2026-05-23 · 스터디·개발 · Photo record · 1 images</li><li>2026-05-22 · 스터디·개발 · Photo record · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Study session</strong><span class="cluster-count">스터디·개발 · 사진 2개 · 기록 1묶음</span></summary><ul><li>2026-05-16 · 스터디·개발 · Study session · 2 images</li></ul></details></li><li class="activity-month"><h5 class="activity-month-heading">2026년 · 4월</h5><details class="activity-cluster"><summary><strong>Mentoring</strong><span class="cluster-count">스터디·개발 · 사진 5개 · 기록 4묶음</span></summary><ul><li>2026-04-30 · 스터디·개발 · Mentoring · 2 images</li><li>2026-04-11 · 스터디·개발 · Mentoring · 1 images</li><li>2026-04-09 · 스터디·개발 · Mentoring · 1 images</li><li>2026-04-02 · 스터디·개발 · Mentoring · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Game design activity</strong><span class="cluster-count">스터디·개발 · 사진 4개 · 기록 2묶음</span></summary><ul><li>2026-04-12 · 스터디·개발 · Game design activity · 3 images</li><li>2026-04-05 · 스터디·개발 · Game design activity · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Board game meetup</strong><span class="cluster-count">행사·교류 · 사진 2개 · 기록 1묶음</span></summary><ul><li>2026-04-10 · 행사·교류 · Board game meetup · 2 images</li></ul></details><details class="activity-cluster"><summary><strong>Photo record</strong><span class="cluster-count">스터디·개발 · 사진 2개 · 기록 1묶음</span></summary><ul><li>2026-04-09 · 스터디·개발 · Photo record · 2 images</li></ul></details><details class="activity-cluster"><summary><strong>Data structures study</strong><span class="cluster-count">스터디·개발 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-04-01 · 스터디·개발 · Data structures study · 1 images</li></ul></details></li><li class="activity-month"><h5 class="activity-month-heading">2026년 · 3월</h5><details class="activity-cluster"><summary><strong>Computer science study</strong><span class="cluster-count">스터디·개발 · 사진 3개 · 기록 1묶음</span></summary><ul><li>2026-03-31 · 스터디·개발 · Computer science study · 3 images</li></ul></details><details class="activity-cluster"><summary><strong>Game design activity</strong><span class="cluster-count">스터디·개발 · 사진 2개 · 기록 2묶음</span></summary><ul><li>2026-03-29 · 스터디·개발 · Game design activity · 1 images</li><li>2026-03-22 · 스터디·개발 · Game design activity · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>UNIDEV general meeting</strong><span class="cluster-count">행사·교류 · 사진 2개 · 기록 1묶음</span></summary><ul><li>2026-03-28 · 행사·교류 · UNIDEV general meeting · 2 images</li></ul></details><details class="activity-cluster"><summary><strong>Mentoring materials</strong><span class="cluster-count">스터디·개발 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-03-28 · 스터디·개발 · Mentoring materials · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Mentoring</strong><span class="cluster-count">스터디·개발 · 사진 1개 · 기록 1묶음</span></summary><ul><li>2026-03-26 · 스터디·개발 · Mentoring · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Club dinner</strong><span class="cluster-count">행사·교류 · 사진 3개 · 기록 1묶음</span></summary><ul><li>2026-03-17 · 행사·교류 · Club dinner · 3 images</li></ul></details></li><li class="activity-month"><h5 class="activity-month-heading">날짜 미상</h5><details class="activity-cluster"><summary><strong>Neople meetup planning</strong><span class="cluster-count">행사·교류 · 사진 1개 · 기록 1묶음</span></summary><ul><li>Undated · 행사·교류 · Neople meetup planning · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>NC company visit</strong><span class="cluster-count">행사·교류 · 사진 2개 · 기록 1묶음</span></summary><ul><li>Undated · 행사·교류 · NC company visit · 2 images</li></ul></details><details class="activity-cluster"><summary><strong>Mentoring</strong><span class="cluster-count">스터디·개발 · 사진 1개 · 기록 1묶음</span></summary><ul><li>Undated · 스터디·개발 · Mentoring · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>IDCON talk</strong><span class="cluster-count">행사·교류 · 사진 1개 · 기록 1묶음</span></summary><ul><li>Undated · 행사·교류 · IDCON talk · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Graphics mentoring</strong><span class="cluster-count">스터디·개발 · 사진 1개 · 기록 1묶음</span></summary><ul><li>Undated · 스터디·개발 · Graphics mentoring · 1 images</li></ul></details><details class="activity-cluster"><summary><strong>Graduation project playtest</strong><span class="cluster-count">행사·교류 · 사진 2개 · 기록 1묶음</span></summary><ul><li>Undated · 행사·교류 · Graduation project playtest · 2 images</li></ul></details><details class="activity-cluster"><summary><strong>Data structures study</strong><span class="cluster-count">스터디·개발 · 사진 2개 · 기록 1묶음</span></summary><ul><li>Undated · 스터디·개발 · Data structures study · 2 images</li></ul></details><details class="activity-cluster"><summary><strong>Computer science study orientation</strong><span class="cluster-count">스터디·개발 · 사진 2개 · 기록 1묶음</span></summary><ul><li>Undated · 스터디·개발 · Computer science study orientation · 2 images</li></ul></details><details class="activity-cluster"><summary><strong>Computer science study</strong><span class="cluster-count">스터디·개발 · 사진 1개 · 기록 1묶음</span></summary><ul><li>Undated · 스터디·개발 · Computer science study · 1 images</li></ul></details></li></ul></details></noscript></section>
 <section class="section wrap discord-section" id="awesome" data-tino-stop aria-labelledby="awesome-title" data-discord-status="not_connected">
 <div class="section-heading"><div><p class="eyebrow">04 / FROM OUR DISCORD</p><h2 id="awesome-title">나누는 소식, 쌓이는 자료.</h2></div><span class="tino-sprite tino-think" role="img" aria-label="자료를 살펴보는 픽셀 티노"></span></div>
@@ -194,7 +241,14 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
 <p class="discord-scope">메시지 수와 공개된 글 수는 다릅니다. 공개 검토를 마친 제목·요약만 표시하며 작성자 정보와 내부 대화는 노출하지 않습니다.</p>
 </section>
 <section class="club-section" id="club" aria-labelledby="club-title"><div class="wrap club-layout"><div><p class="eyebrow">05 / ABOUT IDIOTS</p><h2 id="club-title">잘 몰라도,<br>같이 만들면 됩니다.</h2><div class="club-mascots" aria-label="함께 만드는 픽셀 티노들"><span class="tino-sprite tino-think" role="img" aria-label="노트북을 보는 티노"></span><span class="tino-sprite tino-idle" role="img" aria-label="서 있는 티노"></span><span class="tino-sprite tino-jump" role="img" aria-label="점프하는 티노"></span></div></div><div class="club-description"><p class="club-lead">IDIOTS는 한국공학대학교 게임공학과의 게임 개발 소모임입니다.</p><p>2024년부터 각자의 진로를 위한 공부와 프로젝트를 함께하고 있습니다. 게임 업계 취업, 인디 창업, 창직까지. 선후배가 서로의 경험을 나누며 배운 것을 실제 게임으로 만들어 봅니다.</p><dl class="club-practices"><div><dt>함께 공부하기</dt><dd>CS·자료구조·운영체제, 그래픽스·셰이더, 기획·서버·엔진.</dd></div><div><dt>직접 만들어 보기</dt><dd>Unity·Unreal 프로젝트, 보드게임, 게임잼과 플레이테스트.</dd></div><div><dt>밖에서도 만나기</dt><dd>행사·컨퍼런스·교류회. 2025년 12월부터 UNIDEV 활동에 참여합니다.</dd></div></dl><a class="text-link" href="https://www.instagram.com/idiots_tuk_gamedev/">Instagram에서 만나요 ↗</a></div></div></section>
-<section class="section wrap arcade-section" aria-label="티노 미니게임"><div class="section-heading"><div><p class="eyebrow">06 / ONE MORE PLAY</p><h2>가기 전에, 한 판?</h2></div><p class="section-note">티노와 함께 뛰는 작은 휴식.<br>직접 만든 픽셀 러너입니다.</p></div><!-- Include runner.css and runner.js (defer). Sprite paths are optional, local build assets. -->
+<section class="section wrap arcade-section" aria-label="티노 미니게임"><div class="section-heading"><div><p class="eyebrow">06 / ONE MORE PLAY</p><h2>가기 전에, 한 판?</h2></div><p class="section-note">티노와 함께 뛰는 작은 휴식.<br>직접 만든 세 가지 미니게임입니다.</p></div><div class="tino-arcade" id="tino-arcade" data-arcade-index="0">
+  <div class="arcade-navigation" id="arcade-navigation" hidden role="group" aria-label="티노 미니게임 선택" aria-describedby="arcade-navigation-help">
+    <button type="button" id="arcade-prev" aria-controls="arcade-run arcade-angry arcade-defense" aria-label="이전 미니게임">← Previous</button>
+    <p id="arcade-count" aria-live="polite" aria-atomic="true">1 / 3 · Tino Run</p>
+    <button type="button" id="arcade-next" aria-controls="arcade-run arcade-angry arcade-defense" aria-label="다음 미니게임">Next →</button>
+  </div>
+  <p class="arcade-navigation-help" id="arcade-navigation-help">세 가지 작은 게임. 선택 버튼에서 ← → / Home / End로 이동할 수 있어요. 게임을 바꾸면 멈추며, 직접 시작할 때만 움직여요.</p>
+  <div id="arcade-run" data-arcade-panel="run" role="group" aria-label="1 / 3 · Tino Run"><!-- Include runner.css and runner.js (defer). Sprite paths are optional, local build assets. -->
 <section class="runner-section" id="runner" aria-labelledby="runner-title">
   <div class="runner-inner">
     <div class="runner-heading">
@@ -235,10 +289,43 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
     <section class="project-credits site-project-credits" aria-labelledby="credits-tino-run"><h3 id="credits-tino-run">Tino Run · 제작 안내</h3><p class="credits-note">이 웹사이트를 위해 만든 미니게임입니다. 개인별 기여자 이름은 공개 출처로 확인되지 않았습니다.</p><p class="credits-source">확인 2026-11-11</p></section>
   </div>
 </section>
+</div>
+  <section id="arcade-angry" class="arcade-panel" data-arcade-panel="angry" aria-labelledby="angry-title">
+    <header class="arcade-heading"><p class="eyebrow">02 / LAUNCH LAB</p><h3 id="angry-title">앵그리티노</h3><p>각도와 힘을 맞춰 버그 큐브를 정리해요. 가까운 큐브는 함께 사라져요. 세 개의 작은 발사 실험!</p></header>
+    <div id="angry-game" class="arcade-machine" aria-labelledby="angry-title" data-game-state="ready">
+      <p class="arcade-score" id="angry-score">스테이지 1 / 3 · 발사 5회 · 목표 2개</p>
+      <canvas id="angry-canvas" class="arcade-canvas" width="800" height="400" tabindex="0" role="img" aria-label="앵그리티노 발사 퍼즐. 각도와 힘을 정하고 버그 큐브를 맞히세요." aria-describedby="angry-help angry-status">Canvas를 지원하는 브라우저에서 플레이할 수 있어요.</canvas>
+      <div class="arcade-control-area">
+        <div class="arcade-controls"><button id="angry-start" type="button" disabled>게임 시작</button><button id="angry-pause" type="button" disabled>일시 정지</button><button id="angry-reset" type="button" disabled>처음부터</button><button id="angry-next-level" type="button" disabled>다음 스테이지</button></div>
+        <div class="arcade-aim-controls"><label for="angry-angle">각도 <output id="angry-angle-value" for="angry-angle">48°</output><input id="angry-angle" type="range" min="15" max="80" value="48" step="1" disabled></label><label for="angry-power">힘 <output id="angry-power-value" for="angry-power">65%</output><input id="angry-power" type="range" min="30" max="100" value="65" step="1" disabled></label><button id="angry-fire" type="button" disabled>티노 발사 ↗</button></div>
+        <p class="arcade-help" id="angry-help">게임 시작 → 각도·힘 조절 → 발사. 티노를 왼쪽 아래로 당겼다 놓아도 발사할 수 있어요. 캔버스에 초점을 두고 ← → 각도, ↑ ↓ 힘, Space 발사, Esc 정지. 드래그 취소는 Esc. 나무 장애물은 한 번 부딪히면 부서져요.</p>
+        <p class="arcade-status" id="angry-status" role="status" aria-live="polite" aria-atomic="true">게임 시작을 눌러 조준해 주세요.</p>
+      </div>
+    </div>
+    <p class="arcade-note">사이트 내 자체 제작 미니게임입니다. 개인별 기여자는 확인 전입니다.</p>
+    <noscript><p>앵그리티노는 JavaScript와 Canvas가 필요해요. 자동으로 실행되지는 않아요.</p></noscript>
+  </section>
+  <section id="arcade-defense" class="arcade-panel" data-arcade-panel="defense" aria-labelledby="defense-title">
+    <header class="arcade-heading"><p class="eyebrow">03 / GUARD THE PATH</p><h3 id="defense-title">티노 디펜스</h3><p>여섯 자리 중 원하는 곳에 티노를 배치해 길 끝을 지켜요. 처치 보상으로 강화하고 다섯 웨이브를 버티면 승리!</p></header>
+    <div id="defense-game" class="arcade-machine" aria-labelledby="defense-title" data-game-state="ready">
+      <p class="arcade-score" id="defense-score">웨이브 0 / 5 · 생명 8 · 코인 95</p>
+      <canvas id="defense-canvas" class="arcade-canvas" width="800" height="400" tabindex="0" role="img" aria-label="티노 디펜스. 고정 경로 주변 여섯 자리에 타워를 배치해 버그 큐브가 끝에 도달하지 못하게 하세요." aria-describedby="defense-help defense-status">Canvas를 지원하는 브라우저에서 플레이할 수 있어요.</canvas>
+      <div class="arcade-control-area">
+        <div class="arcade-controls"><button id="defense-start" type="button" disabled>게임 시작</button><button id="defense-pause" type="button" disabled>일시 정지</button><button id="defense-reset" type="button" disabled>처음부터</button><button id="defense-wave" type="button" disabled>다음 웨이브 시작</button></div>
+        <div class="arcade-build-controls"><label for="defense-slot">배치 자리<select id="defense-slot" disabled><option value="0">1번 · 입구 위</option><option value="1">2번 · 입구 아래</option><option value="2">3번 · 가운데 아래</option><option value="3">4번 · 가운데 위</option><option value="4">5번 · 출구 아래</option><option value="5">6번 · 출구 위</option></select></label><label for="defense-type">티노 종류<select id="defense-type" disabled><option value="basic">기본 티노 · 30코인</option><option value="slow">느림 티노 · 40코인</option></select></label><button id="defense-build" type="button" disabled>배치하기</button><button id="defense-upgrade" type="button" disabled>강화 · 35코인</button></div>
+        <p class="arcade-help" id="defense-help">게임 시작 → 자리와 종류 선택 → 배치 → 웨이브 시작. 캔버스를 탭하거나 숫자 1–6으로 자리 선택, B 배치, U 강화, Space 다음 웨이브, Esc 정지. 기본 티노는 공격, 느림 티노는 이동 속도를 낮춰요. 각 타워는 한 번 강화할 수 있어요.</p>
+        <p class="arcade-status" id="defense-status" role="status" aria-live="polite" aria-atomic="true">게임 시작을 눌러 타워를 준비해 주세요.</p>
+      </div>
+    </div>
+    <p class="arcade-note">사이트 내 자체 제작 미니게임입니다. 개인별 기여자는 확인 전입니다.</p>
+    <noscript><p>티노 디펜스는 JavaScript와 Canvas가 필요해요. 자동으로 실행되지는 않아요.</p></noscript>
+  </section>
+  <p class="arcade-note" id="arcade-motion-note">화면 밖·다른 탭·게임 전환 시 자동 정지합니다. 모션 줄이기에서도 직접 시작한 게임은 플레이할 수 있어요. 새 게임의 진행은 저장되지 않아요.</p>
+</div>
 </section>
 </main>
 <footer class="foot"><div class="wrap foot-inner"><div><b>IDIOTS.</b><p>함께 공부하고, 만들고, 플레이합니다.<br>한국공학대학교 게임공학과 소모임</p><small>티노: 한국공학대학교 캐릭터를 바탕으로 만든 픽셀 표현.<br>사이트는 학교의 공식 홈페이지가 아닙니다.</small></div><nav aria-label="관련 자료"><a href="https://www.instagram.com/idiots_tuk_gamedev/">Instagram ↗</a><a href="https://github.com/Jun1188/idiots-web">웹사이트 코드 ↗</a><a href="https://www.tukorea.ac.kr/tukorea/8201/subview.do">티노 소개 ↗</a><a href="#main">맨 위로 ↑</a></nav><span class="tino-sprite tino-run" role="img" aria-label="달리는 픽셀 티노"></span></div><div class="wrap foot-bottom"><span>MADE TOGETHER, PLAYED TOGETHER.</span><span>2024 — NOW</span></div></footer>
-<script type="application/json" id="archive-feed">[{"id":"86f7de6a1bd0d59e1261434e","category":"info","title":"OpenGL study","date":"2026-11-09","count":3},{"id":"5b9f67315eef38c159aa53c5","category":"news","title":"Unicode internal conference","date":"2026-11-07","count":6},{"id":"0067a9a426e4c8bda701f75c","category":"news","title":"Game jam team formation","date":"2026-11-06","count":6,"image":{"src":"media/gamejam-20261106.jpg","alt":"AI_DIOTS 안내판 옆 노트북에 실행된 모두의 카페","caption":"게임잼 참가 팀빌딩에서 기록한 모두의 카페와 AI_DIOTS 현장","sourceName":"26-2 게임잼_참가팀빌딩3_20261106.jpg"}},{"id":"1166b0e617e80888baff6c3f","category":"news","title":"Game jam team formation","date":"2026-11-05","count":4},{"id":"df64033f5828107288ffd0a1","category":"info","title":"OpenGL mentoring","date":"2026-10-26","count":1},{"id":"df5f14a92f5df9fee407203d","category":"info","title":"Study session","date":"2026-10-22","count":2},{"id":"2b2ecd387a76acd90ccf48b4","category":"news","title":"AI hackathon game jam meeting","date":"2026-10-09","count":1},{"id":"79fd06b0529e533824280718","category":"info","title":"Study session","date":"2026-10-08","count":4},{"id":"3999ca0626723df05fd3f17c","category":"news","title":"UNIDEV representatives meeting","date":"2026-10-06","count":1},{"id":"977e683f8936841cc4603376","category":"info","title":"OpenGL study","date":"2026-10-01","count":2},{"id":"e788ccc5009eafaa4bb2aa1d","category":"info","title":"OpenGL study","date":"2026-09-28","count":2},{"id":"889c88de45cd0bb93118b39b","category":"info","title":"OpenGL study","date":"2026-09-21","count":1},{"id":"b232ce0b3e1be1d32a9da1ea","category":"news","title":"Dev-Commit orientation","date":"2026-09-19","count":1},{"id":"13f2ae90277dde91c757d4a9","category":"info","title":"Mentoring","date":"2026-09-18","count":1},{"id":"f481e9dc07dd2815be875421","category":"info","title":"Study session","date":"2026-09-17","count":2},{"id":"17c70aeba55112da6460fbf5","category":"info","title":"Design lecture presentation","date":"2026-09-17","count":1},{"id":"f8606bfb373cf0386be03a8b","category":"info","title":"Photo record","date":"2026-09-16","count":1},{"id":"c71c29eceba7d2ed50fd1a17","category":"info","title":"Study orientation","date":"2026-09-12","count":1},{"id":"7228aa6ed8b3fa3184de0636","category":"info","title":"Photo record","date":"2026-09-10","count":2},{"id":"35cbfbac707b6f84c4a1841b","category":"news","title":"Club meetup","date":"2026-09-04","count":1},{"id":"bdf3b38b633311ec76ae108b","category":"news","title":"Club dinner","date":"2026-09-04","count":5},{"id":"3bbdc4c9346a4a8dc53c3e7b","category":"info","title":"WARP mentoring","date":"2026-09-03","count":1},{"id":"6dbe11a07d97b32cc2393a73","category":"info","title":"Study session","date":"2026-09-03","count":2},{"id":"adaa0d0671b2c4301dc2c0d6","category":"info","title":"Operating systems mentoring","date":"2026-08-27","count":1},{"id":"bc5b54865f2cf59fb02466e4","category":"news","title":"Unicon game demo","date":"2026-08-25","count":10},{"id":"0dcd3de1d7eebc6aff1e36c0","category":"news","title":"Unicon","date":"2026-08-25","count":2},{"id":"3f280ec059fd81509321b259","category":"news","title":"Level Up live development","date":"2026-08-24","count":1},{"id":"0d0baa6b841bd5ce384b7fd0","category":"news","title":"Level Up build submission","date":"2026-08-21","count":1},{"id":"a76f01d33436f38394d03e0a","category":"news","title":"Level Up session","date":"2026-08-19","count":2},{"id":"d770f3dc275acdb44f740fa2","category":"news","title":"Club meetup","date":"2026-08-19","count":1},{"id":"cedff9aa24bd6bd5125b9ab6","category":"info","title":"Graphics mentoring","date":"2026-08-18","count":1},{"id":"92aab58a145f0a3d08ed1007","category":"news","title":"Level Up session","date":"2026-08-16","count":2},{"id":"f26ac0532793f9919de97d8a","category":"info","title":"Operating systems mentoring","date":"2026-08-13","count":3},{"id":"bbe51c4697372bdc12e11c2a","category":"news","title":"Game demo at the club meetup","date":"2026-08-12","count":2},{"id":"5a132864b38d66d1fd3c61c4","category":"news","title":"Club meetup","date":"2026-08-12","count":2},{"id":"33b66d2cffbc8e93e51a7ce4","category":"news","title":"Unity Networking Day","date":"2026-08-08","count":3},{"id":"a6acc8b491992fb251a8fa0b","category":"news","title":"Level Up session","date":"2026-08-07","count":1},{"id":"4344c8240b7d3a7164531e68","category":"info","title":"Operating systems mentoring","date":"2026-08-06","count":2},{"id":"ee5b4c830f4f68d156f91ab5","category":"news","title":"Club meetup","date":"2026-08-05","count":2},{"id":"650db89317b61ea03cc9f3fe","category":"info","title":"Graphics mentoring","date":"2026-08-04","count":1},{"id":"b0e37632efc0050ee55b926a","category":"news","title":"Club meetup","date":null,"count":1,"month":"2026-08","datePrecision":"month"},{"id":"53bfd7dbcbfd2301119aad30","category":"news","title":"Level Up session","date":"2026-07-31","count":2},{"id":"6f7b95168c3666223f0f8a4d","category":"info","title":"Operating systems mentoring","date":"2026-07-30","count":1},{"id":"08f5441f0003e25a0ff22d2f","category":"news","title":"Club meetup","date":"2026-07-29","count":1},{"id":"e7bd90278d45005112c394e1","category":"news","title":"Level Up session","date":"2026-07-25","count":2},{"id":"218da21496204c667433ea25","category":"news","title":"Level Up session","date":"2026-07-24","count":2},{"id":"5ff7274a9af2b5a53a509fb4","category":"info","title":"Operating systems mentoring","date":"2026-07-23","count":1},{"id":"e89903e901a3f640b8b622ea","category":"info","title":"Study session","date":"2026-07-22","count":1},{"id":"981e9b8c8d3401170a42aa28","category":"news","title":"Social game session","date":"2026-07-21","count":1},{"id":"c1f96f2eb20ac0aa2eaabc49","category":"news","title":"Level Up session","date":"2026-07-18","count":2},{"id":"e9c9729b7ed22995e0e6e381","category":"news","title":"NC company visit","date":"2026-07-15","count":5},{"id":"14430857559e0fe7c0be440a","category":"news","title":"Club meetup","date":"2026-07-15","count":1},{"id":"9ba094dd01dcf46f64b16180","category":"info","title":"Study session","date":"2026-07-12","count":1},{"id":"5b60fc293f7cb79727a16512","category":"news","title":"Level Up session","date":"2026-07-10","count":2},{"id":"0634e8a3273a099ab149d68a","category":"info","title":"Study orientation","date":"2026-07-08","count":1},{"id":"b99231178d1268393e5cbf41","category":"info","title":"Challenge recap","date":"2026-07-06","count":1},{"id":"d4b4c408b82bd13d800623e8","category":"info","title":"Photo record","date":"2026-07-04","count":1},{"id":"c769a4c3f12fc4f20036a0d4","category":"news","title":"IDCON talk","date":"2026-07-04","count":2},{"id":"aa4fa8611985024024672bfe","category":"info","title":"Photo record","date":"2026-07-03","count":1},{"id":"97be55cd04892d070311273d","category":"news","title":"Level Up session","date":"2026-07-03","count":2},{"id":"29f4b1ed8ff674ba6846bf31","category":"info","title":"Club challenge","date":"2026-07-02","count":1},{"id":"e7b85a97847aeb116ff4aad6","category":"news","title":"Level Up session","date":"2026-06-25","count":2},{"id":"0d3895e698092ed6270dba5c","category":"news","title":"Level Up session","date":"2026-06-19","count":2},{"id":"f2abeb4023f0a861ba67e371","category":"info","title":"Game design activity","date":"2026-05-31","count":1},{"id":"c60625b534c258c4e4ba935a","category":"info","title":"Mentoring","date":"2026-05-30","count":1},{"id":"09ff0d7c67b436f100b080d2","category":"info","title":"Game engine study","date":"2026-05-29","count":1},{"id":"22e83bd9a73c77c7e2ac3aea","category":"info","title":"Mentoring","date":"2026-05-26","count":1},{"id":"183fc806a41a73912546807f","category":"news","title":"PlayX4","date":"2026-05-23","count":17},{"id":"9764d2c4e40b81c6ad892743","category":"info","title":"Photo record","date":"2026-05-23","count":1},{"id":"b4b7a6e659b840b804331428","category":"info","title":"Photo record","date":"2026-05-22","count":1},{"id":"cff70b6eaf6322abfdae3b07","category":"info","title":"Study session","date":"2026-05-16","count":2},{"id":"6896775f82f21ec3df09b628","category":"info","title":"Game engine study","date":"2026-05-08","count":1},{"id":"afa08b65bfc089ee0e53ba6b","category":"info","title":"Mentoring","date":"2026-05-02","count":1},{"id":"5cd5ef01da797fcb55a8367d","category":"info","title":"Mentoring","date":"2026-04-30","count":2},{"id":"ec03042ac24b411996f417a5","category":"info","title":"Game design activity","date":"2026-04-12","count":3},{"id":"759d3cc4b9b1371bf75b7a3c","category":"info","title":"Mentoring","date":"2026-04-11","count":1},{"id":"06034b88e971d86f2eb408fb","category":"news","title":"Board game meetup","date":"2026-04-10","count":2},{"id":"569863f15cc10852f4e5dff8","category":"info","title":"Photo record","date":"2026-04-09","count":2},{"id":"01b84573dad10cfcdcf8d204","category":"info","title":"Mentoring","date":"2026-04-09","count":1},{"id":"297c2473ef079b72cec914b8","category":"info","title":"Game design activity","date":"2026-04-05","count":1},{"id":"4ff4ee97b74df0aa41aec9fc","category":"info","title":"Mentoring","date":"2026-04-02","count":1},{"id":"18f68f3f9a15fe48023fa5af","category":"info","title":"Data structures study","date":"2026-04-01","count":1},{"id":"da7f9cce761b339721097d38","category":"info","title":"Computer science study","date":"2026-03-31","count":3},{"id":"097a902eb5a61c55dfd026c6","category":"info","title":"Game design activity","date":"2026-03-29","count":1},{"id":"fb16f288fe783c77d42085f9","category":"news","title":"UNIDEV general meeting","date":"2026-03-28","count":2},{"id":"4561121e8ef6e7afc5700695","category":"info","title":"Mentoring materials","date":"2026-03-28","count":1},{"id":"9557d874b37cb1cd07e7882b","category":"info","title":"Mentoring","date":"2026-03-26","count":1},{"id":"c1d0bbe782e5808c2dafbcc5","category":"info","title":"Game design activity","date":"2026-03-22","count":1},{"id":"7f01f7901b9521f65456b642","category":"news","title":"Club dinner","date":"2026-03-17","count":3},{"id":"3ae6de03ea07ab526da0ac51","category":"news","title":"Neople meetup planning","date":null,"count":1},{"id":"f297841295967b9c165eb171","category":"news","title":"NC company visit","date":null,"count":2},{"id":"699a9b6d366e0a1a6b07a4f2","category":"info","title":"Mentoring","date":null,"count":1},{"id":"3cdb7e72bebfee705326d931","category":"news","title":"IDCON talk","date":null,"count":1},{"id":"dba35a73e11af3fe45b26c1e","category":"info","title":"Graphics mentoring","date":null,"count":1},{"id":"a3534621aa0ef797ede9e18e","category":"news","title":"Graduation project playtest","date":null,"count":2},{"id":"01c9204910bf964ad5821e5a","category":"info","title":"Data structures study","date":null,"count":2},{"id":"10e4ee1cb25fc1ebd33bedf8","category":"info","title":"Computer science study orientation","date":null,"count":2},{"id":"f37783619168966a1845b419","category":"info","title":"Computer science study","date":null,"count":1}]</script><script>(() => {
+<script type="application/json" id="archive-feed">[{"id":"86f7de6a1bd0d59e1261434e","category":"info","title":"OpenGL study","date":"2026-11-09","count":3},{"id":"5b9f67315eef38c159aa53c5","category":"news","title":"Unicode internal conference","date":"2026-11-07","count":6},{"id":"0067a9a426e4c8bda701f75c","category":"news","title":"Game jam team formation","date":"2026-11-06","count":6,"image":{"src":"media/gamejam-20261106.jpg","alt":"AI_DIOTS 안내판 옆 노트북에 실행된 모두의 카페","caption":"게임잼 참가 팀빌딩에서 기록한 모두의 카페와 AI_DIOTS 현장","sourceName":"26-2 게임잼_참가팀빌딩3_20261106.jpg"}},{"id":"1166b0e617e80888baff6c3f","category":"news","title":"Game jam team formation","date":"2026-11-05","count":4},{"id":"df64033f5828107288ffd0a1","category":"info","title":"OpenGL mentoring","date":"2026-10-26","count":1},{"id":"df5f14a92f5df9fee407203d","category":"info","title":"Study session","date":"2026-10-22","count":2},{"id":"2b2ecd387a76acd90ccf48b4","category":"news","title":"AI hackathon game jam meeting","date":"2026-10-09","count":1},{"id":"79fd06b0529e533824280718","category":"info","title":"Study session","date":"2026-10-08","count":4},{"id":"3999ca0626723df05fd3f17c","category":"news","title":"UNIDEV representatives meeting","date":"2026-10-06","count":1},{"id":"977e683f8936841cc4603376","category":"info","title":"OpenGL study","date":"2026-10-01","count":2},{"id":"e788ccc5009eafaa4bb2aa1d","category":"info","title":"OpenGL study","date":"2026-09-28","count":2},{"id":"889c88de45cd0bb93118b39b","category":"info","title":"OpenGL study","date":"2026-09-21","count":1},{"id":"b232ce0b3e1be1d32a9da1ea","category":"news","title":"Dev-Commit orientation","date":"2026-09-19","count":1},{"id":"13f2ae90277dde91c757d4a9","category":"info","title":"Mentoring","date":"2026-09-18","count":1},{"id":"f481e9dc07dd2815be875421","category":"info","title":"Study session","date":"2026-09-17","count":2},{"id":"17c70aeba55112da6460fbf5","category":"info","title":"Design lecture presentation","date":"2026-09-17","count":1},{"id":"f8606bfb373cf0386be03a8b","category":"info","title":"Photo record","date":"2026-09-16","count":1},{"id":"c71c29eceba7d2ed50fd1a17","category":"info","title":"Study orientation","date":"2026-09-12","count":1},{"id":"7228aa6ed8b3fa3184de0636","category":"info","title":"Photo record","date":"2026-09-10","count":2},{"id":"35cbfbac707b6f84c4a1841b","category":"news","title":"Club meetup","date":"2026-09-04","count":1,"image":{"src":"media/meetup-20260904.jpg","alt":"야외에서 함께 촬영한 동아리 교류회 단체사진","caption":"2026.09.04 · 동아리 교류회 단체사진"}},{"id":"bdf3b38b633311ec76ae108b","category":"news","title":"Club dinner","date":"2026-09-04","count":5},{"id":"3bbdc4c9346a4a8dc53c3e7b","category":"info","title":"WARP mentoring","date":"2026-09-03","count":1},{"id":"6dbe11a07d97b32cc2393a73","category":"info","title":"Study session","date":"2026-09-03","count":2},{"id":"adaa0d0671b2c4301dc2c0d6","category":"info","title":"Operating systems mentoring","date":"2026-08-27","count":1},{"id":"bc5b54865f2cf59fb02466e4","category":"news","title":"Unicon game demo","date":"2026-08-25","count":10},{"id":"0dcd3de1d7eebc6aff1e36c0","category":"news","title":"Unicon","date":"2026-08-25","count":2},{"id":"3f280ec059fd81509321b259","category":"news","title":"Level Up live development","date":"2026-08-24","count":1},{"id":"0d0baa6b841bd5ce384b7fd0","category":"news","title":"Level Up build submission","date":"2026-08-21","count":1},{"id":"a76f01d33436f38394d03e0a","category":"news","title":"Level Up session","date":"2026-08-19","count":2},{"id":"d770f3dc275acdb44f740fa2","category":"news","title":"Club meetup","date":"2026-08-19","count":1},{"id":"cedff9aa24bd6bd5125b9ab6","category":"info","title":"Graphics mentoring","date":"2026-08-18","count":1},{"id":"92aab58a145f0a3d08ed1007","category":"news","title":"Level Up session","date":"2026-08-16","count":2},{"id":"f26ac0532793f9919de97d8a","category":"info","title":"Operating systems mentoring","date":"2026-08-13","count":3},{"id":"bbe51c4697372bdc12e11c2a","category":"news","title":"Game demo at the club meetup","date":"2026-08-12","count":2},{"id":"5a132864b38d66d1fd3c61c4","category":"news","title":"Club meetup","date":"2026-08-12","count":2},{"id":"33b66d2cffbc8e93e51a7ce4","category":"news","title":"Unity Networking Day","date":"2026-08-08","count":3},{"id":"a6acc8b491992fb251a8fa0b","category":"news","title":"Level Up session","date":"2026-08-07","count":1},{"id":"4344c8240b7d3a7164531e68","category":"info","title":"Operating systems mentoring","date":"2026-08-06","count":2},{"id":"ee5b4c830f4f68d156f91ab5","category":"news","title":"Club meetup","date":"2026-08-05","count":2},{"id":"650db89317b61ea03cc9f3fe","category":"info","title":"Graphics mentoring","date":"2026-08-04","count":1},{"id":"b0e37632efc0050ee55b926a","category":"news","title":"Club meetup","date":null,"count":1,"month":"2026-08","datePrecision":"month"},{"id":"53bfd7dbcbfd2301119aad30","category":"news","title":"Level Up session","date":"2026-07-31","count":2},{"id":"6f7b95168c3666223f0f8a4d","category":"info","title":"Operating systems mentoring","date":"2026-07-30","count":1},{"id":"08f5441f0003e25a0ff22d2f","category":"news","title":"Club meetup","date":"2026-07-29","count":1},{"id":"e7bd90278d45005112c394e1","category":"news","title":"Level Up session","date":"2026-07-25","count":2},{"id":"218da21496204c667433ea25","category":"news","title":"Level Up session","date":"2026-07-24","count":2},{"id":"5ff7274a9af2b5a53a509fb4","category":"info","title":"Operating systems mentoring","date":"2026-07-23","count":1},{"id":"e89903e901a3f640b8b622ea","category":"info","title":"Study session","date":"2026-07-22","count":1},{"id":"981e9b8c8d3401170a42aa28","category":"news","title":"Social game session","date":"2026-07-21","count":1},{"id":"c1f96f2eb20ac0aa2eaabc49","category":"news","title":"Level Up session","date":"2026-07-18","count":2},{"id":"e9c9729b7ed22995e0e6e381","category":"news","title":"NC company visit","date":"2026-07-15","count":5,"image":{"src":"media/nc-20260715.jpg","alt":"NC 전시물 앞에서 함께 촬영한 동아리 단체사진","caption":"2026.07.15 · NC 기업탐방 단체사진"}},{"id":"14430857559e0fe7c0be440a","category":"news","title":"Club meetup","date":"2026-07-15","count":1},{"id":"9ba094dd01dcf46f64b16180","category":"info","title":"Study session","date":"2026-07-12","count":1},{"id":"5b60fc293f7cb79727a16512","category":"news","title":"Level Up session","date":"2026-07-10","count":2},{"id":"0634e8a3273a099ab149d68a","category":"info","title":"Study orientation","date":"2026-07-08","count":1},{"id":"b99231178d1268393e5cbf41","category":"info","title":"Challenge recap","date":"2026-07-06","count":1},{"id":"d4b4c408b82bd13d800623e8","category":"info","title":"Photo record","date":"2026-07-04","count":1},{"id":"c769a4c3f12fc4f20036a0d4","category":"news","title":"IDCON talk","date":"2026-07-04","count":2},{"id":"aa4fa8611985024024672bfe","category":"info","title":"Photo record","date":"2026-07-03","count":1},{"id":"97be55cd04892d070311273d","category":"news","title":"Level Up session","date":"2026-07-03","count":2},{"id":"29f4b1ed8ff674ba6846bf31","category":"info","title":"Club challenge","date":"2026-07-02","count":1},{"id":"e7b85a97847aeb116ff4aad6","category":"news","title":"Level Up session","date":"2026-06-25","count":2},{"id":"0d3895e698092ed6270dba5c","category":"news","title":"Level Up session","date":"2026-06-19","count":2},{"id":"f2abeb4023f0a861ba67e371","category":"info","title":"Game design activity","date":"2026-05-31","count":1},{"id":"c60625b534c258c4e4ba935a","category":"info","title":"Mentoring","date":"2026-05-30","count":1},{"id":"09ff0d7c67b436f100b080d2","category":"info","title":"Game engine study","date":"2026-05-29","count":1},{"id":"22e83bd9a73c77c7e2ac3aea","category":"info","title":"Mentoring","date":"2026-05-26","count":1},{"id":"183fc806a41a73912546807f","category":"news","title":"PlayX4","date":"2026-05-23","count":17,"image":{"src":"media/playx4-20260523.jpg","alt":"PlayX4 전시장 로비에서 촬영한 동아리 단체사진","caption":"2026.05.23 · PlayX4 방문 단체사진"}},{"id":"9764d2c4e40b81c6ad892743","category":"info","title":"Photo record","date":"2026-05-23","count":1},{"id":"b4b7a6e659b840b804331428","category":"info","title":"Photo record","date":"2026-05-22","count":1},{"id":"cff70b6eaf6322abfdae3b07","category":"info","title":"Study session","date":"2026-05-16","count":2},{"id":"6896775f82f21ec3df09b628","category":"info","title":"Game engine study","date":"2026-05-08","count":1},{"id":"afa08b65bfc089ee0e53ba6b","category":"info","title":"Mentoring","date":"2026-05-02","count":1},{"id":"5cd5ef01da797fcb55a8367d","category":"info","title":"Mentoring","date":"2026-04-30","count":2},{"id":"ec03042ac24b411996f417a5","category":"info","title":"Game design activity","date":"2026-04-12","count":3},{"id":"759d3cc4b9b1371bf75b7a3c","category":"info","title":"Mentoring","date":"2026-04-11","count":1},{"id":"06034b88e971d86f2eb408fb","category":"news","title":"Board game meetup","date":"2026-04-10","count":2},{"id":"569863f15cc10852f4e5dff8","category":"info","title":"Photo record","date":"2026-04-09","count":2},{"id":"01b84573dad10cfcdcf8d204","category":"info","title":"Mentoring","date":"2026-04-09","count":1},{"id":"297c2473ef079b72cec914b8","category":"info","title":"Game design activity","date":"2026-04-05","count":1},{"id":"4ff4ee97b74df0aa41aec9fc","category":"info","title":"Mentoring","date":"2026-04-02","count":1},{"id":"18f68f3f9a15fe48023fa5af","category":"info","title":"Data structures study","date":"2026-04-01","count":1},{"id":"da7f9cce761b339721097d38","category":"info","title":"Computer science study","date":"2026-03-31","count":3},{"id":"097a902eb5a61c55dfd026c6","category":"info","title":"Game design activity","date":"2026-03-29","count":1},{"id":"fb16f288fe783c77d42085f9","category":"news","title":"UNIDEV general meeting","date":"2026-03-28","count":2},{"id":"4561121e8ef6e7afc5700695","category":"info","title":"Mentoring materials","date":"2026-03-28","count":1},{"id":"9557d874b37cb1cd07e7882b","category":"info","title":"Mentoring","date":"2026-03-26","count":1},{"id":"c1d0bbe782e5808c2dafbcc5","category":"info","title":"Game design activity","date":"2026-03-22","count":1},{"id":"7f01f7901b9521f65456b642","category":"news","title":"Club dinner","date":"2026-03-17","count":3},{"id":"3ae6de03ea07ab526da0ac51","category":"news","title":"Neople meetup planning","date":null,"count":1},{"id":"f297841295967b9c165eb171","category":"news","title":"NC company visit","date":null,"count":2},{"id":"699a9b6d366e0a1a6b07a4f2","category":"info","title":"Mentoring","date":null,"count":1},{"id":"3cdb7e72bebfee705326d931","category":"news","title":"IDCON talk","date":null,"count":1},{"id":"dba35a73e11af3fe45b26c1e","category":"info","title":"Graphics mentoring","date":null,"count":1},{"id":"a3534621aa0ef797ede9e18e","category":"news","title":"Graduation project playtest","date":null,"count":2},{"id":"01c9204910bf964ad5821e5a","category":"info","title":"Data structures study","date":null,"count":2},{"id":"10e4ee1cb25fc1ebd33bedf8","category":"info","title":"Computer science study orientation","date":null,"count":2},{"id":"f37783619168966a1845b419","category":"info","title":"Computer science study","date":null,"count":1}]</script><script>(() => {
   'use strict';
   const byId = id => document.getElementById(id);
   const feed = JSON.parse(byId('archive-feed').textContent);
@@ -352,7 +439,9 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
     panel.setAttribute('data-story-scope', 'all-records');
     range.min = '0'; range.max = String(stages.length - 1); range.step = '1';
     range.disabled = false;
-    story = {panel, range, play, stages, pixels, stage: stages.length - 1, playing: false, frame: null, revision: 0};
+    story = {panel, range, play, stages, pixels, stage: stages.length - 1, playing: false,
+      intent: false, automatic: false, inView: true, pageSuspended: false, elapsed: 0,
+      previous: null, frame: null, revision: 0};
     const undatedPhotos = undated.reduce((sum, row) => sum + row.count, 0);
     function showStage(index, animate = true) {
       cancelPixelMotion();
@@ -375,60 +464,108 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
         const active = pixel.stage <= story.stage;
         const isNew = active && pixel.stage === story.stage;
         pixel.node.className = 'pixel-dot' + (active ? ' is-active' : '') + (isNew ? ' is-new' : '');
-        if (animate && active && pixel.stage > previous) animatePixel(pixel.node, newIndex++);
+        if (animate && story.inView && !story.pageSuspended && active && pixel.stage > previous) animatePixel(pixel.node, newIndex++);
       }
       updateStoryButton();
     }
     story.show = showStage;
     play.addEventListener('click', () => {
       syncMotion();
-      if (story.playing) {pauseStory(); return;}
+      story.automatic = false;
+      if (story.intent) {pauseStory(); return;}
       if (!canAnimate()) return;
-      if (story.stage === stages.length - 1) showStage(0, false);
-      story.playing = true;
-      updateStoryButton();
-      const revision = ++story.revision;
-      let previous = null, elapsed = 0;
-      const tick = now => {
-        if (revision !== story.revision || !story.playing) return;
-        syncMotion();
-        if (revision !== story.revision || !story.playing) return;
-        if (!canAnimate()) {pauseStory(); return;}
-        if (previous !== null) elapsed += now - previous;
-        previous = now;
-        if (elapsed >= 850) {
-          elapsed %= 850;
-          showStage(story.stage + 1);
-          if (story.stage === stages.length - 1) {pauseStory(); return;}
-        }
-        story.frame = window.requestAnimationFrame(tick);
-      };
-      story.frame = window.requestAnimationFrame(tick);
+      if (story.stage === stages.length - 1) {story.elapsed = 0; showStage(0, false);}
+      story.intent = true;
+      refreshStoryVisibility();
     });
     range.addEventListener('input', () => {
+      const next = Number(range.value);
+      story.automatic = false;
       syncMotion();
       pauseStory();
-      const next = Number(range.value);
+      story.elapsed = 0;
       if (Number.isFinite(next)) showStage(Math.round(next));
     });
-    showStage(stages.length - 1, false);
-    // Brief entrance, not an invented number count-up or an auto-playing story.
-    pixels.forEach((pixel, index) => animatePixel(pixel.node, index));
+    // A fresh document plays once from the first real month. System/site motion
+    // preferences keep the complete static summary instead of partial content.
+    story.automatic = motionEnabled() && typeof window.requestAnimationFrame === 'function' && stages.length > 1;
+    story.intent = story.automatic;
+    story.inView = storyOnscreen();
+    showStage(story.automatic ? 0 : stages.length - 1, false);
+    if (story.automatic && story.inView && !document.hidden)
+      pixels.filter(pixel => pixel.stage === 0).forEach((pixel, index) => animatePixel(pixel.node, index));
+    resumeStory();
+    if (typeof window.IntersectionObserver === 'function') {
+      const observer = new window.IntersectionObserver(entries => {
+        for (const entry of entries) if (entry.target === panel) {
+          story.inView = entry.isIntersecting && entry.intersectionRatio > 0;
+          if (story.inView) resumeStory();
+          else pauseStory(true);
+        }
+      }, {threshold: 0});
+      observer.observe(panel);
+    } else window.addEventListener('scroll', refreshStoryVisibility, {passive: true});
+    window.addEventListener('resize', refreshStoryVisibility, {passive: true});
+  }
+  function storyOnscreen() {
+    if (!story || typeof story.panel.getBoundingClientRect !== 'function') return true;
+    const rect = story.panel.getBoundingClientRect();
+    const height = window.innerHeight || document.documentElement.clientHeight;
+    const width = window.innerWidth || document.documentElement.clientWidth;
+    return rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.right > 0 && rect.top < height && rect.left < width;
+  }
+  function refreshStoryVisibility() {
+    if (!story) return;
+    story.inView = storyOnscreen();
+    if (story.inView) resumeStory();
+    else pauseStory(true);
+  }
+  function resumeStory() {
+    if (!story || story.playing || !story.intent) return;
+    if (!canAnimate() || !story.inView || story.pageSuspended) {updateStoryButton(); return;}
+    story.playing = true;
+    story.previous = null;
+    updateStoryButton();
+    const revision = ++story.revision;
+    const tick = now => {
+      if (revision !== story.revision || !story.playing) return;
+      syncMotion();
+      if (revision !== story.revision || !story.playing) return;
+      if (!canAnimate() || !story.inView || story.pageSuspended) {pauseStory(true); return;}
+      if (story.previous !== null) story.elapsed += now - story.previous;
+      story.previous = now;
+      if (story.elapsed >= 850) {
+        story.elapsed %= 850;
+        story.show(story.stage + 1);
+        if (story.stage === story.stages.length - 1) {
+          story.automatic = false;
+          story.elapsed = 0;
+          pauseStory(false, true);
+          return;
+        }
+      }
+      story.frame = window.requestAnimationFrame(tick);
+    };
+    story.frame = window.requestAnimationFrame(tick);
   }
   function updateStoryButton() {
     if (!story) return;
-    story.play.textContent = story.playing ? '잠시 멈춤' : story.stage === story.stages.length - 1 ? '처음부터 재생' : '이어서 재생';
-    story.play.setAttribute('aria-pressed', String(story.playing));
+    story.play.textContent = story.intent ? '잠시 멈춤' : story.stage === story.stages.length - 1 ? '처음부터 재생' : '이어서 재생';
+    story.play.setAttribute('aria-pressed', String(story.intent));
     story.play.disabled = !motionEnabled() || typeof window.requestAnimationFrame !== 'function';
     story.play.title = motionEnabled() ? '월별 누적 활동 기록 재생' : '모션이 꺼져 있습니다. 슬라이더로 기록을 탐색할 수 있습니다.';
     story.panel.setAttribute('data-playing', String(story.playing));
+    story.panel.setAttribute('data-resume-pending', String(story.intent && !story.playing));
   }
-  function pauseStory() {
+  function pauseStory(retainIntent = false, finishPixels = false) {
     if (!story) return;
     story.playing = false;
+    if (!retainIntent) story.intent = false;
+    story.previous = null;
     story.revision++;
     if (story.frame !== null) window.cancelAnimationFrame?.(story.frame);
     story.frame = null;
+    if (!finishPixels) cancelPixelMotion();
     updateStoryButton();
   }
   function syncMotion() {
@@ -448,7 +585,16 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
       toggle.disabled = systemReduced;
       toggle.title = systemReduced ? '기기의 모션 줄이기 설정을 따릅니다.' : '페이지 전체 모션 켜기 또는 끄기';
     }
-    if (!enabled) {pauseStory(); cancelBarMotion(true); cancelPixelMotion();}
+    if (!enabled) {
+      const finishEntry = story?.automatic && story.intent;
+      pauseStory();
+      if (finishEntry) {
+        story.automatic = false;
+        story.elapsed = 0;
+        story.show(story.stages.length - 1, false);
+      }
+      cancelBarMotion(true); cancelPixelMotion();
+    }
     updateStoryButton();
     window.dispatchEvent(new CustomEvent('archive-motion-change', {detail: {enabled}}));
     return enabled;
@@ -603,13 +749,19 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
   if (reducedMotion?.addEventListener) reducedMotion.addEventListener('change', syncMotion);
   else reducedMotion?.addListener?.(syncMotion);
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {stopMotionChecks(); pauseStory(); cancelBarMotion(true); cancelPixelMotion();}
-    else {syncMotion(); startMotionChecks();}
+    if (document.hidden) {stopMotionChecks(); pauseStory(true); cancelBarMotion(true); cancelPixelMotion();}
+    else {syncMotion(); refreshStoryVisibility(); startMotionChecks();}
   });
   window.addEventListener('pagehide', () => {
-    stopMotionChecks(); pauseStory(); cancelBarMotion(true); cancelPixelMotion();
+    if (story) story.pageSuspended = true;
+    stopMotionChecks(); pauseStory(true); cancelBarMotion(true); cancelPixelMotion();
   });
-  window.addEventListener('pageshow', () => {syncMotion(); startMotionChecks();});
+  // BFCache restores this document's progress and user choices. Only a genuinely
+  // new page load creates another automatic run; hash navigation never does.
+  window.addEventListener('pageshow', () => {
+    if (story) story.pageSuspended = false;
+    syncMotion(); refreshStoryVisibility(); startMotionChecks();
+  });
   window.addEventListener('focus', syncMotion);
   const tino = byId('tino');
   const fallback = () => {tino.hidden = true; tino.nextElementSibling.hidden = false;};
@@ -624,6 +776,155 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
   startMotionChecks();
 })();
 
+</script><script>(() => {
+  'use strict';
+  const root = document.getElementById('field-notes');
+  if (!root || root.getAttribute('data-enhanced') === 'true') return;
+  const viewport = document.getElementById('field-notes-slides');
+  const controls = document.getElementById('field-notes-controls');
+  const prev = document.getElementById('field-notes-prev');
+  const next = document.getElementById('field-notes-next');
+  const count = document.getElementById('field-notes-count');
+  const status = document.getElementById('field-notes-status');
+  const help = document.getElementById('field-notes-help');
+  if (!viewport || !controls || !prev || !next || !count || !status || !help) return;
+  const slides = [...viewport.querySelectorAll('[data-field-note]')];
+  const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+  let index = 0, fade = null, touch = null, suppressClickUntil = 0, measuredWidth = -1;
+  const motionAllowed = () => !reduced?.matches && !document.hidden &&
+    document.documentElement.getAttribute('data-motion') !== 'off';
+  const stopFade = () => {if (fade) fade.cancel(); fade = null;};
+  root.setAttribute('data-count', String(slides.length));
+  root.setAttribute('data-index', slides.length ? '0' : '-1');
+  if (!slides.length) return;
+
+  const pictures = slides.map(slide => {
+    const image = slide.querySelector('img');
+    const link = slide.querySelector('.field-note-media');
+    const loading = slide.querySelector('.field-note-loading');
+    const error = slide.querySelector('.field-note-error');
+    if (!image || !link || !loading || !error) return null;
+    function loaded(ok) {
+      link.setAttribute('data-load-state', ok ? 'ready' : 'error');
+      image.hidden = !ok;
+      loading.hidden = true;
+      error.hidden = ok;
+    }
+    image.addEventListener('load', () => loaded(image.naturalWidth > 0));
+    image.addEventListener('error', () => loaded(false));
+    if (image.complete) loaded(image.naturalWidth > 0);
+    else {link.setAttribute('data-load-state', 'loading'); loading.hidden = false;}
+    return image;
+  });
+  function reserveHeight() {
+    // This runs synchronously, never paints duplicate visible slides and never
+    // makes hidden links focusable. The media boxes have a fixed aspect ratio.
+    root.setAttribute('data-measuring', '');
+    const height = Math.max(...slides.map(slide => slide.getBoundingClientRect().height));
+    root.removeAttribute('data-measuring');
+    if (height > 0) viewport.style.setProperty('--field-notes-height', Math.ceil(height) + 'px');
+    measuredWidth = viewport.getBoundingClientRect().width;
+  }
+  function show(value, announce = false) {
+    const selected = (value % slides.length + slides.length) % slides.length;
+    const changed = selected !== index;
+    stopFade();
+    index = selected;
+    slides.forEach((slide, position) => {
+      const active = position === index;
+      slide.hidden = !active;
+      slide.inert = !active;
+      if (active) slide.removeAttribute('aria-hidden');
+      else slide.setAttribute('aria-hidden', 'true');
+    });
+    if (pictures[index]) pictures[index].loading = 'eager';
+    root.setAttribute('data-index', String(index));
+    count.textContent = (index + 1) + ' / ' + slides.length;
+    if (announce && changed) {
+      const title = slides[index].querySelector('h3')?.textContent.trim() || '대표사진';
+      const date = slides[index].querySelector('.kicker')?.textContent.trim() || '';
+      status.textContent = (index + 1) + ' / ' + slides.length + ' · ' + title + (date ? ' · ' + date : '');
+      if (motionAllowed() && typeof slides[index].animate === 'function') {
+        fade = slides[index].animate([{opacity: .6}, {opacity: 1}], {duration: 160, easing: 'ease-out'});
+      }
+    }
+  }
+  slides.forEach((slide, position) => {
+    slide.setAttribute('role', 'group');
+    slide.setAttribute('aria-roledescription', '슬라이드');
+    slide.setAttribute('aria-label', (position + 1) + ' / ' + slides.length);
+  });
+  root.setAttribute('data-enhanced', 'true');
+  root.setAttribute('role', 'group');
+  root.setAttribute('aria-roledescription', '사진 모음');
+  controls.hidden = false;
+  prev.disabled = next.disabled = slides.length < 2;
+  if (slides.length > 1) {
+    root.tabIndex = 0;
+    root.setAttribute('aria-describedby', 'field-notes-help');
+  } else help.textContent = '등록된 대표사진 1개입니다.';
+  show(0);
+  reserveHeight();
+  prev.addEventListener('click', () => show(index - 1, true));
+  next.addEventListener('click', () => show(index + 1, true));
+  root.addEventListener('keydown', event => {
+    if (slides.length < 2 || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey ||
+        ![root, prev, next].includes(event.target)) return;
+    const destinations = {ArrowLeft: index - 1, ArrowRight: index + 1, Home: 0, End: slides.length - 1};
+    if (!Object.prototype.hasOwnProperty.call(destinations, event.key)) return;
+    event.preventDefault();
+    show(destinations[event.key], true);
+  });
+
+  // Native vertical scrolling and pinch zoom remain available. No touch event
+  // is canceled, and a second finger invalidates the entire gesture.
+  viewport.addEventListener('touchstart', event => {
+    suppressClickUntil = 0;
+    const point = event.touches[0];
+    touch = event.touches.length === 1 && slides.length > 1 ?
+      {id: point.identifier, x: point.clientX, y: point.clientY} : null;
+  }, {passive: true});
+  viewport.addEventListener('touchmove', event => {
+    if (!touch) return;
+    if (event.touches.length !== 1) {touch = null; return;}
+    const point = event.touches[0];
+    if (point.identifier !== touch.id) {touch = null; return;}
+    const dx = Math.abs(point.clientX - touch.x), dy = Math.abs(point.clientY - touch.y);
+    if (dy > 12 && dy >= dx * .8) touch = null;
+  }, {passive: true});
+  viewport.addEventListener('touchend', event => {
+    const start = touch;
+    touch = null;
+    if (!start || event.touches.length) return;
+    const point = [...event.changedTouches].find(item => item.identifier === start.id);
+    if (!point) return;
+    const dx = point.clientX - start.x, dy = point.clientY - start.y;
+    if (Math.abs(dx) < 48 || Math.abs(dx) <= Math.abs(dy) * 1.3) return;
+    suppressClickUntil = event.timeStamp + 500;
+    show(index + (dx < 0 ? 1 : -1), true);
+  }, {passive: true});
+  viewport.addEventListener('touchcancel', () => {touch = null;}, {passive: true});
+  viewport.addEventListener('click', event => {
+    if (event.detail > 0 && event.timeStamp <= suppressClickUntil) {
+      event.preventDefault(); event.stopPropagation(); suppressClickUntil = 0;
+    }
+  }, true);
+  const syncMotion = () => {if (!motionAllowed()) stopFade();};
+  window.addEventListener('archive-motion-change', syncMotion);
+  if (reduced?.addEventListener) reduced.addEventListener('change', syncMotion);
+  else reduced?.addListener?.(syncMotion);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {stopFade(); touch = null; suppressClickUntil = 0;}
+  });
+  window.addEventListener('pagehide', () => {stopFade(); touch = null;});
+  if (typeof window.ResizeObserver === 'function') {
+    const observer = new window.ResizeObserver(() => {
+      if (viewport.getBoundingClientRect().width !== measuredWidth) reserveHeight();
+    });
+    observer.observe(viewport);
+  } else window.addEventListener('resize', reserveHeight);
+  document.fonts?.ready?.then(reserveHeight);
+})();
 </script><script>/* Loading follows real asset readiness. No artificial minimum wait or fake progress. */
 (() => {
   'use strict';
@@ -722,7 +1023,7 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
   'use strict';
   const clamp = (n, low, high) => Math.max(low, Math.min(high, n));
   const finite = (n, fallback = 0) => Number.isFinite(n) ? n : fallback;
-  const FRAME_SELECTOR = '.hero, #story-panel, #dashboard, #games, .game-card, #updates, .update-card, #archive, .chart-card, .records, #awesome, .discord-status, .discord-category, #club, .club-description, .arcade-section, #runner-game, .foot-inner, .project-credits';
+  const FRAME_SELECTOR = '.hero, #story-panel, #dashboard, #games, .game-card, #updates, .update-card, #archive, .chart-card, .records, #awesome, .discord-status, .discord-category, #club, .club-description, .arcade-section, #runner-game, #angry-game, #defense-game, .foot-inner, .project-credits';
   const REVEAL_SELECTOR = '.section-heading, .game-card, .update-card, .club-description, #runner-game';
   const DRAG_THRESHOLD = 6, WALK_SPEED = 14, WALK_DURATION = 1600, IDLE_DELAY = 7000, MAX_PETS = 8;
   const GRAVITY = 1800;
@@ -791,7 +1092,7 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
     const nodes = [...document.querySelectorAll(FRAME_SELECTOR), floorNode];
     const frames = nodes.map((node, index) => {
       const key = node.id || 'frame-' + index;
-      const label = node.id === 'story-panel' ? '활동 기록 창' : node.id === 'runner-game' ? 'Tino Run 게임 창' : node === floorNode ? '페이지 바닥' :
+      const label = node.id === 'story-panel' ? '활동 기록 창' : node.id === 'runner-game' ? 'Tino Run 게임 창' : node.id === 'angry-game' ? '앵그리티노 게임 창' : node.id === 'defense-game' ? '티노 디펜스 게임 창' : node === floorNode ? '페이지 바닥' :
         node.getAttribute('aria-label') || node.querySelector('h1, h2, h3, h4')?.textContent.trim() || ({ dashboard: '활동 요약', updates: '근황', club: '동아리 소개' })[node.id] ||
         (node.classList.contains('records') ? '활동 타임라인' : node.classList.contains('discord-status') ? 'Discord 연결 현황' : node.classList.contains('club-description') ? '동아리 소개 글' : node.classList.contains('foot-inner') ? '하단 안내' : '안내 프레임 ' + (index + 1));
       const dropMode = frameDropMode(node);
@@ -1125,7 +1426,10 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
           (web.length ? '브라우저 플레이가 표시된 작품은 해당 버튼으로 실행할 수 있어요.' :
             '현재 작품은 Windows 다운로드로 안내되어 있고, 브라우저용 WebGL 빌드는 게시되어 있지 않아요. Windows EXE는 이 사이트에서 바로 실행할 수 없어요.') +
           (names.some(name => /coredawn/i.test(name)) ? ' CoreDawn은 실행 파일뿐 아니라 게임 데이터 폴더도 함께 받아야 해요.' : '') + ' 아래 각 게임의 안내와 다운로드를 확인해 주세요.';
-        visit('visit-games', '게임과 다운로드 보기', '#games'); visit('visit-runner', '여기서 Tino Run 해보기', '#runner-game');
+        visit('visit-games', '게임과 다운로드 보기', '#games');
+        const arcade = document.getElementById('tino-arcade');
+        if (arcade) answer.textContent += ' 사이트 아래에는 Tino Run, 앵그리티노, 티노 디펜스가 있고 이전·다음으로 선택한 뒤 직접 시작할 수 있어요.';
+        visit('visit-runner', arcade ? '미니게임 선택하러 가기' : '여기서 Tino Run 해보기', arcade ? '#tino-arcade' : '#runner-game');
       } else if (branch === 'activity') {
         // The story counters can be scrubbed. Totals in the published JSON stay authoritative.
         let feed; try { feed = JSON.parse(document.getElementById('archive-feed')?.textContent || '{}'); } catch (_) { feed = {}; }
@@ -1526,8 +1830,18 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
       else frame = root.requestAnimationFrame(tick);
     }
 
+    function visibleNow() {
+      var box = canvas.getBoundingClientRect();
+      if (doc.hidden || box.width <= 0 || box.height <= 0) return false;
+      var width = Math.max(0, Math.min(box.right, root.innerWidth) - Math.max(box.left, 0));
+      var height = Math.max(0, Math.min(box.bottom, root.innerHeight) - Math.max(box.top, 0));
+      return width * height / (box.width * box.height) >= 0.2;
+    }
+
     function startGame(restart) {
-      if (doc.hidden || !visible) return;
+      // A click may scroll into view before the observer delivers its next entry.
+      visible = visibleNow();
+      if (!visible) return;
       stopFrame();
       if (!restart && state.mode === 'paused') state = resume(state);
       else {
@@ -1701,7 +2015,8 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
     if (root.IntersectionObserver) {
       var observer = new root.IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-          visible = entry.isIntersecting && entry.intersectionRatio >= 0.2;
+          // Ignore stale queued entries after a deliberate scroll/start.
+          visible = visibleNow();
           if (!visible) pauseGame('화면을 벗어나 자동으로 멈췄어요.');
         });
       }, { threshold: [0, 0.2] });
@@ -1728,5 +2043,279 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
   if (root.document.readyState === 'loading') root.document.addEventListener('DOMContentLoaded', mount, { once: true });
   else mount();
 })(typeof window !== 'undefined' ? window : null);
+</script><script>/* Original Tino mini-games. Fixed-step physics, native controls, one active RAF. */
+(function (root) {
+  'use strict';
+  const W = 800, H = 400, STEP = 1 / 120;
+  const clamp = (n, a, b) => Math.max(a, Math.min(b, Number.isFinite(n) ? n : a));
+  const LEVELS = [
+    { targets: [[580, 342], [638, 342]], blocks: [[430, 305, 24, 55]] },
+    { targets: [[495, 342], [670, 342]], blocks: [[390, 280, 24, 80], [600, 310, 24, 50]] },
+    { targets: [[475, 342], [585, 342], [705, 342]], blocks: [[340, 292, 24, 68], [620, 280, 24, 80]] }
+  ];
+  function angryState(level = 0) {
+    level = Math.floor(clamp(level, 0, LEVELS.length - 1));
+    return { mode: 'ready', level, shots: 5, angle: 48, power: 65, projectile: null,
+      targets: LEVELS[level].targets.map(([x, y]) => ({ x, y, alive: true })),
+      blocks: LEVELS[level].blocks.map(([x, y, w, h]) => ({ x, y, w, h, alive: true })) };
+  }
+  function aimAngry(s, angle, power) { if (s.mode === 'playing' && !s.projectile) { s.angle = Math.round(clamp(angle, 15, 80)); s.power = Math.round(clamp(power, 30, 100)); } }
+  function launchAngry(s) {
+    if (s.mode !== 'playing' || s.projectile || s.shots <= 0) return false;
+    const a = s.angle * Math.PI / 180, speed = s.power * 6;
+    s.projectile = { x: 90, y: 300, vx: Math.cos(a) * speed, vy: -Math.sin(a) * speed, time: 0 }; s.shots--; return true;
+  }
+  function finishShot(s) { s.projectile = null; if (!s.targets.some(t => t.alive)) s.mode = 'won'; else if (!s.shots) s.mode = 'lost'; }
+  function angryStep(s, dt) {
+    if (s.mode !== 'playing' || !s.projectile) return;
+    for (let left = clamp(dt, 0, .1); left > 0 && s.projectile; left -= STEP) {
+      const d = Math.min(STEP, left), p = s.projectile; p.time += d; p.vy += 300 * d; p.x += p.vx * d; p.y += p.vy * d;
+      const target = s.targets.find(t => t.alive && Math.hypot(t.x - p.x, t.y - p.y) <= 31);
+      if (target) { for (const t of s.targets) if (Math.hypot(t.x - target.x, t.y - target.y) <= 72) t.alive = false; finishShot(s); break; }
+      for (const b of s.blocks) if (b.alive && p.x + 14 >= b.x && p.x - 14 <= b.x + b.w && p.y + 14 >= b.y && p.y - 14 <= b.y + b.h) {
+        b.alive = false; p.vx *= .7; p.vy = Math.min(p.vy, -70);
+      }
+      if (p.y >= 346 || p.x > W + 20 || p.x < -30 || p.time > 6) finishShot(s);
+    }
+  }
+  const PATH = [[-20, 190], [170, 190], [170, 235], [370, 235], [370, 150], [600, 150], [600, 230], [820, 230]];
+  const SLOTS = [[140, 100], [80, 300], [300, 320], [405, 65], [545, 305], [695, 130]];
+  const LENGTHS = PATH.slice(1).map((p, i) => Math.hypot(p[0] - PATH[i][0], p[1] - PATH[i][1]));
+  const PATH_LENGTH = LENGTHS.reduce((a, b) => a + b, 0);
+  function pathPoint(distance) {
+    for (let i = 0; i < LENGTHS.length; i++) { if (distance <= LENGTHS[i]) { const r = clamp(distance / LENGTHS[i], 0, 1); return { x: PATH[i][0] + (PATH[i + 1][0] - PATH[i][0]) * r, y: PATH[i][1] + (PATH[i + 1][1] - PATH[i][1]) * r }; } distance -= LENGTHS[i]; }
+    return { x: 820, y: 230 };
+  }
+  function defenseState() { return { mode: 'ready', health: 8, coins: 95, wave: 0, waveActive: false, pending: 0, spawn: 0, enemies: [], towers: Array(6).fill(null), selected: 0, type: 'basic', kills: 0, nextEnemy: 1 }; }
+  function towerStats(t) { return t.type === 'slow' ? { range: t.level === 2 ? 165 : 140, damage: t.level === 2 ? 1.2 : .5, cooldown: .85 } : { range: t.level === 2 ? 185 : 160, damage: t.level === 2 ? 2.2 : 1, cooldown: t.level === 2 ? .42 : .55 }; }
+  function buildTower(s) {
+    const cost = s.type === 'slow' ? 40 : 30;
+    if (s.mode !== 'playing' || s.towers[s.selected] || s.coins < cost) return false;
+    s.coins -= cost; s.towers[s.selected] = { type: s.type, level: 1, cooldown: 0, beam: null }; return true;
+  }
+  function upgradeTower(s) {
+    const t = s.towers[s.selected]; if (s.mode !== 'playing' || !t || t.level !== 1 || s.coins < 35) return false;
+    s.coins -= 35; t.level = 2; return true;
+  }
+  function startWave(s) { if (s.mode !== 'playing' || s.waveActive || s.wave >= 5) return false; s.wave++; s.waveActive = true; s.pending = 6 + s.wave * 2; s.spawn = 0; return true; }
+  function defenseStep(s, dt) {
+    if (s.mode !== 'playing' || !s.waveActive) return;
+    for (let left = clamp(dt, 0, .1); left > 0 && s.mode === 'playing' && s.waveActive; left -= STEP) {
+      const d = Math.min(STEP, left); s.spawn -= d;
+      if (s.pending && s.spawn <= 0) { const hp = 1.5 + s.wave * .7; s.enemies.push({ id: s.nextEnemy++, distance: 0, hp, max: hp, slow: 0 }); s.pending--; s.spawn += .85; }
+      for (const enemy of s.enemies) { enemy.distance += (74 + s.wave * 6) * (enemy.slow > 0 ? .5 : 1) * d; enemy.slow = Math.max(0, enemy.slow - d); }
+      for (let i = 0; i < s.towers.length; i++) {
+        const t = s.towers[i]; if (!t) continue;
+        t.cooldown -= d; if (t.beam) { t.beam.time -= d; if (t.beam.time <= 0) t.beam = null; }
+        if (t.cooldown > 0) continue;
+        const stats = towerStats(t), target = s.enemies.filter(e => e.hp > 0 && e.distance < PATH_LENGTH && Math.hypot(pathPoint(e.distance).x - SLOTS[i][0], pathPoint(e.distance).y - SLOTS[i][1]) <= stats.range).sort((a, b) => b.distance - a.distance)[0];
+        if (target) { target.hp -= stats.damage; if (t.type === 'slow') target.slow = 1.1; t.cooldown = stats.cooldown; t.beam = { ...pathPoint(target.distance), time: .1 }; }
+      }
+      s.enemies = s.enemies.filter(e => { if (e.hp <= 0) { s.coins += 8; s.kills++; return false; } if (e.distance >= PATH_LENGTH) { s.health--; return false; } return true; });
+      if (s.health <= 0) { s.health = 0; s.mode = 'lost'; s.waveActive = false; }
+      else if (!s.pending && !s.enemies.length) { s.waveActive = false; s.coins += 25; if (s.wave === 5) s.mode = 'won'; }
+    }
+  }
+  function startGame(s) { if (s.mode !== 'ready' && s.mode !== 'paused') return false; s.mode = 'playing'; return true; }
+  function pauseGame(s) { if (s.mode !== 'playing') return false; s.mode = 'paused'; return true; }
+  function mount(window) {
+    const doc = window.document, deck = doc.getElementById('tino-arcade'); if (!deck || deck.dataset.enhanced) return null;
+    const get = id => doc.getElementById(id), panels = ['run', 'angry', 'defense'].map(id => get('arcade-' + id));
+    if (panels.some(p => !p)) return null;
+    deck.dataset.enhanced = 'true'; get('arcade-navigation').hidden = false;
+    const names = ['Tino Run', '앵그리티노', '티노 디펜스'], cleanup = [], media = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    let index = -1, raf = null, previous = null, disposed = false, sheet = null;
+    const listen = (node, type, fn, options) => { node?.addEventListener(type, fn, options); cleanup.push(() => node?.removeEventListener(type, fn, options)); };
+    const text = (node, value) => { if (node && node.textContent !== value) node.textContent = value; };
+    const games = ['angry', 'defense'].map((id, n) => {
+      const canvas = get(id + '-canvas'); let context = null; try { context = canvas?.getContext('2d'); } catch (_) {}
+      return { id, canvas, context, panel: panels[n + 1], node: get(id + '-game'), state: n ? defenseState() : angryState(), pointer: null, paintPending: true };
+    });
+    const active = () => games[index - 1];
+    // Controls remain usable on short screens even when the canvas is above them.
+    const inView = node => { const b = node.getBoundingClientRect(); return b.width > 0 && b.bottom > 0 && b.top < window.innerHeight; };
+    const visible = g => !g.panel.hidden && inView(g.node);
+    const needsFrame = g => g?.context && g.state.mode === 'playing' && (g.id === 'angry' ? Boolean(g.state.projectile) : g.state.waveActive);
+    function cancelFrame() { if (raf !== null) window.cancelAnimationFrame(raf); raf = null; previous = null; }
+    function request() { if (!disposed && !doc.hidden && raf === null && needsFrame(active()) && visible(active())) raf = window.requestAnimationFrame(tick); }
+    function status(g, message) { text(get(g.id + '-status'), message); }
+    function cancelPointer(g, restore = true) {
+      const p = g.pointer; g.pointer = null; if (!p) return;
+      if (restore) { g.state.angle = p.angle; g.state.power = p.power; }
+      try { if (g.canvas.hasPointerCapture?.(p.id)) g.canvas.releasePointerCapture(p.id); } catch (_) {}
+    }
+    function pause(g, message = '일시 정지했어요. 계속하려면 게임 시작 버튼을 눌러 주세요.') {
+      if (!g) return; cancelPointer(g); if (pauseGame(g.state)) status(g, message); cancelFrame(); render(g);
+    }
+    function sync(g) {
+      const s = g.state, playing = s.mode === 'playing', ready = s.mode === 'ready', paused = s.mode === 'paused';
+      g.node.dataset.gameState = s.mode;
+      get(g.id + '-start').disabled = !g.context || (!ready && !paused); text(get(g.id + '-start'), paused ? '계속하기' : '게임 시작');
+      get(g.id + '-pause').disabled = !playing; get(g.id + '-reset').disabled = !g.context;
+      if (g.id === 'angry') {
+        const aim = playing && !s.projectile;
+        for (const id of ['angle', 'power', 'fire']) get('angry-' + id).disabled = !aim;
+        get('angry-angle').value = String(s.angle); get('angry-power').value = String(s.power);
+        text(get('angry-angle-value'), s.angle + '°'); text(get('angry-power-value'), s.power + '%');
+        get('angry-next-level').disabled = s.mode !== 'won';
+        text(get('angry-score'), '스테이지 ' + (s.level + 1) + ' / 3 · 발사 ' + s.shots + '회 · 목표 ' + s.targets.filter(t => t.alive).length + '개');
+      } else {
+        const tower = s.towers[s.selected]; get('defense-slot').value = String(s.selected); get('defense-type').value = s.type;
+        get('defense-slot').disabled = !playing; get('defense-type').disabled = !playing;
+        get('defense-build').disabled = !playing || Boolean(tower) || s.coins < (s.type === 'slow' ? 40 : 30);
+        get('defense-upgrade').disabled = !playing || !tower || tower.level === 2 || s.coins < 35;
+        get('defense-wave').disabled = !playing || s.waveActive || s.wave >= 5;
+        text(get('defense-score'), '웨이브 ' + s.wave + ' / 5 · 생명 ' + s.health + ' · 코인 ' + s.coins + ' · 처치 ' + s.kills);
+      }
+    }
+    function sprite(ctx, x, y, size = 40) {
+      if (sheet?.complete && sheet.naturalWidth) ctx.drawImage(sheet, 87, 57, 334, 379, x - size / 2, y - size * .7, size, size * 1.13);
+      else { ctx.fillStyle = '#315b91'; ctx.fillRect(x - size / 2, y - size / 2, size, size); ctx.fillStyle = '#fffef9'; ctx.fillRect(x - size / 4, y - size / 4, size / 2, size / 2); }
+    }
+    function draw(g) {
+      g.paintPending = true;
+      if (!g.context || g.panel.hidden || !inView(g.canvas)) return;
+      g.paintPending = false;
+      const ctx = g.context, s = g.state, b = g.canvas.getBoundingClientRect();
+      const pixels = Math.max(320, Math.min(1600, Math.round(b.width * Math.min(2, window.devicePixelRatio || 1))));
+      if (g.canvas.width !== pixels) { g.canvas.width = pixels; g.canvas.height = pixels / 2; }
+      ctx.setTransform(pixels / W, 0, 0, pixels / W, 0, 0); ctx.clearRect(0, 0, W, H); ctx.fillStyle = '#f5f3e9'; ctx.fillRect(0, 0, W, H);
+      // Keep world labels legible after a small canvas is scaled to phone width.
+      const labelSize = Math.max(18, Math.min(44, 14 * W / Math.max(240, b.width)));
+      ctx.font = 'bold ' + labelSize + 'px sans-serif'; ctx.textAlign = 'center';
+      if (g.id === 'angry') {
+        ctx.fillStyle = '#dbe7d6'; ctx.fillRect(0, 360, W, 40); ctx.fillStyle = '#8a6147'; ctx.fillRect(82, 307, 16, 53);
+        for (const block of s.blocks) if (block.alive) { ctx.fillStyle = '#a67950'; ctx.fillRect(block.x, block.y, block.w, block.h); ctx.strokeStyle = '#735438'; ctx.strokeRect(block.x, block.y, block.w, block.h); }
+        for (const target of s.targets) if (target.alive) { ctx.fillStyle = '#d87352'; ctx.fillRect(target.x - 17, target.y - 17, 34, 34); ctx.fillStyle = '#20344b'; ctx.fillRect(target.x - 9, target.y - 5, 5, 5); ctx.fillRect(target.x + 4, target.y - 5, 5, 5); }
+        if (s.projectile) sprite(ctx, s.projectile.x, s.projectile.y, 32);
+        else { sprite(ctx, 90, 300, 40); const a = s.angle * Math.PI / 180; ctx.strokeStyle = '#214bc0'; ctx.lineWidth = 3; ctx.setLineDash([6, 6]); ctx.beginPath(); ctx.moveTo(90, 300); ctx.lineTo(90 + Math.cos(a) * s.power * 1.3, 300 - Math.sin(a) * s.power * 1.3); ctx.stroke(); ctx.setLineDash([]); }
+      } else {
+        ctx.strokeStyle = '#d5c4a4'; ctx.lineWidth = 34; ctx.lineJoin = 'round'; ctx.beginPath(); PATH.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke();
+        ctx.fillStyle = '#20344b'; ctx.fillText('입구', 50, 158); ctx.fillText('도착', 750, 278);
+        for (let i = 0; i < SLOTS.length; i++) {
+          const [x, y] = SLOTS[i], t = s.towers[i]; ctx.fillStyle = i === s.selected ? '#c4d9f4' : '#e3e9dd'; ctx.fillRect(x - 26, y - 26, 52, 52); ctx.strokeStyle = i === s.selected ? '#214bc0' : '#7c8b7e'; ctx.lineWidth = i === s.selected ? 3 : 1; ctx.strokeRect(x - 26, y - 26, 52, 52);
+          if (t) { sprite(ctx, x, y, 34); ctx.fillStyle = t.type === 'slow' ? '#276873' : '#20344b'; ctx.fillText((t.type === 'slow' ? 'S' : 'T') + t.level, x, y + 46); if (t.beam && !media?.matches && doc.documentElement.dataset.motion !== 'off') { ctx.strokeStyle = t.type === 'slow' ? '#276873' : '#e48647'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(t.beam.x, t.beam.y); ctx.stroke(); } }
+          else { ctx.fillStyle = '#20344b'; ctx.fillText(String(i + 1), x, y + 6); }
+        }
+        for (const e of s.enemies) { const p = pathPoint(e.distance); ctx.fillStyle = e.slow > 0 ? '#687fa9' : '#bf604c'; ctx.fillRect(p.x - 12, p.y - 12, 24, 24); ctx.fillStyle = '#20344b'; ctx.fillRect(p.x - 12, p.y - 19, 24, 3); ctx.fillStyle = '#58a27d'; ctx.fillRect(p.x - 12, p.y - 19, 24 * Math.max(0, e.hp / e.max), 3); }
+      }
+      if (s.mode !== 'playing') { ctx.fillStyle = '#f5f3e9ed'; ctx.fillRect(190, 10, 420, 54); ctx.fillStyle = '#20344b'; ctx.fillText(({ ready: '준비', paused: '일시 정지', won: '성공!', lost: '다시 도전' })[s.mode], 400, 52); }
+    }
+    function render(g) { sync(g); draw(g); }
+    function tick(now) {
+      raf = null; const g = active(); if (!g || doc.hidden || !visible(g)) { pause(g, '화면 밖으로 이동해 멈췄어요. 직접 계속할 수 있어요.'); return; }
+      const s = g.state, before = s.mode, waveActive = s.waveActive, shot = s.projectile, dt = previous === null ? 0 : Math.min(.05, Math.max(0, (now - previous) / 1000)); previous = now;
+      if (g.id === 'angry') angryStep(s, dt); else defenseStep(s, dt);
+      if (s.mode !== before) status(g, s.mode === 'won' ? (g.id === 'angry' ? '모든 버그 큐브를 맞혔어요! 다음 스테이지를 선택할 수 있어요.' : '다섯 웨이브를 막았어요. 승리!') : '이번 도전은 끝났어요. 처음부터 버튼으로 다시 도전해 주세요.');
+      else if (g.id === 'angry' && shot && !s.projectile) status(g, '남은 목표 ' + s.targets.filter(t => t.alive).length + '개. 각도와 힘을 바꿔 다시 발사해 보세요.');
+      else if (waveActive && !s.waveActive) status(g, s.wave + '웨이브 완료! 25코인을 받았어요. 배치·강화 후 다음 웨이브를 시작해 주세요.');
+      render(g); if (needsFrame(g)) request(); else previous = null;
+    }
+    function select(value, focus = false) {
+      const next = (value % 3 + 3) % 3;
+      if (next === index) return; // A repeated Home/End must not strand a running RAF.
+      if (next !== index) { if (index === 0 && get('runner-game')?.dataset.runnerState === 'running') get('runner-pause')?.click(); pause(active(), '게임을 바꿔 멈췄어요. 계속하기를 눌러 재개해 주세요.'); }
+      index = next; panels.forEach((p, i) => { p.hidden = i !== index; p.inert = i !== index; }); deck.dataset.arcadeIndex = String(index); text(get('arcade-count'), (index + 1) + ' / 3 · ' + names[index]);
+      cancelFrame(); if (active()) render(active()); if (focus) get('arcade-next').focus({ preventScroll: true });
+      deck.dispatchEvent(new window.CustomEvent('arcade-selection-change', { bubbles: true, detail: { index, name: names[index] } }));
+    }
+    listen(get('arcade-prev'), 'click', () => select(index - 1)); listen(get('arcade-next'), 'click', () => select(index + 1));
+    listen(get('arcade-navigation'), 'keydown', event => {
+      if (event.target !== get('arcade-prev') && event.target !== get('arcade-next')) return;
+      const keys = { ArrowLeft: index - 1, ArrowRight: index + 1, Home: 0, End: 2 }; if (keys[event.key] !== undefined) { event.preventDefault(); select(keys[event.key]); }
+    });
+    function act(g, fn, message) { if (g.panel.hidden || !g.context) return; if (fn(g.state)) { if (message) status(g, message); render(g); request(); } }
+    for (const g of games) {
+      const id = g.id;
+      if (!g.context) status(g, '이 브라우저에서는 Canvas를 열 수 없어요. 다른 브라우저에서 다시 시도해 주세요.');
+      listen(get(id + '-start'), 'click', () => { if (!doc.hidden && visible(g)) act(g, startGame, id === 'angry' ? '각도와 힘을 정하고 발사해 보세요.' : '타워를 배치하고 다음 웨이브 시작을 눌러 주세요.'); });
+      listen(get(id + '-pause'), 'click', () => pause(g));
+      listen(get(id + '-reset'), 'click', () => { cancelPointer(g); cancelFrame(); g.state = id === 'angry' ? angryState(g.state.level) : defenseState(); render(g); status(g, '처음으로 돌아왔어요. 게임 시작을 눌러 주세요.'); });
+      listen(g.canvas, 'keydown', event => {
+        if (g.panel.hidden) return;
+        if (event.key === 'Escape') { event.preventDefault(); if (g.pointer) { cancelPointer(g); render(g); } else pause(g); return; }
+        if (g.state.mode !== 'playing' || event.repeat) return;
+        if (id === 'angry') {
+          if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) { event.preventDefault(); aimAngry(g.state, g.state.angle + (event.key === 'ArrowRight' ? 2 : event.key === 'ArrowLeft' ? -2 : 0), g.state.power + (event.key === 'ArrowUp' ? 5 : event.key === 'ArrowDown' ? -5 : 0)); render(g); }
+          if (event.code === 'Space' || event.key === ' ') { event.preventDefault(); fire(g); }
+        } else {
+          if (/^[1-6]$/.test(event.key)) { g.state.selected = Number(event.key) - 1; render(g); status(g, event.key + '번 자리를 선택했어요.'); }
+          if (event.key.toLowerCase() === 'b') build(g); if (event.key.toLowerCase() === 'u') upgrade(g);
+          if (event.code === 'Space' || event.key === ' ') { event.preventDefault(); wave(g); }
+        }
+      });
+      listen(g.node, 'focusout', event => { if (event.relatedTarget && !g.node.contains(event.relatedTarget)) pause(g, '게임 밖으로 초점을 옮겨 멈췄어요. 계속하기를 누르면 이어집니다.'); });
+      render(g);
+    }
+    function fire(g) { act(g, launchAngry, '티노 출발!'); }
+    function build(g) { act(g, buildTower, (g.state.selected + 1) + '번 자리에 티노를 배치했어요.'); }
+    function upgrade(g) { act(g, upgradeTower, (g.state.selected + 1) + '번 티노를 강화했어요.'); }
+    function wave(g) { act(g, startWave, '웨이브를 시작해요. 길 끝을 지켜 주세요.'); }
+    const angry = games[0], defense = games[1];
+    for (const input of ['angle', 'power']) listen(get('angry-' + input), 'input', () => { aimAngry(angry.state, Number(get('angry-angle').value), Number(get('angry-power').value)); render(angry); });
+    listen(get('angry-fire'), 'click', () => fire(angry));
+    listen(get('angry-next-level'), 'click', () => { if (angry.state.mode !== 'won') return; cancelFrame(); angry.state = angryState((angry.state.level + 1) % LEVELS.length); render(angry); status(angry, '다음 스테이지를 준비했어요. 게임 시작을 눌러 주세요.'); });
+    const localPoint = (g, e) => { const b = g.canvas.getBoundingClientRect(); return { x: clamp((e.clientX - b.left) / b.width * W, 0, W), y: clamp((e.clientY - b.top) / b.height * H, 0, H) }; };
+    listen(angry.canvas, 'pointerdown', event => {
+      if (event.isPrimary === false || event.button !== 0 || angry.pointer || angry.state.mode !== 'playing' || angry.state.projectile || angry.panel.hidden) return;
+      const p = localPoint(angry, event); if (Math.hypot(p.x - 90, p.y - 300) > 60) return;
+      angry.canvas.focus({ preventScroll: true }); angry.pointer = { id: event.pointerId, start: p, angle: angry.state.angle, power: angry.state.power, moved: false };
+      angry.canvas.setPointerCapture?.(event.pointerId); event.preventDefault();
+    });
+    listen(angry.canvas, 'pointermove', event => {
+      const held = angry.pointer; if (!held || held.id !== event.pointerId) return;
+      if (event.pointerType === 'mouse' && event.buttons === 0) { cancelPointer(angry); render(angry); return; }
+      const p = localPoint(angry, event); held.moved ||= Math.hypot(p.x - held.start.x, p.y - held.start.y) >= 8;
+      if (held.moved) { aimAngry(angry.state, Math.atan2(p.y - 300, 90 - p.x) * 180 / Math.PI, Math.hypot(90 - p.x, p.y - 300) * .9); render(angry); event.preventDefault(); }
+    });
+    listen(angry.canvas, 'pointerup', event => { if (angry.pointer?.id !== event.pointerId) return; const launch = angry.pointer.moved; cancelPointer(angry, !launch); if (launch) fire(angry); });
+    for (const type of ['pointercancel', 'lostpointercapture']) listen(angry.canvas, type, event => { if (angry.pointer?.id === event.pointerId) { cancelPointer(angry); render(angry); } });
+    listen(defense.canvas, 'pointerdown', event => {
+      if (event.isPrimary === false || event.button !== 0 || defense.state.mode !== 'playing' || defense.panel.hidden) return;
+      const p = localPoint(defense, event), slot = SLOTS.findIndex(([x, y]) => Math.hypot(p.x - x, p.y - y) < 45);
+      if (slot >= 0) { defense.state.selected = slot; defense.canvas.focus({ preventScroll: true }); render(defense); status(defense, (slot + 1) + '번 자리를 선택했어요. 배치 또는 강화를 눌러 주세요.'); }
+    });
+    listen(get('defense-slot'), 'change', () => { defense.state.selected = Math.floor(clamp(Number(get('defense-slot').value), 0, 5)); render(defense); });
+    listen(get('defense-type'), 'change', () => { defense.state.type = get('defense-type').value === 'slow' ? 'slow' : 'basic'; render(defense); });
+    listen(get('defense-build'), 'click', () => build(defense)); listen(get('defense-upgrade'), 'click', () => upgrade(defense)); listen(get('defense-wave'), 'click', () => wave(defense));
+    const suspend = () => { pause(active(), '화면을 벗어나 멈췄어요. 계속하기를 눌러 주세요.'); cancelFrame(); };
+    listen(window, 'blur', suspend); listen(window, 'pagehide', suspend); listen(doc, 'visibilitychange', () => { if (doc.hidden) suspend(); });
+    listen(window, 'archive-motion-change', event => { if (event.detail?.enabled === false) suspend(); });
+    listen(media, 'change', event => { if (event.matches) suspend(); });
+    listen(window, 'resize', () => { if (active()) { cancelPointer(active()); render(active()); } });
+    let observer;
+    if (window.IntersectionObserver) {
+      observer = new window.IntersectionObserver(entries => {
+        if (disposed) return;
+        for (const entry of entries) {
+          const g = games.find(item => item.node === entry.target || item.canvas === entry.target);
+          if (!g || g !== active()) continue;
+          if (entry.target === g.node && !entry.isIntersecting && !visible(g)) pause(g, '화면 밖으로 이동해 멈췄어요. 직접 계속할 수 있어요.');
+          // Returning to a canvas paints missed updates, never advances or resumes physics.
+          else if (entry.target === g.canvas && entry.isIntersecting && g.paintPending) draw(g);
+        }
+      }, { threshold: [0, .001] }); // Include a positive crossing after an exact edge-touch entry.
+      games.forEach(g => { observer.observe(g.node); observer.observe(g.canvas); });
+    } else listen(window, 'scroll', () => {
+      const g = active(); if (!g) return;
+      if (!visible(g)) suspend(); else if (g.paintPending) draw(g);
+    }, { passive: true });
+    function runnerLink() { if (/^#runner(?:-game|-canvas)?$/.test(window.location?.hash || '')) { select(0); get('runner-game').scrollIntoView({ behavior: 'instant', block: 'start' }); } }
+    listen(window, 'hashchange', runnerLink);
+    // A repeated PLAY click has no hashchange when #runner-game is already in the URL.
+    listen(doc, 'click', event => {
+      if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || (event.button !== undefined && event.button !== 0)) return;
+      for (let node = event.target; node && node !== doc; node = node.parentNode) {
+        if (node.tagName === 'A' && /^#runner(?:-game|-canvas)?$/.test(node.getAttribute('href') || '')) { select(0); break; }
+      }
+    });
+    if (window.Image) { sheet = new window.Image(); sheet.onload = () => { if (active()) draw(active()); }; sheet.src = 'media/tino-sprites.png'; }
+    select(0); runnerLink();
+    return { games, select, destroy() { suspend(); disposed = true; observer?.disconnect(); cleanup.forEach(fn => fn()); if (sheet) sheet.onload = null; panels.forEach(p => { p.hidden = false; p.inert = false; }); get('arcade-navigation').hidden = true; delete deck.dataset.enhanced; } };
+  }
+  const api = { angryState, aimAngry, launchAngry, angryStep, defenseState, buildTower, upgradeTower, startWave, defenseStep, pathPoint, startGame, pauseGame, mount, LEVELS, SLOTS, PATH_LENGTH };
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else if (root?.document) { if (root.document.readyState === 'loading') root.document.addEventListener('DOMContentLoaded', () => mount(root), { once: true }); else mount(root); }
+})(typeof window === 'undefined' ? null : window);
 </script>
 </body></html>
