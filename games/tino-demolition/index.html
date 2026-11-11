@@ -1,0 +1,21 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#162d40"><title>앵그리티노 · IDIOTS</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="scores.css"></head>
+<body><main id="game" tabindex="-1">
+<header><a href="../../#start-screen">← IDIOTS</a><button id="help-button" aria-expanded="false" aria-controls="help">조작 안내</button></header>
+<div class="title"><div><p>티노의 가상 캠퍼스 퍼즐</p><h1>앵그리티노</h1></div><p>남은 발 안에 모형을 모두 무너뜨리세요.<br>점선 끝에서 첫 충돌 위치를 확인할 수 있어요.</p></div>
+<section class="console" aria-label="앵그리티노 게임">
+<div class="topline"><strong id="level-name">01 · 공학관 앞뜰</strong><span id="ammo">남은 발 3 / 3</span><span id="damage">철거 0%</span></div>
+<div class="stage-wrap"><canvas id="stage" width="960" height="540" aria-label="가상 캠퍼스 건물과 티노. 방향키로 각도 조절, Space를 누른 채 충전하고 놓으면 발사합니다."></canvas><button id="aim-handle" aria-label="티노를 누르고 목표 방향으로 드래그. 오래 누르면 충전, 놓으면 발사. 키보드 방향키로 조준하고 Space를 누른 채 충전 후 놓으세요." title="목표 쪽으로 드래그 · 놓으면 발사" disabled></button><div id="loading" role="status">게임 그림을 불러오는 중…</div></div>
+<div class="aim-summary"><span id="target">궤적 준비 중</span><span id="remaining">목표 5개</span></div>
+<div class="controls">
+<div class="aim-readout"><strong>티노를 누르고 목표 쪽으로 드래그</strong><span>오래 누를수록 강하게 · 놓으면 즉시 발사</span><div><output id="angle-value">12°</output> · <output id="power-value">20%</output><meter id="charge" min="20" max="100" value="20" aria-label="충전 세기"></meter></div></div>
+<fieldset class="ammo-choice"><legend>함께 날아갈 티노</legend><label><input type="radio" name="ammo-type" value="impact" checked><img data-ammo-art="fly" alt=""><span class="ammo-name">돌격</span><small>강한 한 방</small></label><label><input type="radio" name="ammo-type" value="echo"><img data-ammo-art="celebrate" alt=""><span class="ammo-name">파동</span><small>넓은 충격</small></label><label><input type="radio" name="ammo-type" value="glass"><img data-ammo-art="aim" alt=""><span class="ammo-name">연구</span><small>유리에 강함</small></label></fieldset>
+<div class="actions"><button id="undo" disabled>한 발 되돌리기</button><button id="reset" disabled>이 구역 다시</button><button id="pause" disabled>일시정지 <kbd>P</kbd></button></div>
+</div>
+<p id="brief" class="brief">낮은 기둥을 노려보세요. 지지가 사라지면 위층도 무너집니다.</p>
+<section id="result" class="result" hidden aria-labelledby="result-title"><img id="badge" alt=""><div><h2 id="result-title"></h2><p id="result-description"></p></div><button id="next" class="primary">다음 구역 →</button></section>
+<p id="announcement" class="sr-only" aria-live="polite" role="status"></p>
+</section>
+<section id="help" hidden><h2>누르고, 조준하고, 놓기</h2><ol><li>티노를 누르고 <strong>목표 쪽으로</strong> 드래그하세요. 점선과 끝의 표식은 실제 첫 충돌 위치입니다.</li><li>누르는 시간에 따라 충전됩니다. 약 1.8초면 최대 세기이며, <strong>손을 놓으면 바로 발사</strong>됩니다. 취소하려면 Escape를 누르세요.</li><li>돌격은 강한 한 방, 파동은 넓은 충격, 연구는 유리 파괴에 유리해요. 다음 발을 쏘기 전에 티노를 고르세요.</li><li>지지부가 사라지면 위 모형이 중력에 따라 떨어져 아래 모형과 충돌합니다. 빗나갔다면 한 발 되돌리기를 써보세요.</li></ol><p>키보드: 티노에 Tab으로 이동, ↑/↓ 각도 조절, Space를 누른 채 충전 후 놓으면 발사. P 일시정지, U 되돌리기, Escape 충전 취소. 탭을 벗어나면 자동 일시정지합니다.</p><button id="close-help">안내 닫기</button></section>
+<footer>기획·요청: Jun1188 · 구현·이미지 제작: AI 지원<br>한국공학대학교 티노에서 영감을 받은 비공식 팬 게임. 무인 가상 캠퍼스 모형이며 실제 시설이나 구조를 재현하지 않습니다. 계정·광고·외부 전송 없음.</footer>
+<noscript><p class="notice">JavaScript를 켜면 플레이할 수 있습니다. <a href="../../#start-screen">IDIOTS로 돌아가기</a></p><style>#loading{display:none}</style></noscript>
+</main><script src="scores.js" defer></script><script type="module" src="app.mjs"></script></body></html>

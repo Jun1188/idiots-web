@@ -5,6 +5,7 @@
   <meta name="theme-color" content="#101f2a">
   <title>티노: 캠퍼스 라인 · IDIOTS</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="scores.css">
 </head>
 <body>
 <main id="game" tabindex="-1">
@@ -24,7 +25,7 @@
         <h2 id="cover-title">함께, 한 걸음 앞으로.</h2>
         <p id="cover-description">가드로 앞을 지키고 펄스로 뒤에서 지원하세요.<br>에너지를 모아 메카를 투입하고, 오른쪽 기지를 무너뜨리세요.</p>
         <button id="start" class="primary" disabled>아트 불러오는 중…</button>
-        <p class="cover-meta" id="cover-meta">보통 3~5분 · 직접 시작 · 저장 / 과금 없음</p>
+        <p class="cover-meta" id="cover-meta">보통 3~5분 · 직접 시작 · 이 기기 점수 저장 · 과금 없음</p>
       </div>
     </div>
     <div class="command-deck">
@@ -32,16 +33,19 @@
       <div class="unit-buttons">
         <button data-unit="melee" disabled><img alt="" data-portrait="melee"><span class="unit-copy"><strong>가드 티노 <kbd>1</kbd></strong><span>전열 보호 · 50</span><small class="role-count">전장 0</small><small class="availability">시작 후 소환</small></span></button>
         <button data-unit="ranged" disabled><img alt="" data-portrait="ranged"><span class="unit-copy"><strong>펄스 티노 <kbd>2</kbd></strong><span>원거리 지원 · 100</span><small class="role-count">전장 0</small><small class="availability">시작 후 소환</small></span></button>
-        <button data-unit="tank" disabled><img alt="" data-portrait="tank"><span class="unit-copy"><strong>메카 티노 <kbd>3</kbd></strong><span>범위 돌파 · 180</span><small class="role-count">전장 0</small><small class="availability">시작 후 소환</small></span></button>
+        <button data-unit="tank" disabled><img alt="" data-portrait="tank"><span class="unit-copy"><strong>메카 티노 <kbd>3</kbd></strong><span>범위 돌파 · 160</span><small class="role-count">전장 0</small><small class="availability">시작 후 소환</small></span></button>
+        <button data-unit="sniper" disabled><img alt="" data-portrait="sniper"><span class="unit-copy"><strong>아크 티노 <kbd>4</kbd></strong><span>장거리 정밀 · 150</span><small class="role-count">전장 0</small><small class="availability">시작 후 소환</small></span></button>
       </div>
+      <fieldset class="build-deck"><legend>캠퍼스 공학 패드 · 건물은 제자리를 지킵니다</legend><label>설치 위치 <select id="build-slot"><option value="0">01 작업실 앞</option><option value="1">02 광장</option><option value="2">03 전방</option></select></label><button data-build="barricade" disabled>티노 방벽 · 120 <kbd>B</kbd></button><button data-build="turret" disabled>펄스 포탑 · 180 <kbd>T</kbd></button><small id="build-note">위치를 고른 뒤 설치하세요. 적이 넘어온 패드에는 설치할 수 없습니다.</small></fieldset>
       <div class="utility-buttons"><button id="upgrade" disabled><strong>공학 업그레이드 <kbd>U</kbd></strong><span>160 · 수입 +3 / 초</span></button><button id="support" disabled><strong>동아리 펄스 <kbd>E</kbd></strong><span>우리 진영 55% 안의 적을 밀어내기</span></button></div>
       <p id="battle-summary" class="battle-summary">오른쪽 기계를 멈추세요. 소환과 업그레이드에 같은 에너지를 사용합니다.</p>
       <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
     </div>
   </section>
-  <section id="guide" class="guide" hidden><div><h2>세 역할, 하나의 전선</h2><button id="close-help" aria-label="플레이 안내 닫기">닫기 ×</button></div><ol><li><strong>가드가 먼저.</strong> 튼튼한 가드가 시간을 벌면, 펄스가 뒤에서 공격합니다.</li><li><strong>모을까, 투입할까?</strong> 160 에너지로 공학을 개선하면 이후 수입이 늘어납니다. 전선이 위험하면 지원이 먼저예요.</li><li><strong>메카로 돌파.</strong> 느리지만 모여 있는 적에게 강합니다. 동아리 펄스는 우리 쪽 55% 안의 적에게만 닿아요.</li></ol><p>1 / 2 / 3 소환 · U 업그레이드 · E 지원 · P 또는 Space 일시정지 · Escape 안내 닫기 / 일시정지. 이 게임 영역에서만 단축키가 작동합니다.</p><p>탭을 벗어나면 자동으로 멈춥니다. 모션 감소 설정을 따릅니다. 전투는 시각 정보를 사용하며 화면 낭독기에는 주요 상황 요약을 제공합니다.</p></section>
-  <footer>기획·요청: Jun1188 · 구현·이미지 제작: AI 지원<br>티노에서 영감을 받은 비공식 팬 게임. 실제 학교 사건을 묘사하지 않습니다.<br>외부 전송·광고·계정·자동 저장 없음.</footer>
+  <section id="guide" class="guide" hidden><div><h2>네 역할, 하나의 전선</h2><button id="close-help" aria-label="플레이 안내 닫기">닫기 ×</button></div><ol><li><strong>가드가 먼저.</strong> 튼튼한 가드가 시간을 벌면, 펄스가 뒤에서 공격합니다.</li><li><strong>모을까, 투입할까?</strong> 160 에너지로 공학을 개선하면 이후 수입이 늘어납니다. 전선이 위험하면 지원이 먼저예요.</li><li><strong>메카로 돌파.</strong> 가드와 펄스를 한 명씩 갖췄다면 160 에너지를 모아 메카를 투입하세요. 가드만 계속 보충하면 돌파 자금이 부족해져요. 느리지만 모여 있는 적에게 강합니다. 동아리 펄스는 우리 쪽 55% 안의 적에게만 닿아요.</li></ol><p>1 / 2 / 3 / 4 소환 · B 방벽 / T 포탑 설치 (위치 선택 후) · U 업그레이드 · E 지원 · P 또는 Space 일시정지 · Escape 안내 닫기 / 일시정지. 이 게임 영역에서만 단축키가 작동합니다.</p><p>탭을 벗어나면 자동으로 멈춥니다. 모션 감소 설정을 따릅니다. 전투는 시각 정보를 사용하며 화면 낭독기에는 주요 상황 요약을 제공합니다.</p></section>
+  <footer>기획·요청: Jun1188 · 구현·이미지 제작: AI 지원<br>티노에서 영감을 받은 비공식 팬 게임. 실제 학교 사건을 묘사하지 않습니다.<br>점수는 이 브라우저에만 저장. 외부 전송·광고·계정 없음. 게임 종료 점수는 같은 사이트의 기록 패널에 전달됩니다.</footer>
   <noscript><style>.cover{display:none}.notice{position:fixed;top:16px;left:16px;right:16px;z-index:10;border:2px solid #f5cf75}</style><p class="notice" role="alert">이 게임은 JavaScript가 필요합니다. <a href="../../">IDIOTS 사이트로 돌아가기</a></p></noscript>
 </main>
+<script src="scores.js"></script>
 <script type="module" src="app.mjs"></script>
 </body></html>

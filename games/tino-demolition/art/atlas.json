@@ -1,0 +1,458 @@
+{
+  "version": 1,
+  "background": {
+    "file": "campus-puzzle.png",
+    "groundY": 0.8703703703703703,
+    "note": "Unoccupied fictional campus; actual painted front curb near .94 image height. Logical y470 may be on pavement, not curb."
+  },
+  "sprites": {
+    "aim": {
+      "file": "puzzle-actors.png",
+      "rect": [
+        48,
+        115,
+        376,
+        277
+      ],
+      "anchor": [
+        188.0,
+        274
+      ]
+    },
+    "fly": {
+      "file": "puzzle-actors.png",
+      "rect": [
+        468,
+        125,
+        376,
+        253
+      ],
+      "anchor": [
+        188.0,
+        250
+      ]
+    },
+    "impact": {
+      "file": "puzzle-actors.png",
+      "rect": [
+        952,
+        61,
+        348,
+        331
+      ],
+      "anchor": [
+        174.0,
+        328
+      ]
+    },
+    "celebrate": {
+      "file": "puzzle-actors.png",
+      "rect": [
+        1354,
+        47,
+        372,
+        348
+      ],
+      "anchor": [
+        186.0,
+        345
+      ]
+    },
+    "launcher": {
+      "file": "puzzle-actors.png",
+      "rect": [
+        80,
+        482,
+        295,
+        364
+      ],
+      "anchor": [
+        147.5,
+        361
+      ]
+    },
+    "dust": {
+      "file": "puzzle-actors.png",
+      "rect": [
+        491,
+        627,
+        322,
+        205
+      ],
+      "anchor": [
+        161.0,
+        202
+      ]
+    },
+    "barrier": {
+      "file": "puzzle-actors.png",
+      "rect": [
+        921,
+        577,
+        376,
+        260
+      ],
+      "anchor": [
+        188.0,
+        257
+      ]
+    },
+    "badge": {
+      "file": "puzzle-actors.png",
+      "rect": [
+        1396,
+        482,
+        308,
+        364
+      ],
+      "anchor": [
+        154.0,
+        361
+      ]
+    },
+    "brick-intact": {
+      "file": "building-modules.png",
+      "rect": [
+        11,
+        92,
+        305,
+        289
+      ],
+      "anchor": [
+        152.5,
+        286
+      ]
+    },
+    "brick-cracked": {
+      "file": "building-modules.png",
+      "rect": [
+        358,
+        92,
+        304,
+        289
+      ],
+      "anchor": [
+        152.0,
+        286
+      ]
+    },
+    "brick-rubble": {
+      "file": "building-modules.png",
+      "rect": [
+        706,
+        199,
+        308,
+        182
+      ],
+      "anchor": [
+        154.0,
+        179
+      ]
+    },
+    "glass-intact": {
+      "file": "building-modules.png",
+      "rect": [
+        11,
+        471,
+        309,
+        308
+      ],
+      "anchor": [
+        154.5,
+        305
+      ]
+    },
+    "glass-cracked": {
+      "file": "building-modules.png",
+      "rect": [
+        357,
+        471,
+        308,
+        308
+      ],
+      "anchor": [
+        154.0,
+        305
+      ]
+    },
+    "glass-rubble": {
+      "file": "building-modules.png",
+      "rect": [
+        699,
+        578,
+        317,
+        203
+      ],
+      "anchor": [
+        158.5,
+        200
+      ]
+    },
+    "pillar-intact": {
+      "file": "building-modules.png",
+      "rect": [
+        101,
+        859,
+        126,
+        355
+      ],
+      "anchor": [
+        63.0,
+        352
+      ]
+    },
+    "pillar-cracked": {
+      "file": "building-modules.png",
+      "rect": [
+        442,
+        859,
+        132,
+        355
+      ],
+      "anchor": [
+        66.0,
+        352
+      ]
+    },
+    "pillar-rubble": {
+      "file": "building-modules.png",
+      "rect": [
+        705,
+        1020,
+        296,
+        194
+      ],
+      "anchor": [
+        148.0,
+        191
+      ]
+    },
+    "roof-intact": {
+      "file": "building-modules.png",
+      "rect": [
+        7,
+        1350,
+        321,
+        108
+      ],
+      "anchor": [
+        160.5,
+        105
+      ]
+    },
+    "roof-cracked": {
+      "file": "building-modules.png",
+      "rect": [
+        356,
+        1350,
+        320,
+        108
+      ],
+      "anchor": [
+        160.0,
+        105
+      ]
+    },
+    "roof-rubble": {
+      "file": "building-modules.png",
+      "rect": [
+        701,
+        1346,
+        322,
+        112
+      ],
+      "anchor": [
+        161.0,
+        109
+      ]
+    }
+  },
+  "files": {
+    "campus-puzzle.png": {
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB",
+      "bytes": 1937267,
+      "sha256": "8e88457b2a760a1d84ea195cb1edd7120daaf3dbd880b30b16cc631c654f3949",
+      "chunks": [
+        {
+          "type": "IHDR",
+          "bytes": 13
+        },
+        {
+          "type": "caBX",
+          "bytes": 21881
+        },
+        {
+          "type": "IDAT",
+          "bytes": 1915317
+        },
+        {
+          "type": "IEND",
+          "bytes": 0
+        }
+      ],
+      "sensitiveMarkerMatches": []
+    },
+    "puzzle-actors.png": {
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "bytes": 1163185,
+      "sha256": "f36bc07b87d566541490a4e2f21cc43fc14d0052c09f629b9f2081cf3dca6405",
+      "chunks": [
+        {
+          "type": "IHDR",
+          "bytes": 13
+        },
+        {
+          "type": "caBX",
+          "bytes": 21881
+        },
+        {
+          "type": "IDAT",
+          "bytes": 1141235
+        },
+        {
+          "type": "IEND",
+          "bytes": 0
+        }
+      ],
+      "sensitiveMarkerMatches": []
+    },
+    "building-modules.png": {
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGBA",
+      "bytes": 1854153,
+      "sha256": "2290e80da950acd118439bf93b35fd02df4a16b42572577d58683f0d0aae7892",
+      "chunks": [
+        {
+          "type": "IHDR",
+          "bytes": 13
+        },
+        {
+          "type": "caBX",
+          "bytes": 21881
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 62407
+        },
+        {
+          "type": "IEND",
+          "bytes": 0
+        }
+      ],
+      "sensitiveMarkerMatches": []
+    }
+  }
+}

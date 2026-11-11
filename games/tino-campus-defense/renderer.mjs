@@ -1,5 +1,5 @@
-const KEYS = { melee: 'guard', ranged: 'pulse', tank: 'mecha', scout: 'runner', brute: 'hauler', shooter: 'drone', boss: 'boss' };
-const files = { background: 'campus-battlefield.png', ally: 'tino-units.png', action: 'tino-actions.png', enemy: 'scrap-enemies.png' };
+const KEYS = { sniper: 'pulse', melee: 'guard', ranged: 'pulse', tank: 'mecha', scout: 'runner', brute: 'hauler', shooter: 'drone', boss: 'boss' };
+const files = { barricade: 'barricade.svg', turret: 'turret.svg', background: 'campus-battlefield.png', ally: 'tino-units.png', action: 'tino-actions.png', enemy: 'scrap-enemies.png' };
 export async function loadArt() {
   const art = {};
   art.atlas = await fetch(new URL('art/atlas.json', import.meta.url)).then(r => { if (!r.ok) throw new Error('Missing atlas'); return r.json(); });
@@ -31,6 +31,14 @@ export function createRenderer(canvas, art, reducedMotion) {
   resize();
   const observer = new ResizeObserver(resize); observer.observe(canvas);
   function sprite(unit, time, ground, alpha = 1) {
+    if (unit.structure) {
+      const size = mobile ? 106 : 85;
+      ctx.save(); ctx.globalAlpha = alpha;
+      ctx.drawImage(art[unit.kind], unit.x - size / 2, ground - size + 8, size, size);
+      ctx.fillStyle = '#142d37'; ctx.fillRect(unit.x-26,ground-size-4,52,5);
+      ctx.fillStyle = '#a4dfc3'; ctx.fillRect(unit.x-25,ground-size-3,50*Math.max(0,unit.hp/unit.maxHp),3);
+      ctx.restore(); return;
+    }
     let frame = unit.action === 'walk' ? (unit.team === 'ally' ? 'walkA' : 'walk') : unit.action === 'attack' ? 'attack' : 'idle';
     if (unit.action === 'victory' && unit.team === 'ally') frame = 'victory';
     if (unit.flash > 0) frame = 'hurt';
@@ -52,7 +60,9 @@ export function createRenderer(canvas, art, reducedMotion) {
     const y = ground + lane;
     const sway = reducedMotion ? 0 : unit.action === 'walk' ? Math.sin(time * 9 + unit.id) * 1.2 : 0;
     ctx.save(); ctx.globalAlpha = alpha;
+    if (unit.kind === 'sniper') ctx.filter = 'hue-rotate(28deg)';
     ctx.drawImage(art[image], sx, sy, sw, sh, renderX - anchorX, y - definition.anchor[1] * scale + sway, width, height);
+    ctx.filter = 'none';
     if (unit.hp < unit.maxHp) {
       const barWidth = mobile ? 64 : 44;
       const barHeight = mobile ? 8 : 5;
@@ -73,6 +83,10 @@ export function createRenderer(canvas, art, reducedMotion) {
     ctx.drawImage(art.background, 0, 0, 960, 480);
     // Dusk slowly advances with the encounter, never obscuring actors or HUD.
     ctx.fillStyle = `rgba(10,24,51,${Math.min(.12, s.time / 2000)})`; ctx.fillRect(0, 0, 960, h);
+    for (const [i,x] of [210,350,490].entries()) {
+      ctx.fillStyle = '#a3c4b977'; ctx.fillRect(x-30,ground+9,60,3);
+      ctx.font = '11px monospace'; ctx.textAlign = 'center'; ctx.fillText(`PAD 0${i+1}`,x,ground+25);
+    }
     if (s.phase === 'ready') {
       sprite({ team: 'ally', kind: 'melee', action: 'idle', x: 190, id: 0, size: 80, hp: 1, maxHp: 1 }, 0, ground);
       sprite({ team: 'ally', kind: 'ranged', action: 'idle', x: 260, id: 1, size: 74, hp: 1, maxHp: 1 }, 0, ground);
