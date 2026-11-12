@@ -35,11 +35,12 @@ function refresh(){
   canvas.dataset.remainingBlocks=String(alive);
   canvas.dataset.totalBlocks=String(state.blocks.length);
   canvas.dataset.remainingHp=String(Math.round(state.blocks.reduce((sum,b)=>sum+Math.max(0,b.hp),0)));
+  canvas.dataset.bonusScore=String(state.bonusScore);canvas.dataset.bonusRemaining=String(state.targets.filter(t=>!t.collected).length);
   canvas.dataset.angle=String(state.angle);canvas.dataset.power=String(state.power);
   $('#level-name').textContent=definition.name;
   $('#ammo').textContent=`남은 발 ${state.shotsLeft} / ${definition.shots}`;
   $('#damage').textContent=`철거 ${Math.round((1-alive/state.blocks.length)*100)}%`;
-  $('#remaining').textContent=`목표 ${alive}개`;
+  $('#remaining').textContent=`부재 ${alive}개 · 보너스 ${state.bonusScore}점`;
   $('#charge').value=state.power;
   $('#angle-value').textContent=`${state.angle}°`;$('#power-value').textContent=`${state.power}%`;
   const aiming=loaded&&state.phase==='aim';
@@ -58,7 +59,7 @@ function refresh(){
   if(finished){
     if(!resultSent){
       resultSent=true;
-      const score=state.blocks.filter(b=>b.hp<=0).length*100+(state.phase==='won'?500+state.stars*100:0);
+      const score=state.blocks.filter(b=>b.hp<=0).length*100+state.bonusScore+(state.phase==='won'?500+state.stars*100:0);
       const detail={game:'angry-tino',score,runId};
       window.dispatchEvent(new CustomEvent('idiots:game-result',{detail}));
       if(window.parent!==window)window.parent.postMessage({type:'idiots:game-result',...detail},location.origin);

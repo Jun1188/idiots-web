@@ -343,6 +343,149 @@
         64.0,
         112
       ]
+    },
+    "sports-intact": {
+      "file": "campus-facades.svg",
+      "rect": [
+        0,
+        672,
+        128,
+        112
+      ],
+      "anchor": [
+        64,
+        112
+      ]
+    },
+    "sports-cracked": {
+      "file": "campus-facades.svg",
+      "rect": [
+        128,
+        672,
+        128,
+        112
+      ],
+      "anchor": [
+        64,
+        112
+      ]
+    },
+    "sports-rubble": {
+      "file": "campus-facades.svg",
+      "rect": [
+        256,
+        672,
+        128,
+        112
+      ],
+      "anchor": [
+        64,
+        112
+      ]
+    },
+    "research-intact": {
+      "file": "campus-facades.svg",
+      "rect": [
+        0,
+        784,
+        128,
+        112
+      ],
+      "anchor": [
+        64,
+        112
+      ]
+    },
+    "research-cracked": {
+      "file": "campus-facades.svg",
+      "rect": [
+        128,
+        784,
+        128,
+        112
+      ],
+      "anchor": [
+        64,
+        112
+      ]
+    },
+    "research-rubble": {
+      "file": "campus-facades.svg",
+      "rect": [
+        256,
+        784,
+        128,
+        112
+      ],
+      "anchor": [
+        64,
+        112
+      ]
+    },
+    "sportsroof-intact": {
+      "file": "campus-facades.svg",
+      "rect": [
+        0,
+        896,
+        128,
+        112
+      ],
+      "anchor": [
+        64,
+        112
+      ]
+    },
+    "sportsroof-cracked": {
+      "file": "campus-facades.svg",
+      "rect": [
+        128,
+        896,
+        128,
+        112
+      ],
+      "anchor": [
+        64,
+        112
+      ]
+    },
+    "sportsroof-rubble": {
+      "file": "campus-facades.svg",
+      "rect": [
+        256,
+        896,
+        128,
+        112
+      ],
+      "anchor": [
+        64,
+        112
+      ]
+    },
+    "professor": {
+      "file": "campus-facades.svg",
+      "rect": [
+        0,
+        1008,
+        128,
+        112
+      ],
+      "anchor": [
+        64,
+        112
+      ]
+    },
+    "exam": {
+      "file": "campus-facades.svg",
+      "rect": [
+        128,
+        1008,
+        128,
+        112
+      ],
+      "anchor": [
+        64,
+        112
+      ]
     }
   },
   "files": {
@@ -534,10 +677,10 @@
     },
     "campus-facades.svg": {
       "width": 384,
-      "height": 672,
+      "height": 1120,
       "mode": "RGBA",
-      "bytes": 13208,
-      "sha256": "c806496c1855a992b810868791aa41b761e360bfac20dc8f40260f49aec01916",
+      "bytes": 18492,
+      "sha256": "84a0579f2dfaaadd58891e72d7916f635b76f0c314984cc53ace2b7336676632",
       "chunks": [],
       "sensitiveMarkerMatches": []
     }

@@ -1,7 +1,8 @@
-import{createGame,command,step,STEP,WIDTH,HEIGHT,DURATION,FACILITIES,grab,drag,release,scoreGame}from'./engine.mjs';
+import{createGame,command,step,STEP,WIDTH,HEIGHT,DURATION,FACILITIES,PADS,grab,drag,release,scoreGame}from'./engine.mjs';
 import{loadArt,createRenderer}from'./renderer.mjs';
 const $=s=>document.querySelector(s),game=$('#game'),stage=$('#stage'),targets=$('#tino-targets');
 let state=createGame(),renderer,raf=0,last=0,acc=0,selected=null,pointer=null,samples=[],runId='',sent=false,lastUI=0;
+const padNodes=[];
 const nodes=new Map();const fmt=t=>`${Math.floor(t/60).toString().padStart(2,'0')}:${Math.floor(t%60).toString().padStart(2,'0')}`;
 function coords(e){const r=stage.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width*WIDTH,y:(e.clientY-r.top)/r.height*HEIGHT};}
 function updateTargets(){for(const [id,node]of nodes)if(!state.units.some(u=>u.id===id)){node.remove();nodes.delete(id);}
@@ -12,19 +13,41 @@ function updateTargets(){for(const [id,node]of nodes)if(!state.units.some(u=>u.i
  node.addEventListener('focus',()=>{selected=u.id;});node.addEventListener('keydown',e=>{if(state.phase!=='playing')return;if(e.key===' '){e.preventDefault();if(e.repeat)return;if(state.held===u.id)release(state,680,-460);else grab(state,u.x,u.y);updateUI();}else if(e.key.startsWith('Arrow')&&state.held===u.id){e.preventDefault();drag(state,u.x+(e.key==='ArrowRight'?30:e.key==='ArrowLeft'?-30:0),u.y+(e.key==='ArrowDown'?30:e.key==='ArrowUp'?-30:0));}});targets.appendChild(node);nodes.set(u.id,node);}
  node.style.left=`${u.x/WIDTH*100}%`;node.style.top=`${u.y/HEIGHT*100}%`;node.disabled=state.phase!=='playing';node.setAttribute('aria-pressed',String(u.held));node.setAttribute('aria-label',`티노 ${u.id} ${u.held?'잡힘':u.thrown?'날아가는 중':u.slowed?'느려짐':'잡기'}`);
  }}
+function placeFacility(kind,slot){
+ if(state.phase!=='playing'||pointer!==null)return false;
+ const name=FACILITIES[kind]?.name;
+ if(!name)return false;
+ $('#build-slot').value=String(slot);
+ const used=state.facilities.some(f=>f.slot===slot);
+ const ok=command(state,'build',`${kind}:${slot}`);
+ $('#placement-note').textContent=ok?`${slot+1}번 위치에 ${name} 설치 완료.`:used?'이미 시설이 있는 위치입니다. 다른 패드를 선택하세요.':`에너지가 부족해요. ${name}에는 ${FACILITIES[kind].cost}가 필요합니다.`;
+ updateUI();return ok;
+}
+for(const [slot,pad] of PADS.entries()){
+ const b=document.createElement('button');b.type='button';b.className='facility-pad-target';b.dataset.padSlot=slot;
+ b.style.left=`${pad.x/WIDTH*100}%`;b.style.top=`${(pad.y-30)/HEIGHT*100}%`;
+ b.innerHTML='<span aria-hidden="true">＋</span>';
+ b.addEventListener('click',()=>{const restoreFocus=document.activeElement===b;if(placeFacility($('#placement-kind').value,slot)&&restoreFocus){const next=padNodes.slice(slot+1).concat(padNodes.slice(0,slot)).find(n=>!n.disabled);(next||$('#placement-kind')).focus({preventScroll:true});}});
+ $('#build-targets').appendChild(b);padNodes.push(b);
+}
+function updatePads(){const kind=$('#placement-kind').value,f=FACILITIES[kind];for(const [slot,b] of padNodes.entries()){
+ const installed=state.facilities.find(v=>v.slot===slot);b.disabled=state.phase!=='playing'||pointer!==null||Boolean(installed);
+ b.dataset.occupied=String(Boolean(installed));b.dataset.affordable=String(state.energy>=f.cost);
+ b.setAttribute('aria-label',installed?`${slot+1}번 패드: ${FACILITIES[installed.kind].name} 설치됨`:`${slot+1}번 패드에 ${f.name} 설치, 에너지 ${f.cost}`);
+}}
 function updateUI(){const playing=state.phase==='playing';$('#clock').textContent=fmt(state.time);$('#energy').textContent=Math.floor(state.energy);$('#ally-hp').value=state.hp;$('#ally-value').textContent=`${state.hp} / 10`;$('#saved').textContent=`보낸 티노 ${state.saved}`;$('#rescued').textContent=state.saved;$('#wave').textContent=`${Math.min(5,Math.floor(state.time/36)+1)} / 5`;
  $('#phase-label').textContent=state.phase==='ready'?'준비':state.time<DURATION?'교수님 지키기':'남은 티노 보내기';$('#pause').disabled=!['playing','paused'].includes(state.phase);$('#pause').textContent=state.phase==='paused'?'계속하기 · P':'일시정지 · P';$('#select-tino').disabled=!playing||!state.units.length;$('#throw-tino').disabled=!playing||!state.units.some(u=>u.id===selected);$('#selection-note').textContent=selected&&state.units.some(u=>u.id===selected)?`티노 ${selected} 선택 · 잡아서 움직이거나 ‘보내기’를 누르세요.`:'티노 몸을 잡거나, 다음 티노 선택으로 시작하세요.';
- const slot=Number($('#build-slot').value),used=state.facilities.some(f=>f.slot===slot);for(const b of document.querySelectorAll('[data-build]'))b.disabled=!playing||used||state.energy<FACILITIES[b.dataset.build].cost;$('#build-note').textContent=used?'이미 시설이 있는 패드입니다. 다른 위치를 선택하세요.':'시설은 보조 역할이에요. 직접 잡고 보내는 것이 핵심!';$('#battle-summary').textContent=`교수님 ${state.hp}/10 · 방문 중 ${state.units.length}명 · 회수 ${state.saved}명 · ${state.time<DURATION?'남은 시간 '+fmt(DURATION-state.time):'남은 티노를 모두 보내세요.'}`;updateTargets();}
+ const slot=Number($('#build-slot').value),used=state.facilities.some(f=>f.slot===slot);for(const b of document.querySelectorAll('[data-build]'))b.disabled=!playing||used||state.energy<FACILITIES[b.dataset.build].cost;$('#build-note').textContent=used?'이미 시설이 있는 패드입니다. 다른 위치를 선택하세요.':'시설은 보조 역할이에요. 직접 잡고 보내는 것이 핵심!';$('#battle-summary').textContent=`교수님 ${state.hp}/10 · 방문 중 ${state.units.length}명 · 회수 ${state.saved}명 · ${state.time<DURATION?'남은 시간 '+fmt(DURATION-state.time):'남은 티노를 모두 보내세요.'}`;updateTargets();updatePads();}
 function cover(title,copy,kicker,button){$('#cover').hidden=false;$('#cover-title').textContent=title;$('#cover-description').textContent=copy;$('#cover-kicker').textContent=kicker;$('#start').textContent=button;}
 function pause(){if(!command(state,'pause'))return;pointer=null;samples=[];cancelAnimationFrame(raf);cover('잠깐 쉬어가요.','시간과 시설, 티노의 움직임이 모두 멈췄어요.','PAUSED','계속하기');updateUI();renderer.render(state);}
 function end(){cancelAnimationFrame(raf);pointer=null;if(!sent){sent=true;window.dispatchEvent(new CustomEvent('idiots:game-result',{detail:{game:'campus-line',score:scoreGame(state),runId}}));}const won=state.phase==='won';cover(won?'교수님을 지켰어요!':'다음 당번도 부탁해요.',`보낸 티노 ${state.saved}명 · ${state.score}점. ${won?'모두 무사히 바깥으로!':'시설을 보조로 쓰고 티노를 멀리 던져 보세요.'}`,won?'MISSION COMPLETE':'RETRY / 다시 할 수 있어요','다시 플레이');updateUI();$('#start').focus({preventScroll:true});}
 function loop(now){if(state.phase!=='playing')return;acc+=last?Math.min(.1,(now-last)/1000):0;last=now;while(acc>=STEP&&state.phase==='playing'){step(state);acc-=STEP;}renderer.render(state);updateTargets();if(now-lastUI>100){updateUI();lastUI=now;}if(['won','lost'].includes(state.phase))end();else raf=requestAnimationFrame(loop);}
 function run(){last=0;acc=0;$('#cover').hidden=true;updateUI();cancelAnimationFrame(raf);raf=requestAnimationFrame(loop);}
-$('#start').addEventListener('click',()=>{if(state.phase==='paused')command(state,'resume');else{state=createGame();selected=null;sent=false;runId=crypto.randomUUID();command(state,'start');}run();});
+$('#start').addEventListener('click',()=>{if(state.phase==='paused')command(state,'resume');else{state=createGame();selected=null;sent=false;$('#placement-note').textContent='놓을 시설을 고른 뒤, 지도 위 ＋ 패드를 클릭하거나 터치하세요.';runId=crypto.randomUUID();command(state,'start');}run();});
 $('#pause').addEventListener('click',()=>{if(state.phase==='paused'){command(state,'resume');run();}else pause();});
 $('#select-tino').addEventListener('click',()=>{if(!state.units.length)return;const i=state.units.findIndex(u=>u.id===selected);selected=state.units[(i+1)%state.units.length].id;nodes.get(selected)?.focus({preventScroll:true});updateUI();});
 $('#throw-tino').addEventListener('click',()=>{const u=state.units.find(u=>u.id===selected);if(!u)return;if(state.held===null)grab(state,u.x,u.y);if(state.held===u.id)release(state,680,-460);updateUI();});
-for(const b of document.querySelectorAll('[data-build]'))b.addEventListener('click',()=>{command(state,'build',`${b.dataset.build}:${$('#build-slot').value}`);updateUI();});$('#build-slot').addEventListener('change',updateUI);
+for(const b of document.querySelectorAll('[data-build]'))b.addEventListener('click',()=>{placeFacility(b.dataset.build,Number($('#build-slot').value));});$('#build-slot').addEventListener('change',updateUI);$('#placement-kind').addEventListener('change',()=>{updatePads();$('#placement-note').textContent=`${FACILITIES[$('#placement-kind').value].name} 선택. 지도 위 빈 ＋ 패드에 놓으세요.`;});
 $('#help').addEventListener('click',()=>{pause();$('#guide').hidden=!$('#guide').hidden;$('#help').setAttribute('aria-expanded',String(!$('#guide').hidden));});$('#close-help').addEventListener('click',()=>{$('#guide').hidden=true;$('#help').setAttribute('aria-expanded','false');$('#help').focus();});
 game.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#guide').hidden){e.preventDefault();$('#guide').hidden=true;$('#help').setAttribute('aria-expanded','false');$('#help').focus();return;}if(e.key==='Escape'||(e.key.toLowerCase()==='p'&&!/SELECT|INPUT/.test(e.target.tagName))){e.preventDefault();if(state.phase==='paused'){command(state,'resume');run();}else pause();}});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});window.addEventListener('blur',pause);window.addEventListener('pagehide',pause);window.addEventListener('resize',()=>{if(pointer!==null)pause();});

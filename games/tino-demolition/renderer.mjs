@@ -55,10 +55,19 @@ export function createRenderer(canvas,art,reducedMotion=false){
     }
     for(const [key,roofs] of roofGroups){
       const left=Math.min(...roofs.map(b=>b.x)),right=Math.max(...roofs.map(b=>b.x+b.w));
-      const y=Math.min(...roofs.map(b=>b.y))-20;
+      const y=WORLD.ground+14;
       ctx.fillStyle='#244956';ctx.fillRect((left+right)/2-69,y,138,20);
       ctx.fillStyle='#d9e5ca';ctx.font='bold 11px monospace';ctx.textAlign='center';
-      ctx.fillText(key==='d'||key==='g'?'TUK · TIP':'TUK · ENGINEERING',(left+right)/2,y+14);
+      const theme=roofs[0].theme;ctx.fillText(theme==='tip'?'TUK · TIP':theme==='sports'?'TUK · SPORTS':theme==='research'?'TUK · RESEARCH':'TUK · ENGINEERING',(left+right)/2,y+14);
+    }
+    for(const t of s.targets.filter(t=>!t.collected)){
+      // Fictional bonus sprites, not depictions of identifiable university staff.
+      sprite(t.kind,t.x-7,t.y-3,t.w+14,t.h+6,t.falling&&!reducedMotion?Math.sin(s.time*5)*.12:0);
+      ctx.fillStyle='#edca6d';ctx.fillRect(t.x+t.w/2-3,t.y-11,6,5);
+    }
+    for(const e of s.events.filter(e=>e.type==='bonus'&&s.time-e.time<1.5)){
+      ctx.save();ctx.globalAlpha=Math.min(1,(1.5-s.time+e.time)*2);ctx.font='bold 18px monospace';ctx.textAlign='center';
+      const y=e.y-25-(reducedMotion?0:(s.time-e.time)*24);ctx.lineWidth=5;ctx.strokeStyle='#193b49';ctx.strokeText('+'+e.value,e.x,y);ctx.fillStyle='#ffe69c';ctx.fillText('+'+e.value,e.x,y);ctx.restore();
     }
     for(const b of s.barriers){
       // The visual barrier occupies the same bounds as its collision plane.

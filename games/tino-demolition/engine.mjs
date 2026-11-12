@@ -22,34 +22,45 @@ export const MATERIALS = {
   roof: { hp: 85, label: '지붕' },
 };
 const block = (id, kind, x, y, w, h, supports = []) => ({ id, kind, x, y, w, h, supports, hp: MATERIALS[kind].hp, maxHp: MATERIALS[kind].hp });
-// Repeated structural bays have a continuous slab line and actual supporting piers.
-function campus(id,x,bays,floors,kind='brick'){
- const out=[],pitch=112,bayHeight=98,baseY=WORLD.ground-98;
+// Campus motifs: long brick teaching wings, a low sports hall and stepped TIP towers.
+// Uniformly scaled bays retain their window/slab proportions; roofs can span a gym.
+function campus(id,x,bays,floors,kind='brick',scale=1,theme='engineering'){
+ const out=[],pitch=112*scale,bayHeight=98*scale,baseY=WORLD.ground-bayHeight;
  for(let col=0;col<bays;col++){
   const foot=id+'p'+col,stories=Array.isArray(floors)?floors[col]:floors;
-  out.push({...block(foot,'pillar',x+col*pitch,baseY,pitch,98),skin:col===Math.floor(bays/2)?'pillar':'glass'});
+  const decor={building:id,theme,scale};
+  out.push({...block(foot,'pillar',x+col*pitch,baseY,pitch,bayHeight),...decor,skin:theme==='sports'?'sports':col===Math.floor(bays/2)?'pillar':'glass'});
   let support=foot;
   for(let floor=0;floor<stories;floor++){
    const key=id+'f'+floor+'b'+col;
-   out.push({...block(key,kind,x+col*pitch,baseY-(floor+1)*bayHeight,pitch,bayHeight,[support]),skin:kind==='glass'&&floor>0?'tip':kind});support=key;
+   out.push({...block(key,kind,x+col*pitch,baseY-(floor+1)*bayHeight,pitch,bayHeight,[support]),...decor,skin:theme==='research'?'research':theme==='tip'?'tip':kind});support=key;
   }
-  out.push({...block(id+'r'+col,'roof',x+col*pitch,baseY-stories*bayHeight-45.5,pitch,45.5,[support]),skin:kind==='glass'?'crown':'roof'});
+  if(theme!=='sports')out.push({...block(id+'r'+col,'roof',x+col*pitch,baseY-stories*bayHeight-45.5*scale,pitch,45.5*scale,[support]),...decor,skin:theme==='tip'?'crown':'roof'});
  }
+ if(theme==='sports')out.push({...block(id+'r','roof',x,baseY-70*scale,pitch*bays,70*scale,out.map(b=>b.id)),building:id,theme,scale,skin:'sportsroof'});
  return out;
 }
+function scoreMobs(blocks){
+ const roofs=blocks.filter(b=>b.kind==='roof'),groups=[...new Set(roofs.map(b=>b.building))];
+ return groups.flatMap((group,i)=>{
+  const roof=roofs.filter(b=>b.building===group).sort((a,b)=>a.y-b.y||a.x-b.x)[0];
+  const kind=i%2?'professor':'exam',w=kind==='professor'?44:34,h=kind==='professor'?58:44;
+  return [{id:group+'-bonus',kind,x:roof.x+(roof.w-w)/2,y:roof.y-h,w,h,support:roof.id,value:kind==='professor'?300:150,collected:false,falling:false,vy:0}];
+ });
+}
 export const LEVELS = [
- {name:'01 · 창의공학관',brief:'광장을 사이에 둔 두 공학동. 뒤로 당기는 위치로 각도를, 누르는 시간으로 세기를 조절하세요. 외벽은 한 번에 사라지지 않습니다.',shots:14,par:10,angle:35,power:65,
-  blocks:[...campus('a',660,2,1),...campus('b',1150,2,1)],barriers:[]},
- {name:'02 · TIP 혁신타워',brief:'앞쪽 연구관과 뒤쪽 TIP 타워를 각각 공략하세요. 높은 궤적으로 앞 건물을 넘기고, 유리에는 연구 티노를 활용해 보세요.',shots:18,par:14,angle:48,power:70,
-  blocks:[...campus('c',720,2,1),...campus('d',1210,2,2,'glass')],barriers:[]},
- {name:'03 · 캠퍼스 연결동',brief:'서로 떨어진 세 건물. 가까운 곳은 낮고 짧게, 먼 타워는 높게 쏘세요. 기둥과 외벽의 균열을 읽고 다음 발을 계획하세요.',shots:22,par:18,angle:35,power:65,
-  blocks:[...campus('e',570,2,1),...campus('f',970,2,1),...campus('g',1370,1,2,'glass')],barriers:[]},
+ {name:'01 · 공학관 앞마당',brief:'낮고 긴 공학관과 높은 연구관 사이로 조준하세요. 옥상의 F 시험지와 가상 교수님 몹은 추가 점수입니다.',shots:20,par:15,angle:35,power:65,
+  blocks:[...campus('a',610,3,1,'brick',.8),...campus('b',1150,2,[1,2],'glass',.95,'research')],barriers:[]},
+ {name:'02 · 체육관과 TIP',brief:'낮은 아치 지붕의 체육관 너머 TIP 타워를 공략하세요. 높은 층은 파괴 순서에 따라 점수 몹이 떨어집니다.',shots:20,par:16,angle:48,power:70,
+  blocks:[...campus('c',650,2,0,'brick',1.15,'sports'),...campus('d',1170,2,[2,3],'glass',1,'tip')],barriers:[]},
+ {name:'03 · 캠퍼스 스카이라인',brief:'작은 강의동·유리 연구동·높은 TIP 모형이 서로 떨어져 있습니다. 가까운 곳은 낮고 짧게, 먼 타워는 높게 쏘세요.',shots:28,par:23,angle:35,power:65,
+  blocks:[...campus('e',550,3,1,'brick',.7),...campus('f',960,2,1,'glass',.85,'research'),...campus('g',1335,2,[2,3],'glass',.85,'tip')],barriers:[]},
 ];
 export function createGame(level = 0) {
   const definition = LEVELS[level];
   if (!definition) throw new RangeError('Unknown level');
   return { level, ammoType:'impact', phase:'aim', resumePhase:null, angle:definition.angle, power:definition.power, shotsLeft:definition.shots, used:0, time:0,
-    blocks:structuredClone(definition.blocks), barriers:structuredClone(definition.barriers), projectile:null, rubble:[], events:[], lastImpact:null,
+    blocks:structuredClone(definition.blocks), barriers:structuredClone(definition.barriers), targets:scoreMobs(definition.blocks), bonusScore:0, projectile:null, rubble:[], events:[], lastImpact:null,
     lastShot:null, undoCount:0, settle:0, stars:0, hitStop:0, shotDestroyed:0, eventId:0 };
 }
 export const speedFor = power => 300 + power * 6.4;
@@ -125,6 +136,17 @@ function destroy(s,b,cause){
   s.shotDestroyed++;
   event(s,'destroy',{id:b.id,kind:b.kind,cause,count:s.shotDestroyed,x:b.x+b.w/2,y:b.y+b.h/2});
 }
+function collectTarget(s,t,cause){
+ if(t.collected)return;t.collected=true;s.bonusScore+=t.value;
+ event(s,'bonus',{id:t.id,kind:t.kind,value:t.value,cause,x:t.x+t.w/2,y:t.y+t.h/2});
+}
+function updateTargets(s,dt){
+ for(const t of s.targets.filter(t=>!t.collected)){
+  const support=s.blocks.find(b=>b.id===t.support);
+  if(!t.falling&&(!support||support.hp<=0||support.falling)){t.falling=true;t.vy=0;}
+  if(t.falling){t.vy+=WORLD.gravity*dt;t.y+=t.vy*dt;if(t.y+t.h>=WORLD.ground){t.y=WORLD.ground-t.h;collectTarget(s,t,'landed');}}
+ }
+}
 function collapse(s){
   let changed=true;
   while(changed){changed=false;for(const b of s.blocks.filter(b=>b.hp>0&&b.supports.length)){
@@ -149,13 +171,17 @@ function impact(s,p,hit){
       const distance=Math.hypot(hit.x-x,hit.y-y);
       if(distance<ammo.radius){b.hp-=damage*.2*(1-distance/ammo.radius);if(b.hp<=0)destroy(s,b,'impact');}
     }
+    for(const t of s.targets.filter(t=>!t.collected)){
+      const x=Math.max(t.x,Math.min(t.x+t.w,hit.x)),y=Math.max(t.y,Math.min(t.y+t.h,hit.y));
+      if(Math.hypot(hit.x-x,hit.y-y)<ammo.radius)collectTarget(s,t,'impact');
+    }
     collapse(s);
   }
   s.phase='settling';s.settle=1.1;
 }
 export function fire(s){
   if(s.phase!=='aim'||s.shotsLeft<=0)return false;
-  s.lastShot={blocks:structuredClone(s.blocks),shotsLeft:s.shotsLeft,used:s.used,angle:s.angle,power:s.power,ammoType:s.ammoType};
+  s.lastShot={blocks:structuredClone(s.blocks),targets:structuredClone(s.targets),bonusScore:s.bonusScore,shotsLeft:s.shotsLeft,used:s.used,angle:s.angle,power:s.power,ammoType:s.ammoType};
   s.shotDestroyed=0;s.hitStop=0;s.rubble=[];s.projectile=projectileFor(s);s.shotsLeft--;s.used++;s.phase='flight';s.lastImpact=null;event(s,'launch');return true;
 }
 export function undo(s){
@@ -170,11 +196,13 @@ export function step(s,dt=DT){
   dt=Math.max(0,Math.min(dt,DT));if(s.hitStop>0){s.hitStop=Math.max(0,s.hitStop-dt);return;}s.time+=dt;
   s.events=s.events.filter(e=>s.time-e.time<2);
   if(s.phase==='flight'){
-    const result=advanceProjectile(s.projectile,s.blocks,s.barriers,dt);s.projectile=result.next;
+    const result=advanceProjectile(s.projectile,s.blocks,s.barriers,dt);
+    for(const t of s.targets.filter(t=>!t.collected))if(segmentHit(s.projectile,result.next,t))collectTarget(s,t,'projectile');
+    s.projectile=result.next;
     if(result.hit)impact(s,result.next,result.hit);
   }else{
     s.settle-=dt;
-    if(s.settle<=0&&!s.blocks.some(b=>b.hp>0&&b.falling)){s.projectile=null;
+    if(s.settle<=0&&!s.blocks.some(b=>b.hp>0&&b.falling)&&!s.targets.some(t=>!t.collected&&t.falling)){s.projectile=null;
       if(s.blocks.every(b=>b.hp<=0)){s.phase='won';s.stars=s.used<=LEVELS[s.level].par?3:s.shotsLeft>0?2:1;}
       else s.phase=s.shotsLeft>0?'aim':'lost';
     }
@@ -207,6 +235,7 @@ export function step(s,dt=DT){
       destroy(s,b,'landed');collapse(s);s.settle=Math.max(s.settle,.65);
     }
   }
+  updateTargets(s,dt);
   for(const r of s.rubble){
     r.age+=dt;r.vy+=WORLD.gravity*dt;r.x+=r.vx*dt;r.y+=r.vy*dt;r.angle+=r.spin*dt;
     if(r.y+r.h>WORLD.ground){r.y=WORLD.ground-r.h;if(r.vy>45&&r.bounces<2){r.vy=-r.vy*.22;r.bounces++;}else r.vy=0;r.vx*=.88;r.spin*=.7;}
