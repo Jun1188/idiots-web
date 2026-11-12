@@ -166,10 +166,10 @@ html[data-motion=off] .scroll-world,.scroll-world[data-static=true]{--scene-colo
 .tino-perch__call:hover{color:var(--tino-call-hover,var(--ink,#182821))}.tino-perch__call:focus-visible{outline:2px solid var(--tino-call-focus,var(--blue,#2357dc));outline-offset:1px}
 /* Inherit high-contrast controls into the bright introduction and its nested panel. */
 #club{--tino-call:#344f43;--tino-call-hover:#182821;--tino-call-focus:#2357a0;--tino-perch-line:#607c69}
-.hero.tino-frame,#games.tino-frame,#updates.tino-frame,#archive.tino-frame,#awesome.tino-frame,#club.tino-frame,.arcade-section.tino-frame{padding-top:var(--tino-reserve,64px);padding-bottom:var(--tino-reserve,64px)}
-#story-panel.tino-frame,.game-card.tino-frame,.update-card.tino-frame,.chart-card.tino-frame,.records.tino-frame,.discord-status.tino-frame,.discord-category.tino-frame,.club-description.tino-frame,.foot-inner.tino-frame,.project-credits.tino-frame{padding-top:var(--tino-reserve,64px);padding-bottom:var(--tino-reserve,64px)}
-#dashboard.tino-frame{padding-top:var(--tino-reserve,64px);padding-bottom:var(--tino-reserve,64px)}
-#runner-game.tino-frame{padding-top:var(--tino-reserve,64px);padding-bottom:var(--tino-reserve,64px)}
+.hero.tino-frame,#games.tino-frame,#updates.tino-frame,#archive.tino-frame,#awesome.tino-frame,#club.tino-frame,.arcade-section.tino-frame{padding-top:var(--tino-reserve-top,64px);padding-bottom:var(--tino-reserve-bottom,64px)}
+#story-panel.tino-frame,.game-card.tino-frame,.update-card.tino-frame,.chart-card.tino-frame,.records.tino-frame,.discord-status.tino-frame,.discord-category.tino-frame,.club-description.tino-frame,.foot-inner.tino-frame,.project-credits.tino-frame{padding-top:var(--tino-reserve-top,64px);padding-bottom:var(--tino-reserve-bottom,64px)}
+#dashboard.tino-frame{padding-top:var(--tino-reserve-top,64px);padding-bottom:var(--tino-reserve-bottom,64px)}
+#runner-game.tino-frame{padding-top:var(--tino-reserve-top,64px);padding-bottom:var(--tino-reserve-bottom,64px)}
 .tino-floor{position:relative;box-sizing:border-box;width:100%;max-width:none;height:60px;margin:0}
 /* The final floor catches every release column, including page margins. */
 .tino-floor .tino-perch:after{left:0;right:0}
@@ -178,21 +178,21 @@ html[data-motion=off] .scroll-world,.scroll-world[data-static=true]{--scene-colo
 .scroll-tino[hidden],.tino-dialog[hidden]{display:none!important}
 .scroll-tino:focus-visible{outline:2px solid var(--blue,#2357dc);outline-offset:-2px;background:#2357dc0d}
 .scroll-tino[data-state=drag]{cursor:grabbing}
-.scroll-tino__sprite{display:block;width:100%;height:100%;background:url("media/tino-sprites.png") 0 0/300% 200% no-repeat;image-rendering:pixelated;pointer-events:none}
-.scroll-tino[data-pose=run1] .scroll-tino__sprite{background-position:50% 0}
-.scroll-tino[data-pose=run2] .scroll-tino__sprite{background-position:100% 0}
-.scroll-tino[data-pose=jump] .scroll-tino__sprite{background-position:0 100%}
-.scroll-tino[data-pose=wave] .scroll-tino__sprite{background-position:50% 100%}
-.scroll-tino[data-pose=think] .scroll-tino__sprite{background-position:100% 100%}
-.tino-launcher{background:none;color:var(--ink,#182821);border:1px solid var(--line,#cbd3c5);font:11px/1.4 var(--sans,sans-serif);padding:6px 10px;min-height:32px;white-space:nowrap;cursor:pointer}
+.scroll-tino__sprite{display:block;width:100%;height:100%;background:url("media/tino-sprites.png") 5.2817% 6.4103%/384% 256% no-repeat;image-rendering:pixelated;pointer-events:none}
+.scroll-tino[data-pose=run1] .scroll-tino__sprite{background-position:50.3521% 6.4103%}
+.scroll-tino[data-pose=run2] .scroll-tino__sprite{background-position:95.4225% 6.4103%}
+.scroll-tino[data-pose=jump] .scroll-tino__sprite{background-position:6.5141% 84.1346%}
+.scroll-tino[data-pose=wave] .scroll-tino__sprite{background-position:49.8239% 90.0641%}
+.scroll-tino[data-pose=think] .scroll-tino__sprite{background-position:92.9577% 90.0641%}
+.tino-launcher{background:none;color:var(--ink,#182821);border:1px solid var(--line,#cbd3c5);font:11px/1.4 var(--sans,sans-serif);padding:6px 10px;min-height:44px;white-space:nowrap;cursor:pointer}
 .tino-launcher:hover{background:#e8ede3}
 .tino-dialog{position:fixed;z-index:45;box-sizing:border-box;width:350px;max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);overflow:auto;overscroll-behavior:contain;scroll-padding-top:64px;scroll-padding-bottom:12px;background:var(--paper,#f5f4ee);color:var(--ink,#182821);border:2px solid var(--ink,#182821);box-shadow:5px 5px 0 #18282126;padding:17px;font-family:var(--sans,sans-serif)}
 .tino-dialog__heading{position:sticky;top:0;z-index:1;background:var(--paper,#f5f4ee);display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line,#cbd3c5);padding-bottom:10px}
 .tino-dialog__heading strong{font:700 11px/1.5 var(--mono,monospace)}
-.tino-dialog__close{background:none;border:0;padding:7px;min-height:36px;font-size:11px;cursor:pointer;color:inherit}
+.tino-dialog__close{background:none;border:0;padding:7px;min-height:44px;font-size:12px;cursor:pointer;color:inherit}
 .tino-dialog__text{font-size:13px;line-height:1.8;margin:14px 0;word-break:keep-all;overflow-wrap:anywhere}
 .tino-dialog__choices{display:grid;gap:7px}
-.tino-dialog__choices button{border:1px solid #bdcbbb;background:#e8ede3;color:inherit;min-height:40px;padding:9px 11px;text-align:left;font:12px/1.5 var(--sans,sans-serif);cursor:pointer;word-break:keep-all}
+.tino-dialog__choices button{border:1px solid #bdcbbb;background:#e8ede3;color:inherit;min-height:44px;padding:9px 11px;text-align:left;font:12px/1.5 var(--sans,sans-serif);cursor:pointer;word-break:keep-all}
 .tino-dialog__choices button:hover{border-color:var(--blue,#2357dc);color:var(--blue,#2357dc)}
 .tino-dialog button:focus-visible,.tino-launcher:focus-visible{outline:3px solid var(--blue,#2357dc);outline-offset:2px}
 .tino-dialog__note{display:block;font-size:10px;line-height:1.7;color:#5b6b5e;border-top:1px solid var(--line,#cbd3c5);padding-top:10px;margin-top:12px}
@@ -216,20 +216,35 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
 
 .scroll-tino[data-selected=true]{z-index:2}
 /* A quiet invitation, never an automatically opened conversation. */
-.tino-idle-tip{position:fixed;z-index:34;max-width:256px;padding:10px 14px;background:#fffdf4;color:#253d39;border:1px solid #6f8e83;border-radius:14px 14px 14px 3px;box-shadow:0 3px 12px #223b3212;font:500 12px/1.5 inherit;text-align:left;cursor:pointer}
+.tino-idle-tip{position:fixed;z-index:34;max-width:220px;min-height:44px;padding:10px 14px;background:#fffdf4;color:#253d39;border:1px solid #6f8e83;border-radius:14px 14px 14px 3px;box-shadow:0 3px 12px #223b3212;font:600 13px/1.5 var(--sans,sans-serif);text-align:left;cursor:pointer}
 .tino-idle-tip[hidden],.tino-dialog__choices button[hidden]{display:none!important}
 .tino-dialog__navigation{display:flex;flex-wrap:wrap;gap:8px;padding:10px 0;border-top:1px solid #b6c7bf}
-.tino-dialog__navigation button{background:transparent;border:0;color:inherit;text-decoration:underline;text-underline-offset:4px;min-height:40px;cursor:pointer}
+.tino-dialog__navigation button{background:transparent;border:0;color:inherit;text-decoration:underline;text-underline-offset:4px;min-height:44px;cursor:pointer}
 @media print{.tino-idle-tip{display:none!important}}
 
 /* Reserve extra room only on ledges that actually host a companion. */
 .tino-frame{--tino-reserve:64px}
 .hero.tino-frame,#games.tino-frame,#updates.tino-frame,#archive.tino-frame,#awesome.tino-frame,#club.tino-frame,.arcade-section.tino-frame{--tino-reserve:70px}
 #runner-game.tino-frame{--tino-reserve:60px}
-.tino-frame.tino-room{--tino-reserve:90px!important}
-.tino-room>.tino-perch{height:84px}
-.tino-room>.tino-perch:after{top:74px}
-.tino-floor.tino-room{height:84px;padding:0}
+.tino-frame.tino-room{padding-top:var(--tino-reserve-top,64px);padding-bottom:var(--tino-reserve-bottom,64px)}
+.tino-room>.tino-perch[data-tino-edge=top]{height:var(--tino-reserve-top,64px)}
+.tino-room>.tino-perch[data-tino-edge=bottom]{height:var(--tino-reserve-bottom,64px)}
+.tino-room>.tino-perch:after{top:calc(100% - 10px)}
+.tino-floor.tino-room{height:var(--tino-reserve,116px);padding:0}
+
+/* Each semantic UI panel gets separate upper/lower rails, not text overlays. */
+#chapter-toc.tino-frame,.hero-copy.tino-frame,#contact.tino-frame,.demolition-launcher.tino-frame,.campus-launcher.tino-frame{padding-top:var(--tino-reserve-top,64px);padding-bottom:var(--tino-reserve-bottom,64px)}
+/* Cropped 400px source windows remove the old transparent-cell padding. */
+.scroll-tino__cue{position:absolute;right:0;top:0;display:grid;place-items:center;width:18px;height:18px;border-radius:50%;border:1px solid #294e48;background:#fffdf4;color:#244b43;font:700 12px/1 var(--sans,sans-serif);pointer-events:none}
+.scroll-tino[data-state=drag] .scroll-tino__cue,.scroll-tino[data-state=fall] .scroll-tino__cue{display:none}
+.scroll-tino:hover .scroll-tino__cue,.scroll-tino:focus-visible .scroll-tino__cue{background:#244b43;color:#fffdf4}
+
+/* New semantic panels follow the same edge-specific reservation. */
+#chapter-toc.tino-room,.hero-copy.tino-room,#contact.tino-room,.demolition-launcher.tino-room,.campus-launcher.tino-room{padding-top:var(--tino-reserve-top,64px);padding-bottom:var(--tino-reserve-bottom,64px)}
+
+/* Clickable cards keep their original accessible link and hit area. */
+.tino-link-frame{min-width:0;display:block}
+.tino-link-frame>.campus-launcher,.tino-link-frame>.demolition-launcher{margin-bottom:0}
 
 /* A static, lazy-loaded link. The standalone game does not run on this page. */
 .campus-launcher{display:grid;grid-template-columns:minmax(0,240px) minmax(0,1fr);align-items:center;gap:24px;margin:0 0 32px;padding:18px;border:1px solid var(--line,#cdd0c8);background:var(--paper,#f5f4ee);color:var(--ink,#202624);text-decoration:none;min-width:0;min-height:44px}
@@ -1317,9 +1332,9 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
   'use strict';
   const clamp = (n, low, high) => Math.max(low, Math.min(high, n));
   const finite = (n, fallback = 0) => Number.isFinite(n) ? n : fallback;
-  const FRAME_SELECTOR = '.hero, #story-panel, #dashboard, #games, .game-card, #updates, .update-card, #archive, .chart-card, .records, #awesome, .discord-status, .discord-category, #club, .club-description, .arcade-section, #runner-game, .foot-inner, .project-credits';
+  const FRAME_SELECTOR = '#chapter-toc, .hero, .hero-copy, #story-panel, #dashboard, #games, .game-card, #updates, .update-card, #archive, .chart-card, .records, #awesome, .discord-status, .discord-category, #club, .club-description, .arcade-section, #runner-game, .foot-inner, #contact, .project-credits, .demolition-launcher, .campus-launcher';
   const REVEAL_SELECTOR = '.section-heading, .game-card, .update-card, .club-description, #runner-game';
-  const DRAG_THRESHOLD = 6, WALK_SPEED = 14, WALK_DURATION = 1600, IDLE_DELAY = 7000, MAX_PETS = 8;
+  const DRAG_THRESHOLD = 6, WALK_SPEED = 14, WALK_DURATION = 1600, IDLE_DELAY = 7000, MAX_PETS = 24;
   const GRAVITY = 1800;
 
   // Frame category metadata for layout/debugging, not release hit testing.
@@ -1334,11 +1349,11 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
     if (!rect || rect.width < size + 64 || rect.height < 1) return null;
     const low = Math.max(8, rect.left + 52), high = Math.min(viewport.width - size - 8, rect.right - size - 8);
     if (high < low) return null;
-    const y = rect.top + (rect.bottom - rect.top >= 84 ? 74 : 50) - size * .86;
+    const y = rect.top + (rect.bottom - rect.top - 8) - size * .94;
     return { low, high, y, top: rect.top, bottom: rect.bottom, visible: y >= 0 && y + size <= viewport.height };
   }
   function petSize(number, width) {
-    return (width <= 600 ? [44, 56, 64] : [48, 64, 80])[(number - 1) % 3];
+    return (width <= 600 ? [56, 72, 84] : [64, 80, 96])[(number - 1) % 3];
   }
   // Quantiles of actual document ledges, not the first few DOM cards or the viewport.
   function initialHomes(frames, count) {
@@ -1354,6 +1369,25 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
         Math.abs(item.rail.y - target) < Math.abs(best.rail.y - target) ? item : best));
     }
     return chosen;
+  }
+  function initialPlacements(frames, count) {
+    const candidates = [];
+    for (const frame of frames) if (!frame.floor) for (const edge of ['top', 'bottom']) {
+      const rail = edgeRail(frame, edge); if (rail) candidates.push({ frame, edge, y: rail.y });
+    }
+    candidates.sort((a,b) => a.y-b.y);
+    if (!candidates.length) return [];
+    const chosen = [], low = candidates[0].y, high = candidates[candidates.length-1].y;
+    for(let i=0;i<count;i++) {
+      const target = low+(high-low)*i/Math.max(1,count-1);
+      const unused = candidates.filter(item=>!chosen.includes(item));
+      chosen.push((unused.length?unused:candidates).reduce((best,item)=>Math.abs(item.y-target)<Math.abs(best.y-target)?item:best));
+    }
+    return chosen;
+  }
+  function defaultCount(frames) {
+    const ys = frames.flatMap(frame=>frame.floor?[]:['top','bottom'].map(edge=>edgeRail(frame,edge)?.y).filter(Number.isFinite));
+    return ys.length ? clamp(Math.ceil((Math.max(...ys)-Math.min(...ys))/550)+1,12,MAX_PETS) : 12;
   }
   function railPoint(rail, ratio) { return { x: rail.low + (rail.high - rail.low) * clamp(finite(ratio, .7), 0, 1), y: rail.y }; }
   function ratioAt(rail, x) { return clamp((x - rail.low) / Math.max(1, rail.high - rail.low), 0, 1); }
@@ -1407,8 +1441,21 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
     const create = (tag, className, text) => { const node = document.createElement(tag); if (className) node.className = className; if (text) node.textContent = text; return node; };
     const textOf = (selector, fallback = '') => document.querySelector(selector)?.textContent.trim() || fallback;
     const floorNode = create('div', 'tino-floor'); floorNode.id = 'tino-floor'; document.body.appendChild(floorNode);
-    const nodes = [...document.querySelectorAll(FRAME_SELECTOR), floorNode];
-    const frames = nodes.map((node, index) => {
+    const frames = [];
+    let bindNewFrame = () => {};
+    function registerFrame(node) {
+      if (frames.some(item=>item.node===node || item.source===node)) return;
+      const source = node;
+      // An entire linked card is an active hit target, including its padding.
+      // Put the two companion lanes in a separate noninteractive sibling shell.
+      if (['A','BUTTON','SUMMARY'].includes(node.tagName) || ['link','button'].includes(node.getAttribute('role'))) {
+        const wrapper = create('div', 'tino-link-frame');
+        node.parentNode.insertBefore(wrapper,node); wrapper.appendChild(node);
+        wrapper.id = (node.id || 'tino-link-' + frames.length) + '-tino-frame';
+        wrapper.setAttribute('aria-label',node.getAttribute('aria-label') || node.querySelector('h1, h2, h3, h4')?.textContent.trim() || '게임 안내');
+        node = wrapper;
+      }
+      const index = frames.length;
       const key = node.id || 'frame-' + index;
       const label = node.id === 'story-panel' ? '활동 기록 창' : node.id === 'runner-game' ? 'Tino Run 게임 창' : node === floorNode ? '페이지 바닥' :
         node.getAttribute('aria-label') || node.querySelector('h1, h2, h3, h4')?.textContent.trim() || ({ dashboard: '활동 요약', updates: '근황', club: '동아리 소개' })[node.id] ||
@@ -1423,12 +1470,17 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
         perch.appendChild(call); edge === 'top' ? node.insertBefore(perch, node.firstChild) : node.appendChild(perch);
         perches[edge] = perch; calls[edge] = call;
       }
-      return { key, label, node, floor, dropMode, perches, calls, perch: perches.top, call: calls.top, rails: {}, rail: null, box: null };
-    });
+      const item = { key, label, node, source, floor, dropMode, perches, calls, perch: perches.top, call: calls.top, rails: {}, rail: null, box: null };
+      frames.push(item); bindNewFrame(item);
+    }
+    function discoverFrames() {
+      for (const node of [...document.querySelectorAll(FRAME_SELECTOR),floorNode]) registerFrame(node);
+    }
+    discoverFrames();
     if (!frames.length) return null;
     const layer = create('div', 'scroll-tino-layer'); layer.id = 'tino-companions'; document.body.appendChild(layer);
     const status = create('p', 'sr-only'); status.id = 'tino-status'; status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite'); document.body.appendChild(status);
-    const launcher = create('button', 'tino-launcher', '티노 4명'); launcher.type = 'button'; launcher.setAttribute('aria-haspopup', 'dialog'); launcher.setAttribute('aria-controls', 'tino-dialog');
+    const launcher = create('button', 'tino-launcher', '티노 안내'); launcher.type = 'button'; launcher.setAttribute('aria-haspopup', 'dialog'); launcher.setAttribute('aria-controls', 'tino-dialog');
     (document.querySelector('.mast-inner') || frames[0].node).appendChild(launcher);
     const dialog = create('section', 'tino-dialog'); dialog.id = 'tino-dialog'; dialog.hidden = true; dialog.setAttribute('role', 'dialog'); dialog.setAttribute('aria-modal', 'false');
     dialog.setAttribute('aria-labelledby', 'tino-dialog-title'); dialog.setAttribute('aria-describedby', 'tino-dialog-text tino-dialog-note');
@@ -1438,7 +1490,7 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
     const choices = create('div', 'tino-dialog__choices'); choices.id = 'tino-dialog-choices'; dialog.appendChild(choices);
     const note = create('small', 'tino-dialog__note', '공개 정보와 정해진 선택지로만 동작해요. 외부 서버·AI 호출이나 대화 전송은 없어요.'); note.id = 'tino-dialog-note'; dialog.appendChild(note); document.body.appendChild(dialog);
     const pets = [], cleanup = [];
-    let selected = null, dialogPet = null, nextPet = 1, pointer = null, size = 48, raf = null, dirty = true, disposed = false, suspended = false;
+    let selected = null, dialogPet = null, nextPet = 1, pointer = null, size = 64, raf = null, dirty = true, disposed = false, suspended = false;
     let motionAllowed = document.documentElement.dataset.motion !== 'off', returnFocus = launcher, dialogSource = launcher, dialogScrollX = 0, dialogScrollY = 0;
     const listen = (node, type, fn, opts) => { node?.addEventListener(type, fn, opts); cleanup.push(() => node?.removeEventListener(type, fn, opts)); };
     const announce = text => { status.textContent = text; };
@@ -1447,10 +1499,34 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
     const sizedRail = (pet, item, edge = 'top') => {
       const rail = edgeRail(item, edge); if (!rail) return null;
       const delta = sizeOf(pet) - size;
-      const y = rail.y - delta * .86, high = rail.high - delta;
+      const y = rail.y - delta * .94, high = rail.high - delta;
       return high < rail.low ? null : { ...rail, y, high, visible: y >= 0 && y + sizeOf(pet) <= window.innerHeight };
     };
-    function reserve(item, pet) { if (sizeOf(pet) <= 56) return; if (item && !item.node.classList.contains('tino-room')) { item.node.classList.add('tino-room'); dirty = true; } }
+    function reserve() { dirty = true; }
+    // Keep ledges stable when a pet leaves: shrinking a prior home at the
+    // document bottom forces browser scroll clamping and pulls the page up.
+    // Heights are bounded by the largest pet, never added cumulatively.
+    // Recompute on responsive breakpoint changes; freeze during a drop.
+    function syncReservations() {
+      if (pointer || pets.some(pet => pet.fall)) return;
+      for (const item of frames) {
+        const empty = (document.documentElement.clientWidth || window.innerWidth) <= 600 ? 68 : 76;
+        const sameViewport = item.reservationViewport === empty;
+        const heights = { top: Math.max(empty, sameViewport ? item.reservedTop || 0 : 0),
+          bottom: Math.max(empty, sameViewport ? item.reservedBottom || 0 : 0) };
+        item.reservationViewport = empty;
+        for (const pet of pets) if (pet.current === item) heights[pet.edge] = Math.max(heights[pet.edge], sizeOf(pet) + 20);
+        if (item.reservedTop === heights.top && item.reservedBottom === heights.bottom) continue;
+        item.reservedTop = heights.top; item.reservedBottom = heights.bottom;
+        item.reserve = Math.max(heights.top, heights.bottom);
+        item.node.classList.add('tino-room');
+        for (const edge of ['top', 'bottom']) {
+          const value = heights[edge] + 'px', key = '--tino-reserve-' + edge;
+          if (item.node.style.getPropertyValue?.(key) !== value) item.node.style.setProperty(key, value);
+        }
+        item.node.style.setProperty('--tino-reserve', item.reserve + 'px');
+      }
+    }
     const railOf = pet => sizedRail(pet, pet.current, pet.edge);
     const targetFor = (pet, point) => {
       const adjusted = frames.map(item => ({ ...item, original: item,
@@ -1481,8 +1557,9 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
       seat.low = rail.low; seat.high = rail.high;
     }
     function measure() {
+      syncReservations();
       const viewport = { width: document.documentElement.clientWidth || window.innerWidth, height: window.innerHeight };
-      size = viewport.width <= 600 ? 44 : 48;
+      size = viewport.width <= 600 ? 56 : 64;
       for (const item of frames) {
         item.box = item.node.isConnected && item.node.getClientRects().length ? item.node.getBoundingClientRect() : null;
         for (const edge of ['top', 'bottom']) item.rails[edge] = item.box && item.perches[edge]?.getClientRects().length ? railBounds(item.perches[edge].getBoundingClientRect(), size, viewport) : null;
@@ -1672,8 +1749,9 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
       if (pets.length >= MAX_PETS) return null;
       const number = nextPet++, actor = create('button', 'scroll-tino'); actor.id = number === 1 ? 'scroll-tino' : 'scroll-tino-' + number; actor.type = 'button'; actor.hidden = true; actor.dataset.tinoPet = 'tino-' + number; actor.title = '티노 ' + number + ' · 클릭해서 대화 · 끌어서 옮기기';
       actor.setAttribute('aria-label', '티노 ' + number + '와 대화. 끌어서 옮기거나 프레임을 선택할 수 있어요.'); actor.setAttribute('aria-haspopup', 'dialog'); actor.setAttribute('aria-controls', 'tino-dialog'); actor.setAttribute('aria-expanded', 'false');
-      const sprite = create('span', 'scroll-tino__sprite'); sprite.setAttribute('aria-hidden', 'true'); actor.appendChild(sprite); layer.appendChild(actor);
-      const pet = { number, id: 'tino-' + number, name: '티노 ' + number, actor, sprite, current: homeFrame, edge, ratio: .3 + (number % 3) * .23, point: { x: 0, y: 0 }, facing: 1,
+      const sprite = create('span', 'scroll-tino__sprite'); sprite.setAttribute('aria-hidden', 'true'); actor.appendChild(sprite);
+      const cue = create('span','scroll-tino__cue','?'); cue.setAttribute('aria-hidden','true'); actor.appendChild(cue); layer.appendChild(actor);
+      const pet = { number, id: 'tino-' + number, name: '티노 ' + number, actor, sprite, current: homeFrame, edge, ratio: number % 2 ? .9 : .12, point: { x: 0, y: 0 }, facing: 1,
         timer: null, walk: null, reaction: null, fall: null, hover: false, quiet: false, suppressClick: false, rest: 'idle', pose: 'idle' };
       reserve(homeFrame, pet);
       if (dirty) measure();
@@ -1707,7 +1785,9 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
       if (pets.length <= 1) return;
       if (pointer?.pet === pet) endPointer(true); stopMotion(pet); pet.fall = null;
       if (dialogPet === pet) closeDialog(false); pets.splice(pets.indexOf(pet), 1); pet.listeners.forEach(dispose => dispose()); pet.actor.remove();
-      if (selected === pet) selected = pets[0]; updateCount(); launcher.focus({ preventScroll: true }); announce(pet.name + '을 쉬게 했어요.'); request();
+      // Explicit removal is a layout-management action, unlike a physical drop.
+      for (const item of frames) item.reservationViewport = null;
+      if (selected === pet) selected = pets[0]; updateCount(); launcher.focus({ preventScroll: true }); announce(pet.name + '을 쉬게 했어요.'); invalidate();
     }
     listen(window, 'pointermove', event => {
       if (!pointer || event.pointerId !== pointer.id) return;
@@ -1798,7 +1878,7 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
         for (const item of frames) if (item.node.isConnected && item.node.getClientRects().length)
           for (const edge of item.floor ? ['top'] : ['top', 'bottom']) addChoice('move-' + item.key + '-' + edge, item.label + ' · ' + (edge === 'top' ? '위' : '아래') + (item === current && edge === pet.edge ? ' · 지금 여기' : ''), () => relocate(pet, item, edge), item.key, edge);
       } else if (branch === 'pets') {
-        answer.textContent = '지금 ' + pets.length + '명, 최대 ' + MAX_PETS + '명까지 함께할 수 있어요. 선택한 티노만 옮기거나 쉬게 할 수 있어요. 새로 열면 기본 6명으로 시작해요.';
+        answer.textContent = '지금 ' + pets.length + '명, 최대 ' + MAX_PETS + '명까지 함께할 수 있어요. 선택한 티노만 옮기거나 쉬게 할 수 있어요. 새로 열면 페이지 길이에 맞춰 곳곳에 배치돼요.';
         for (const friend of pets) {
           const button = addChoice('select-' + friend.id, friend.name + (friend === pet ? ' · 선택됨' : '') + ' · ' + (friend.current?.label || '이동 중'), () => { selected = friend; dialogPet = friend; renderDialog('home'); request(); }); button.dataset.tinoPetTarget = friend.id;
         }
@@ -1849,25 +1929,41 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
       if (options.idleTips === false || disposed || suspended || document.hidden || !dialog.hidden || pointer) return;
       tipTimer = window.setTimeout(() => {
         tipTimer = null;
-        if (disposed || suspended || document.hidden || !dialog.hidden || pointer || Date.now() - tipShownAt < 60000) return;
-        tipPet = pets.find(friend => !friend.actor.hidden && friend.point.y >= 16 && friend.point.y < window.innerHeight - 100);
+        if (disposed || suspended || document.hidden || !dialog.hidden || pointer || Date.now() - tipShownAt < 30000) return;
+        const mastBottom = document.querySelector('.mast')?.getBoundingClientRect().bottom || 0;
+        const safeTop = mastBottom>0 && mastBottom<window.innerHeight/2 ? mastBottom+8 : 16;
+        tipPet = pets.filter(friend => !friend.actor.hidden && friend.point.y >= safeTop && friend.point.y < window.innerHeight - sizeOf(friend)-32)
+          .sort((a,b)=>Math.abs(a.point.y-window.innerHeight*.45)-Math.abs(b.point.y-window.innerHeight*.45))[0];
         if (!tipPet) return;
-        tip.textContent = tipPet.name + ': 둘러보기 팁이 필요하면 눌러 줘!'; tip.hidden = false;
-        tip.style.left = clamp(tipPet.point.x - 80, 12, Math.max(12, window.innerWidth - 268)) + 'px';
-        tip.style.top = Math.max(12, tipPet.point.y - 62) + 'px'; tipShownAt = Date.now();
-        tipTimer = window.setTimeout(hideTip, 10000);
-      }, 6500);
+        tip.textContent = '둘러보기 팁이 필요해? 나를 눌러 줘!'; tip.hidden = false;
+        const size = sizeOf(tipPet), width = Math.min(220,window.innerWidth-24), gap=10;
+        const right = tipPet.point.x+size+gap;
+        const left = right+width<=window.innerWidth-12 ? right : tipPet.point.x-width-gap;
+        tip.style.maxWidth=width+'px';
+        tip.style.left=clamp(left,12,window.innerWidth-width-12)+'px';
+        tip.style.top=clamp(tipPet.point.y+size*.25,safeTop,window.innerHeight-68)+'px';
+        tip.setAttribute('aria-label',tipPet.name+'의 사이트 안내 열기'); tipShownAt = Date.now();
+        tipTimer = window.setTimeout(hideTip, 8000);
+      }, 1800);
     }
     listen(tip, 'click', () => { const friend = tipPet || selected; hideTip(); openDialog(friend.actor, friend); });
     listen(window, 'scroll', scheduleTip, { passive: true });
     listen(document, 'pointerdown', event => { if (event.target !== tip) hideTip(); });
     listen(document, 'keydown', hideTip);
     cleanup.push(() => { hideTip(); tip.remove(); });
-    const initial = clamp(Math.floor(finite(options.initialCount, 6)), 1, MAX_PETS);
     measure();
-    const homes = initialHomes(frames, initial);
-    for (let i = 0; i < initial; i++) createPet(homes[i] || frames[0], 'top');
-    for (const item of frames) for (const edge of item.floor ? ['top'] : ['top', 'bottom']) listen(item.calls[edge], 'click', () => relocate(selected, item, edge));
+    const initial = clamp(Math.floor(finite(options.initialCount, defaultCount(frames))), 1, MAX_PETS);
+    const homes = initialPlacements(frames, initial);
+    for (let i = 0; i < initial; i++) createPet(homes[i]?.frame || frames[0], homes[i]?.edge || 'top');
+    // Reserving lanes changes document height. Rebalance once during setup,
+    // never in response to scroll: companions remain on their own frames.
+    if (!Number.isFinite(options.initialCount)) {
+      measure(); const settledHomes=initialPlacements(frames,initial);
+      pets.forEach((pet,i)=>{ const home=settledHomes[i]; if(home){pet.current=home.frame;pet.edge=home.edge;reserve(home.frame,pet);} });
+      dirty=true;
+    }
+    bindNewFrame=item=>{for(const edge of item.floor?['top']:['top','bottom'])listen(item.calls[edge],'click',()=>relocate(selected,item,edge));};
+    frames.forEach(bindNewFrame);
     listen(launcher, 'click', () => { if (!dialog.hidden) closeDialog(); else openDialog(launcher); }); listen(close, 'click', () => closeDialog());
     listen(document, 'pointerdown', event => { if (!dialog.hidden && !dialog.contains(event.target) && !pets.some(pet => pet.actor.contains(event.target)) && event.target !== launcher) closeDialog(false); });
     listen(document, 'keydown', event => { if (event.key === 'Escape') { if (pointer) { event.preventDefault(); endPointer(true); } if (!dialog.hidden) { event.preventDefault(); closeDialog(); } } });
@@ -1893,7 +1989,7 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
     if (reduced?.addEventListener) listen(reduced, 'change', changeMotion); else if (reduced?.addListener) { reduced.addListener(changeMotion); cleanup.push(() => reduced.removeListener?.(changeMotion)); }
     let resize, mutations, revealObserver;
     if (window.ResizeObserver) { resize = new window.ResizeObserver(invalidate); resize.observe(main); for (const item of frames) resize.observe(item.node); }
-    if (window.MutationObserver) { mutations = new window.MutationObserver(invalidate); mutations.observe(main, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] }); }
+    if (window.MutationObserver) { mutations = new window.MutationObserver(()=>{discoverFrames();invalidate();}); mutations.observe(main, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] }); }
     const reveals = [...document.querySelectorAll(REVEAL_SELECTOR)];
     function settleReveals() { revealObserver?.disconnect(); for (const node of reveals) node.classList.add('is-revealed'); }
     if (canAnimate(selected) && window.IntersectionObserver) {
@@ -1903,11 +1999,12 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
     document.fonts?.ready.then(invalidate); request(); scheduleTip();
     return { actor: pets[0].actor, pets, dialog, frames, invalidate, destroy() {
       endPointer(true); disposed = true; for (const pet of pets) { stopMotion(pet); pet.fall = null; pet.listeners.forEach(dispose => dispose()); } cancelFrame(); cleanup.forEach(fn => fn()); resize?.disconnect(); mutations?.disconnect(); revealObserver?.disconnect();
-      for (const item of frames) { Object.values(item.perches).forEach(perch => perch.remove()); delete item.node.dataset.tinoFrame; delete item.node.dataset.tinoLabel; delete item.node.dataset.tinoDrop; item.node.classList.remove('tino-frame'); item.node.classList.remove('tino-room'); }
+      for (const item of frames) { Object.values(item.perches).forEach(perch => perch.remove()); delete item.node.dataset.tinoFrame; delete item.node.dataset.tinoLabel; delete item.node.dataset.tinoDrop; item.node.classList.remove('tino-frame'); item.node.classList.remove('tino-room'); for (const key of ['--tino-reserve','--tino-reserve-top','--tino-reserve-bottom']) item.node.style.removeProperty?.(key); }
+      for (const item of frames) if(item.source!==item.node && item.node.parentNode) { item.node.parentNode.insertBefore(item.source,item.node); item.node.remove(); }
       floorNode.remove(); layer.remove(); dialog.remove(); status.remove(); launcher.remove();
     } };
   }
-  if (typeof module === 'object' && module.exports) module.exports = { petSize, initialHomes, railBounds, railPoint, ratioAt, frameDropMode, fallTarget, dialogArea, placeDialog, mount, WALK_SPEED, WALK_DURATION, IDLE_DELAY, MAX_PETS, GRAVITY };
+  if (typeof module === 'object' && module.exports) module.exports = { petSize, initialHomes, initialPlacements, defaultCount, railBounds, railPoint, ratioAt, frameDropMode, fallTarget, dialogArea, placeDialog, mount, WALK_SPEED, WALK_DURATION, IDLE_DELAY, MAX_PETS, GRAVITY };
   else if (root?.document) { if (root.document.readyState === 'loading') root.document.addEventListener('DOMContentLoaded', () => mount(root), { once: true }); else mount(root); }
 })(typeof window !== 'undefined' ? window : null);
 
