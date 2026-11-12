@@ -41,6 +41,11 @@
 .runner-noscript{margin:0;padding:18px 20px;font-size:13px}
 @media(max-width:640px){.runner-section{padding:42px 0 50px}.runner-heading{display:block}.runner-badge{display:inline-block;margin-top:16px}.runner-toolbar{padding:11px 12px;align-items:start;gap:10px}.runner-machine-title{font-size:9px;margin-top:3px}.runner-scores{gap:10px}.runner-score-item{display:block;text-align:right}.runner-score-label{display:block;font-size:8px}.runner-score-value{font-size:14px}.runner-canvas{aspect-ratio:2/1}.runner-overlay{top:29%;padding:8px 13px}.runner-overlay-copy{font-size:10px;line-height:1.5;max-width:230px}.runner-bottom{padding:14px 12px}.runner-controls{display:grid;grid-template-columns:1fr 1fr}.runner-button-primary{grid-column:1/-1}.runner-button{padding:9px 10px}.runner-machine{box-shadow:4px 4px 0 var(--runner-ink)}}
 @media(prefers-reduced-motion:reduce){.runner-section *{scroll-behavior:auto}}
+
+.runner-actions {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:10px 0;}
+.runner-actions .runner-button {min-height:44px;min-width:0;padding:8px 4px;font-size:12px;white-space:normal;touch-action:manipulation;}
+.runner-actions .runner-button:focus-visible {outline:3px solid #3459e6;outline-offset:2px;}
+.runner-actions .runner-button:disabled {opacity:.65;}
 .game-scoreboard{font:500 12px/1.6 sans-serif;border-top:1px solid #66867955;margin-top:18px;padding-top:12px;text-align:left;max-width:380px;color:inherit}.game-scoreboard summary{cursor:pointer;min-height:44px}.game-scoreboard p{font-size:11px;opacity:.8}.game-scoreboard h4{font-size:12px;margin:15px 0 5px}.game-scoreboard ol{padding-left:24px;margin:0;display:flex;flex-wrap:wrap;gap:7px 25px}.game-scoreboard button{min-height:44px;margin-top:16px;background:transparent;border:1px solid #80978e;padding:7px 12px;border-radius:5px;color:inherit;cursor:pointer}
 
 @media(min-width:1500px){.game-scoreboard--standalone{position:fixed;right:12px;top:25vh;width:180px;max-height:65vh;overflow:auto;padding:14px;border:1px solid #80978e66;background:var(--bg,#fafbf8);z-index:5}.game-scoreboard--standalone ol{display:block}}
@@ -159,12 +164,12 @@ html[data-motion=off] .scroll-world,.scroll-world[data-static=true]{--scene-colo
 .tino-perch:after{content:"";position:absolute;top:50px;left:52px;right:8px;border-top:1px solid var(--tino-perch-line,#87978a30)}
 .tino-perch__call{position:absolute;top:8px;left:0;width:44px;min-height:44px;background:none;border:0;color:var(--tino-call,#506258);font:11px/1.4 var(--sans,sans-serif);cursor:pointer;pointer-events:auto;padding:2px}
 .tino-perch__call:hover{color:var(--tino-call-hover,var(--ink,#182821))}.tino-perch__call:focus-visible{outline:2px solid var(--tino-call-focus,var(--blue,#2357dc));outline-offset:1px}
-/* These tokens inherit into the nested introduction panel on the bright section. */
+/* Inherit high-contrast controls into the bright introduction and its nested panel. */
 #club{--tino-call:#344f43;--tino-call-hover:#182821;--tino-call-focus:#2357a0;--tino-perch-line:#607c69}
-.hero.tino-frame,#games.tino-frame,#updates.tino-frame,#archive.tino-frame,#awesome.tino-frame,#club.tino-frame,.arcade-section.tino-frame{padding-top:70px;padding-bottom:70px}
-#story-panel.tino-frame,.game-card.tino-frame,.update-card.tino-frame,.chart-card.tino-frame,.records.tino-frame,.discord-status.tino-frame,.discord-category.tino-frame,.club-description.tino-frame,.foot-inner.tino-frame,.project-credits.tino-frame{padding-top:64px;padding-bottom:64px}
-#dashboard.tino-frame{padding-top:64px;padding-bottom:64px}
-#runner-game.tino-frame{padding-top:60px;padding-bottom:60px}
+.hero.tino-frame,#games.tino-frame,#updates.tino-frame,#archive.tino-frame,#awesome.tino-frame,#club.tino-frame,.arcade-section.tino-frame{padding-top:var(--tino-reserve,64px);padding-bottom:var(--tino-reserve,64px)}
+#story-panel.tino-frame,.game-card.tino-frame,.update-card.tino-frame,.chart-card.tino-frame,.records.tino-frame,.discord-status.tino-frame,.discord-category.tino-frame,.club-description.tino-frame,.foot-inner.tino-frame,.project-credits.tino-frame{padding-top:var(--tino-reserve,64px);padding-bottom:var(--tino-reserve,64px)}
+#dashboard.tino-frame{padding-top:var(--tino-reserve,64px);padding-bottom:var(--tino-reserve,64px)}
+#runner-game.tino-frame{padding-top:var(--tino-reserve,64px);padding-bottom:var(--tino-reserve,64px)}
 .tino-floor{position:relative;box-sizing:border-box;width:100%;max-width:none;height:60px;margin:0}
 /* The final floor catches every release column, including page margins. */
 .tino-floor .tino-perch:after{left:0;right:0}
@@ -217,6 +222,15 @@ html[data-motion=off] .scroll-reveal,html[data-page-visibility=hidden] .scroll-r
 .tino-dialog__navigation button{background:transparent;border:0;color:inherit;text-decoration:underline;text-underline-offset:4px;min-height:40px;cursor:pointer}
 @media print{.tino-idle-tip{display:none!important}}
 
+/* Reserve extra room only on ledges that actually host a companion. */
+.tino-frame{--tino-reserve:64px}
+.hero.tino-frame,#games.tino-frame,#updates.tino-frame,#archive.tino-frame,#awesome.tino-frame,#club.tino-frame,.arcade-section.tino-frame{--tino-reserve:70px}
+#runner-game.tino-frame{--tino-reserve:60px}
+.tino-frame.tino-room{--tino-reserve:90px!important}
+.tino-room>.tino-perch{height:84px}
+.tino-room>.tino-perch:after{top:74px}
+.tino-floor.tino-room{height:84px;padding:0}
+
 /* A static, lazy-loaded link. The standalone game does not run on this page. */
 .campus-launcher{display:grid;grid-template-columns:minmax(0,240px) minmax(0,1fr);align-items:center;gap:24px;margin:0 0 32px;padding:18px;border:1px solid var(--line,#cdd0c8);background:var(--paper,#f5f4ee);color:var(--ink,#202624);text-decoration:none;min-width:0;min-height:44px}
 .campus-launcher>img{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:contain}
@@ -267,8 +281,31 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
 .start-game-intro{font-size:11px;color:#aabbd0;line-height:1.8;margin:0 0 12px}.start-screen #start-play-links{border-left:1px solid #69809c;padding-left:12px;gap:6px}.start-screen #start-play-links>a{grid-template-columns:33px minmax(0,1fr) 10px;min-height:54px;padding:9px 10px;border:1px solid #788ca45c;box-shadow:none;font-size:13px;background:#102039b0;gap:8px}.start-screen-code{font-size:8px}.start-screen-contact{margin:0;min-height:56px;padding:12px;font-size:10px;border:0;border-top:1px solid #aec1db66;background:transparent}.start-screen-contact small{display:block;margin:4px 0 0;font-size:11px}.start-screen-footnote{margin-top:20px}
 @media(max-width:360px){.start-screen-footprints{padding:20px 17px;font-size:25px}.start-secondary-menu{grid-template-columns:minmax(0,1fr) 88px;gap:10px}.start-screen #start-play-links>a{grid-template-columns:minmax(0,1fr) 10px;font-size:12px}.start-screen #start-play-links .start-screen-code{display:none}}
 
-/* Core club introduction above the existing primary CTA. */
-.start-club-intro{margin:0 0 22px;border-left:2px solid #e9bd73;padding:1px 0 1px 18px}.start-club-intro p{font-size:clamp(18px,1.7vw,22px);line-height:1.7;margin:6px 0;color:#fff5dc;letter-spacing:-.03em}.start-club-intro .start-club-label{font-size:12px;color:#f2d49d;letter-spacing:.02em;margin:0 0 8px}.start-club-intro .start-club-detail{font-size:14px;line-height:1.8;color:#d4deeb;margin-top:10px;max-width:32ch}
+/* A small playable desk on the left; the club and its story remain the main menu. */
+.start-screen-stage{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);align-items:center}
+.start-runner{grid-column:1;grid-row:1;min-width:0;align-self:end;margin:150px 0 18px;color:#17253b;text-shadow:none}
+.start-screen-console{grid-column:2;grid-row:1}.start-club-intro{margin:0 0 22px;border-left:2px solid #e9bd73;padding:1px 0 1px 18px}.start-club-intro p{font-size:clamp(18px,1.7vw,22px);line-height:1.7;margin:6px 0;color:#fff5dc;letter-spacing:-.03em}.start-club-intro .start-club-label{font-size:12px;color:#f2d49d;letter-spacing:.02em;margin:0 0 8px}.start-club-intro .start-club-detail{font-size:14px;line-height:1.8;color:#d4deeb;margin-top:10px;max-width:32ch}
+.start-runner .runner-section{padding:0;border:0;scroll-margin-top:24px}.start-runner .runner-inner{width:100%}.start-runner .runner-heading{margin-bottom:12px;align-items:center}.start-runner .runner-kicker{color:#e5d3b1;font-size:9px;margin-bottom:5px}.start-runner .runner-title{color:#fff5dc;font-size:20px;letter-spacing:-.03em}.start-runner .runner-intro,.start-runner .runner-badge{display:none}.start-runner .runner-machine{box-shadow:4px 4px 0 #091329}.start-runner .runner-toolbar{padding:9px 12px;gap:8px;font-size:9px}.start-runner .runner-machine-title{font-size:8px}.start-runner .runner-scores{gap:10px}.start-runner .runner-score-value{font-size:12px}.start-runner .runner-score-label{font-size:8px}.start-runner .runner-bottom{padding:12px}.start-runner .runner-controls{gap:6px}.start-runner .runner-button{font-size:11px;min-height:44px;padding:8px 10px}.start-runner .runner-help{font-size:10px;line-height:1.8}.start-runner .runner-status{font-size:11px}.start-runner .runner-overlay-title{font-size:18px}.start-runner .runner-overlay-copy{font-size:10px}.start-runner .runner-overlay{padding:8px 12px}.start-runner .project-credits{font-size:10px;color:#d4deeb}.start-runner .project-credits summary{min-height:44px}
+@media(max-width:900px){.start-screen-stage{display:grid;grid-template-columns:minmax(0,1fr);gap:36px}.start-screen-console{grid-column:1;grid-row:1}.start-runner{grid-column:1;grid-row:2;max-width:580px;width:100%;justify-self:center;margin:0}.start-runner .runner-title{font-size:22px}}
+@media(max-width:900px) and (max-height:500px) and (orientation:landscape){.start-screen-stage{grid-template-columns:minmax(0,.9fr) minmax(0,1fr);align-items:start}.start-screen-console{grid-column:2;grid-row:1}.start-runner{grid-column:1;grid-row:1;align-self:center}.start-club-intro p{font-size:17px}.start-club-intro .start-club-detail{font-size:12px}}
+
+.start-screen[data-state=loading] .start-runner{visibility:hidden}
+/* Credits moved with the runner: keep their muted ink readable on the title art. */
+.start-runner .project-credits{--muted:#d4deeb;--line:#718096}
+/* Desktop arcade stays a side desk: the wider story column owns the entry. */
+@media(min-width:901px){
+  .start-screen-stage{grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:clamp(40px,5vw,80px)}
+  .start-screen-console{max-width:620px}
+  .start-runner{width:100%;max-width:420px;align-self:center;margin:60px 0 18px}
+  .start-runner .runner-help{font-size:12px;line-height:1.7}
+}
+@media(min-width:901px) and (max-width:1100px){
+  .start-screen-stage{grid-template-columns:minmax(0,.85fr) minmax(0,1fr)}
+}
+/* Local reading scrim, not a veil over the pixel room or the left arcade. */
+@media(min-width:901px){
+  .start-screen-console{background:linear-gradient(90deg,#0c1530ed,#0c1530d9);box-shadow:0 0 28px 18px #0c1530cc}
+}
 </style>
 </head>
 <body><div id="scroll-world" class="scroll-world" aria-hidden="true"><i class="world-orbit"></i><i class="world-pixels"></i><span class="world-chapter">01 / PLAY</span><i class="world-progress"></i></div>
@@ -276,7 +313,53 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
 <section class="start-screen" id="start-screen" aria-labelledby="start-screen-title" data-state="menu" data-load-result="plain" data-sprite-state="fallback">
   <div class="start-screen-topline"><span>IDIOTS / TUK GAMEDEV CLUB</span><a id="start-skip" href="#main">시작화면 건너뛰기 <span aria-hidden="true">↓</span></a></div>
   <div class="start-screen-art" aria-hidden="true"><img class="start-screen-background" data-start-asset src="media/start-campus.png" width="1672" height="941" alt="" fetchpriority="high" decoding="async"></div>
-  <div class="start-screen-stage"><div class="start-screen-console">
+  <div class="start-screen-stage"><aside class="start-runner" aria-label="잠깐 쉬어 가는 티노 러너"><!-- Include runner.css and runner.js (defer). Sprite paths are optional, local build assets. -->
+<section class="runner-section" id="runner" aria-labelledby="runner-title">
+  <div class="runner-inner">
+    <div class="runner-heading">
+      <div>
+        <p class="runner-kicker">BONUS STAGE / 01</p>
+        <h2 class="runner-title" id="runner-title">한 판만 더, 티노.</h2>
+        <p class="runner-intro">점프하고, 슬라이딩하고, 전공서적으로 버그를 물리쳐요.</p>
+      </div>
+      <span class="runner-badge">BUILT FOR A LITTLE BREAK</span>
+    </div>
+    <div class="runner-machine" id="runner-game" data-runner-state="ready">
+      <div class="runner-toolbar">
+        <span class="runner-machine-title">TINO RUN / OFFLINE ARCADE</span>
+        <div class="runner-scores" aria-label="게임 기록">
+          <span class="runner-score-item"><span class="runner-score-label">SCORE</span><span class="runner-score-value" id="runner-score">00000</span></span>
+          <span class="runner-score-item"><span class="runner-score-label">BEST</span><span class="runner-score-value" id="runner-best">00000</span></span>
+        </div>
+      </div>
+      <div class="runner-screen">
+        <canvas class="runner-canvas" id="runner-canvas" width="1000" height="300" data-sprite-sheet="media/tino-sprites.png" tabindex="0" role="img" aria-label="티노 달리기 게임. 점프로 지상 장애물, 슬라이딩으로 드론을 피하고 전공서적으로 다가오는 버그를 공격해요." aria-describedby="runner-help runner-status">티노 달리기 게임에는 Canvas를 지원하는 브라우저가 필요해요.</canvas>
+        <div class="runner-overlay" id="runner-overlay" aria-hidden="true">
+          <strong class="runner-overlay-title" id="runner-overlay-title">READY, TINO?</strong>
+          <span class="runner-overlay-copy" id="runner-overlay-copy">시작하고, 장애물을 훌쩍.</span>
+        </div>
+      </div>
+      <div class="runner-bottom">
+        <div class="runner-controls" role="group" aria-label="티노 게임 조작">
+          <button class="runner-button runner-button-primary" id="runner-start" type="button">게임 시작</button>
+          <button class="runner-button" id="runner-pause" type="button" disabled>일시 정지</button>
+          <button class="runner-button" id="runner-restart" type="button" disabled>처음부터</button>
+        </div>
+        <div class="runner-actions" role="group" aria-label="플레이 동작">
+          <button class="runner-button" id="runner-jump" type="button" disabled>점프 · ↑</button>
+          <button class="runner-button" id="runner-slide" type="button" disabled>슬라이드 · ↓</button>
+          <button class="runner-button" id="runner-attack" type="button" disabled>전공서적 · X</button>
+        </div>
+        <p class="runner-help" id="runner-help"><kbd>Space</kbd> / <kbd>↑</kbd> / 화면 터치로 점프 · <kbd>↓</kbd> / <kbd>S</kbd> 슬라이드 · <kbd>X</kbd> 전공서적 · <kbd>Esc</kbd> 일시 정지<br>낮은 드론은 슬라이드, 다가오는 버그는 책으로 공격(+25점). 책 준비 0.75초, 슬라이드 0.85초.<br>게임을 시작한 뒤 조작해 주세요. 화면을 벗어나면 자동으로 멈추고, 최고 기록은 이 브라우저에 저장돼요.</p>
+        <p class="runner-status" id="runner-status" role="status" aria-live="polite" aria-atomic="true">게임 시작을 누르면 티노가 달려요.</p>
+        <p class="runner-motion-note" id="runner-motion-note" hidden>동작 줄이기가 켜져 있어요. 게임은 직접 시작할 때만 움직여요.</p>
+      </div>
+      <noscript><p class="runner-noscript">게임을 플레이하려면 JavaScript를 켜 주세요.</p></noscript>
+    </div>
+    <section class="project-credits site-project-credits" aria-labelledby="credits-tino-run"><h3 id="credits-tino-run">Tino Run · 제작 안내</h3><p class="credits-note">이 웹사이트를 위해 만든 미니게임입니다. 개인별 기여자 이름은 공개 출처로 확인되지 않았습니다.</p><p class="credits-source">확인 2026-11-11</p></section>
+  </div>
+</section>
+</aside><div class="start-screen-console">
     <header class="start-screen-title-block">
       <div><p class="start-screen-kicker">함께 만드는 플레이 로그</p><h1 id="start-screen-title">IDIOTS<span>PLAY LOG</span></h1></div>
       <figure class="start-screen-player"><span class="start-screen-tino" role="img" aria-label="시작화면에서 기다리는 픽셀 티노"><span class="start-screen-tino-sheet" aria-hidden="true"></span><svg class="start-screen-tino-fallback" viewBox="0 0 40 40" aria-hidden="true" shape-rendering="crispEdges"><path fill="#172b55" d="M12 4h7v3h7v3h4v4h3v13h-3v8h-8v-3h-4v3h-7v-5H5v-5h3V14h3V7h1z"/><path fill="#fffef9" d="M17 8h8v3h4v4h1v12h-3v5h-4v-3h-7v3h-3v-7H8v2H6v-2h5V15h3v-4h3z"/><path fill="#335b9a" d="M11 7h5v4h-5zm-3 7h5v5H8zm-1 8h4v4H7zm9 0h10v7H16z"/><path fill="#172b55" d="M19 13h2v3h-2zm8 0h2v3h-2zm-6 6h7v2h-7z"/><path fill="#335b9a" d="M15 17h3v3h-3zm14 0h3v3h-3z"/><path fill="#bbc7d4" d="M22 22h14l-3 8H19z"/><path fill="#172b55" d="M20 30h15v2H20z"/><path fill="#335b9a" d="M28 24h3v3h-3z"/></svg></span><figcaption>TINO / PLAYER 01</figcaption></figure>
@@ -290,7 +373,7 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
       <div class="start-club-intro"><p class="start-club-label">한국공학대학교 게임개발 동아리</p><p>2024년부터 함께 공부하고,<br>직접 게임을 만드는 <strong>IDIOTS</strong>입니다.</p><p class="start-club-detail">선후배의 경험이 프로젝트로, 프로젝트가 새로운 만남으로 이어집니다.</p></div>
       <a class="start-screen-footprints" id="start-link-footprints" href="#main"><span><small>EXPLORE OUR STORY</small>발자취 확인하기</span><span aria-hidden="true">↓</span></a>
       <div class="start-secondary-menu">
-      <details class="start-play-menu" id="start-game-menu"><summary><span>잠깐, 게임 한 판</span><small>GAME PLAY · 게임 고르기</small></summary><nav aria-label="게임 선택"><p class="start-game-intro">기록을 둘러보다 쉬어 가는 작은 아케이드.</p><div id="start-play-links"><a class="start-screen-play" id="start-link-demolition" href="games/tino-demolition/"><span class="start-screen-code">ANGRY</span><span>앵그리티노 <small>가상 모형 발사 퍼즐</small></span><span class="start-screen-arrow" aria-hidden="true">▶</span></a><a class="start-screen-play" id="start-link-run" href="#runner-game"><span class="start-screen-code">RUN</span><span>Tino Run <small>픽셀 러너</small></span><span class="start-screen-arrow" aria-hidden="true">▶</span></a><a class="start-screen-play" id="start-link-campus" href="games/tino-campus-defense/"><span class="start-screen-code">CAMPUS</span><span>티노: 캠퍼스 라인 <small>캠퍼스 공방전</small></span><span class="start-screen-arrow" aria-hidden="true">▶</span></a></div></nav></details>
+      <details class="start-play-menu" id="start-game-menu"><summary><span>잠깐, 게임 한 판</span><small>GAME PLAY · 게임 고르기</small></summary><nav aria-label="게임 선택"><p class="start-game-intro">기록을 둘러보다 쉬어 가는 작은 아케이드.</p><div id="start-play-links"><a class="start-screen-play" id="start-link-demolition" href="games/tino-demolition/"><span class="start-screen-code">ANGRY</span><span>앵그리티노 <small>가상 모형 발사 퍼즐</small></span><span class="start-screen-arrow" aria-hidden="true">▶</span></a><a class="start-screen-play" id="start-link-run" href="#runner-game"><span class="start-screen-code">RUN</span><span>Tino Run <small>픽셀 러너</small></span><span class="start-screen-arrow" aria-hidden="true">▶</span></a><a class="start-screen-play" id="start-link-campus" href="games/tino-campus-defense/"><span class="start-screen-code">CAMPUS</span><span>티노: 캠퍼스 라인 <small>티노 잡고 던지기 · 작업실 방어</small></span><span class="start-screen-arrow" aria-hidden="true">▶</span></a></div></nav></details>
       <a class="start-screen-contact" id="start-link-contact" href="#contact"><span>CONTACT <small>연락하기</small></span><span aria-hidden="true">↗</span></a>
       </div>
     </div>
@@ -339,50 +422,9 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
   <div class="campus-launcher-copy"><p class="campus-launcher-label">AIM / ADJUST / TRY AGAIN</p><h3 id="demolition-launcher-title">앵그리티노</h3><p id="demolition-launcher-description">각도와 세기를 조절해 무인 가상 모형을 무너뜨리는 발사 퍼즐. 실제 시설을 재현하지 않습니다.</p><span class="campus-launcher-action">별도 게임 페이지에서 시작 <span aria-hidden="true">↗</span></span><p class="campus-launcher-credit" id="demolition-launcher-credit">기획·요청: Jun1188 · 구현·이미지 제작: AI 지원</p></div>
 </a>
 <a class="campus-launcher" id="campus-launcher" href="games/tino-campus-defense/" aria-labelledby="campus-launcher-title" aria-describedby="campus-launcher-description campus-launcher-credit">
-  <img src="games/tino-campus-defense/art/campus-battlefield.png" width="1774" height="887" loading="lazy" decoding="async" alt="해 질 무렵 가상의 공학 캠퍼스, 왼쪽 작업실과 오른쪽 기계 기지를 그린 게임 배경">
-  <div class="campus-launcher-copy"><p class="campus-launcher-label">ANOTHER SMALL PLAY</p><h3 id="campus-launcher-title">티노: 캠퍼스 라인</h3><p id="campus-launcher-description">가드로 지키고, 펄스로 지원하고, 메카로 돌파하는 작은 공방전.</p><span class="campus-launcher-action">별도 게임 페이지에서 시작 <span aria-hidden="true">↗</span></span><p class="campus-launcher-credit" id="campus-launcher-credit">기획·요청: Jun1188 · 구현·이미지 제작: AI 지원</p></div>
+  <img src="games/tino-campus-defense/art/campus-window.svg" width="720" height="540" loading="lazy" decoding="async" alt="세 층 캠퍼스 발판에서 티노를 잡아 바깥으로 보내는 창작 게임 맵">
+  <div class="campus-launcher-copy"><p class="campus-launcher-label">ANOTHER SMALL PLAY</p><h3 id="campus-launcher-title">티노: 캠퍼스 라인</h3><p id="campus-launcher-description">다가오는 티노를 잡아 멀리 보내고, 학교 건물풍 시설로 작업실을 지켜요.</p><span class="campus-launcher-action">별도 게임 페이지에서 시작 <span aria-hidden="true">↗</span></span><p class="campus-launcher-credit" id="campus-launcher-credit">기획·요청: Jun1188 · 구현·이미지 제작: AI 지원</p></div>
 </a>
-<!-- Include runner.css and runner.js (defer). Sprite paths are optional, local build assets. -->
-<section class="runner-section" id="runner" aria-labelledby="runner-title">
-  <div class="runner-inner">
-    <div class="runner-heading">
-      <div>
-        <p class="runner-kicker">BONUS STAGE / 01</p>
-        <h2 class="runner-title" id="runner-title">한 판만 더, 티노.</h2>
-        <p class="runner-intro">공부 끝, 게임 시작. 버그를 뛰어넘고 나만의 기록을 남겨요.</p>
-      </div>
-      <span class="runner-badge">BUILT FOR A LITTLE BREAK</span>
-    </div>
-    <div class="runner-machine" id="runner-game" data-runner-state="ready">
-      <div class="runner-toolbar">
-        <span class="runner-machine-title">TINO RUN / OFFLINE ARCADE</span>
-        <div class="runner-scores" aria-label="게임 기록">
-          <span class="runner-score-item"><span class="runner-score-label">SCORE</span><span class="runner-score-value" id="runner-score">00000</span></span>
-          <span class="runner-score-item"><span class="runner-score-label">BEST</span><span class="runner-score-value" id="runner-best">00000</span></span>
-        </div>
-      </div>
-      <div class="runner-screen">
-        <canvas class="runner-canvas" id="runner-canvas" width="1000" height="300" data-sprite-sheet="media/tino-sprites.png" tabindex="0" role="img" aria-label="티노 달리기 게임. 장애물을 뛰어넘어 기록을 쌓아요." aria-describedby="runner-help runner-status">티노 달리기 게임에는 Canvas를 지원하는 브라우저가 필요해요.</canvas>
-        <div class="runner-overlay" id="runner-overlay" aria-hidden="true">
-          <strong class="runner-overlay-title" id="runner-overlay-title">READY, TINO?</strong>
-          <span class="runner-overlay-copy" id="runner-overlay-copy">시작하고, 장애물을 훌쩍.</span>
-        </div>
-      </div>
-      <div class="runner-bottom">
-        <div class="runner-controls" role="group" aria-label="티노 게임 조작">
-          <button class="runner-button runner-button-primary" id="runner-start" type="button">게임 시작</button>
-          <button class="runner-button" id="runner-pause" type="button" disabled>일시 정지</button>
-          <button class="runner-button" id="runner-restart" type="button" disabled>처음부터</button>
-        </div>
-        <p class="runner-help" id="runner-help"><kbd>Space</kbd> / <kbd>↑</kbd> / 화면 터치로 점프 · <kbd>Esc</kbd> 일시 정지<br>게임을 시작한 뒤 조작해 주세요. 화면을 벗어나면 자동으로 멈추고, 최고 기록은 이 브라우저에 저장돼요.</p>
-        <p class="runner-status" id="runner-status" role="status" aria-live="polite" aria-atomic="true">게임 시작을 누르면 티노가 달려요.</p>
-        <p class="runner-motion-note" id="runner-motion-note" hidden>동작 줄이기가 켜져 있어요. 게임은 직접 시작할 때만 움직여요.</p>
-      </div>
-      <noscript><p class="runner-noscript">게임을 플레이하려면 JavaScript를 켜 주세요.</p></noscript>
-    </div>
-    <section class="project-credits site-project-credits" aria-labelledby="credits-tino-run"><h3 id="credits-tino-run">Tino Run · 제작 안내</h3><p class="credits-note">이 웹사이트를 위해 만든 미니게임입니다. 개인별 기여자 이름은 공개 출처로 확인되지 않았습니다.</p><p class="credits-source">확인 2026-11-11</p></section>
-  </div>
-</section>
 </section>
 </main>
 <footer class="foot"><div class="wrap foot-inner"><div><b>IDIOTS.</b><p>함께 공부하고, 만들고, 플레이합니다.<br>한국공학대학교 게임공학과 소모임</p><small>티노: 한국공학대학교 캐릭터를 바탕으로 만든 픽셀 표현.<br>사이트는 학교의 공식 홈페이지가 아닙니다.</small></div><nav aria-label="관련 자료"><a href="https://www.instagram.com/idiots_tuk_gamedev/">Instagram ↗</a><a href="https://github.com/Jun1188/idiots-web">웹사이트 코드 ↗</a><a href="https://www.tukorea.ac.kr/tukorea/8201/subview.do">티노 소개 ↗</a><a href="#main">맨 위로 ↑</a></nav><span class="tino-sprite tino-run" role="img" aria-label="달리는 픽셀 티노"></span></div><section class="wrap contact-block" id="contact" aria-labelledby="contact-title"><h2 id="contact-title">Contact</h2><a href="https://www.instagram.com/idiots_tuk_gamedev/">IDIOTS Instagram ↗</a><p>동아리의 공개 Instagram 계정으로 연결합니다.</p></section><div class="wrap foot-bottom"><span>MADE TOGETHER, PLAYED TOGETHER.</span><span>2024 — NOW</span></div></footer>
@@ -1292,8 +1334,26 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
     if (!rect || rect.width < size + 64 || rect.height < 1) return null;
     const low = Math.max(8, rect.left + 52), high = Math.min(viewport.width - size - 8, rect.right - size - 8);
     if (high < low) return null;
-    const y = rect.top + 50 - size * .86;
+    const y = rect.top + (rect.bottom - rect.top >= 84 ? 74 : 50) - size * .86;
     return { low, high, y, top: rect.top, bottom: rect.bottom, visible: y >= 0 && y + size <= viewport.height };
+  }
+  function petSize(number, width) {
+    return (width <= 600 ? [44, 56, 64] : [48, 64, 80])[(number - 1) % 3];
+  }
+  // Quantiles of actual document ledges, not the first few DOM cards or the viewport.
+  function initialHomes(frames, count) {
+    const candidates = frames.filter(item => !item.floor && item.rail)
+      .sort((a, b) => a.rail.y - b.rail.y);
+    const chosen = [];
+    if (!candidates.length) return [];
+    const low = candidates[0].rail.y, high = candidates[candidates.length - 1].rail.y;
+    for (let i = 0; i < count; i++) {
+      const target = low + (high - low) * i / Math.max(1, count - 1);
+      const unused = candidates.filter(item => !chosen.includes(item));
+      chosen.push((unused.length ? unused : candidates).reduce((best, item) =>
+        Math.abs(item.rail.y - target) < Math.abs(best.rail.y - target) ? item : best));
+    }
+    return chosen;
   }
   function railPoint(rail, ratio) { return { x: rail.low + (rail.high - rail.low) * clamp(finite(ratio, .7), 0, 1), y: rail.y }; }
   function ratioAt(rail, x) { return clamp((x - rail.low) / Math.max(1, rail.high - rail.low), 0, 1); }
@@ -1383,7 +1443,21 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
     const listen = (node, type, fn, opts) => { node?.addEventListener(type, fn, opts); cleanup.push(() => node?.removeEventListener(type, fn, opts)); };
     const announce = text => { status.textContent = text; };
     const canAnimate = pet => motionAllowed && document.documentElement.dataset.motion !== 'off' && !reduced?.matches && !pet.quiet;
-    const railOf = pet => edgeRail(pet.current, pet.edge);
+    const sizeOf = pet => petSize(pet.number, document.documentElement.clientWidth || window.innerWidth);
+    const sizedRail = (pet, item, edge = 'top') => {
+      const rail = edgeRail(item, edge); if (!rail) return null;
+      const delta = sizeOf(pet) - size;
+      const y = rail.y - delta * .86, high = rail.high - delta;
+      return high < rail.low ? null : { ...rail, y, high, visible: y >= 0 && y + sizeOf(pet) <= window.innerHeight };
+    };
+    function reserve(item, pet) { if (sizeOf(pet) <= 56) return; if (item && !item.node.classList.contains('tino-room')) { item.node.classList.add('tino-room'); dirty = true; } }
+    const railOf = pet => sizedRail(pet, pet.current, pet.edge);
+    const targetFor = (pet, point) => {
+      const adjusted = frames.map(item => ({ ...item, original: item,
+        rails: { top: sizedRail(pet, item, 'top'), bottom: sizedRail(pet, item, 'bottom') } }));
+      const target = fallTarget(adjusted, point, sizeOf(pet), finite(window.scrollY));
+      return target ? { ...target, frame: target.frame.original } : null;
+    };
     const state = (pet, name, pose = 'idle') => {
       const values = { state: name, pose, frame: pet.current?.key || '', edge: pet.edge, paused: String(!canAnimate(pet)), selected: String(pet === selected) };
       for (const [key, value] of Object.entries(values)) if (pet.actor.dataset[key] !== value) pet.actor.dataset[key] = value;
@@ -1395,6 +1469,7 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
     function invalidate() { dirty = true; request(); }
     function updateCount() { launcher.textContent = '티노 ' + pets.length + '명'; launcher.setAttribute('aria-label', '티노 ' + pets.length + '명 관리 및 대화'); }
     function adaptGroundedSeat(pet) {
+      const size = sizeOf(pet);
       const seat = pet.gravitySeat, rail = railOf(pet);
       if (!seat || pet.fall || !rail) return;
       // Grounded reflow is not a release: retain the same frame and clamp only
@@ -1414,13 +1489,14 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
         item.rail = item.rails.top;
       }
       for (const pet of pets) {
-        pet.actor.style.setProperty('--tino-size', size + 'px');
+        pet.actor.style.setProperty('--tino-size', sizeOf(pet) + 'px');
         if (!railOf(pet) && !pet.fall) { pet.current = frames.find(item => item.rail) || null; pet.edge = 'top'; pet.ratio = .6; stopMotion(pet); }
         if (pointer?.pet !== pet) adaptGroundedSeat(pet);
       }
       dirty = false;
     }
     function scheduleIdle(pet) {
+      const size = sizeOf(pet);
       if (pet.timer !== null || pet.walk || pet.reaction || pet.fall || pointer?.pet === pet || !dialog.hidden || pet.actor.hidden || pet.hover || document.activeElement === pet.actor || !canAnimate(pet) || !railOf(pet)) return;
       pet.timer = window.setTimeout(() => {
         pet.timer = null;
@@ -1432,9 +1508,9 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
         pet.facing = start + 22.4 > rail.high ? -1 : start - 22.4 < rail.low ? 1 : -pet.facing;
         let end = clamp(start + pet.facing * WALK_SPEED * WALK_DURATION / 1000, rail.low, rail.high);
         for (const other of pets) if (other !== pet && other.current === pet.current && other.edge === pet.edge && !other.fall) {
-          const x = railPoint(rail, other.ratio).x;
+          const x = other.gravitySeat?.x ?? railPoint(railOf(other), other.ratio).x;
           if (x > start) end = Math.min(end, Math.max(start, x - size - 6));
-          else end = Math.max(end, Math.min(start, x + size + 6));
+          else end = Math.max(end, Math.min(start, x + sizeOf(other) + 6));
         }
         pet.walk = { start: null, x: start, end }; request();
       }, IDLE_DELAY + pet.number * 350);
@@ -1445,21 +1521,23 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
       request();
     }
     function availableX(pet, target, preferred) {
+      const size = sizeOf(pet);
       const rail = target.rail, gap = size + 6;
       const occupied = pets.filter(other => other !== pet && !other.fall && pointer?.pet !== other && other.current === target.frame && other.edge === target.edge)
-        .map(other => railPoint(rail, other.ratio).x);
+        .map(other => ({ x: other.gravitySeat?.x ?? railPoint(railOf(other), other.ratio).x, size: sizeOf(other) }));
       const candidates = [clamp(preferred, rail.low, rail.high), rail.low, rail.high];
       for (let x = rail.low; x <= rail.high; x += gap) candidates.push(x);
       candidates.sort((a, b) => Math.abs(a - preferred) - Math.abs(b - preferred));
-      return candidates.find(x => occupied.every(other => Math.abs(x - other) >= gap));
+      return candidates.find(x => occupied.every(other => x + size + 6 <= other.x || other.x + other.size + 6 <= x));
     }
     function allocate(pet, target, x) {
+      const size = sizeOf(pet);
       pet.gravitySeat = null;
       const falling = Number.isFinite(target.y);
       const candidates = [target];
-      for (const edge of ['top', 'bottom']) { const rail = edgeRail(target.frame, edge); if (rail && (!falling || edge === 'top')) candidates.push({ frame: target.frame, edge, rail }); }
-      for (const item of frames) for (const edge of ['top', 'bottom']) { const rail = edgeRail(item, edge); if (rail?.visible && (!falling || (edge === 'top' && rail.y >= target.rail.y))) candidates.push({ frame: item, edge, rail }); }
-      for (const item of frames) for (const edge of ['top', 'bottom']) { const rail = edgeRail(item, edge); if (rail && (!falling || (edge === 'top' && rail.y >= target.rail.y))) candidates.push({ frame: item, edge, rail }); }
+      for (const edge of ['top', 'bottom']) { const rail = sizedRail(pet, target.frame, edge); if (rail && (!falling || edge === 'top')) candidates.push({ frame: target.frame, edge, rail }); }
+      for (const item of frames) for (const edge of ['top', 'bottom']) { const rail = sizedRail(pet, item, edge); if (rail?.visible && (!falling || (edge === 'top' && rail.y >= target.rail.y))) candidates.push({ frame: item, edge, rail }); }
+      for (const item of frames) for (const edge of ['top', 'bottom']) { const rail = sizedRail(pet, item, edge); if (rail && (!falling || (edge === 'top' && rail.y >= target.rail.y))) candidates.push({ frame: item, edge, rail }); }
       if (falling) {
         const center = x + size / 2;
         candidates.sort((a, b) => {
@@ -1472,43 +1550,46 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
       }
       for (const candidate of candidates) {
         const free = availableX(pet, candidate, x);
-        if (free !== undefined) { pet.current = candidate.frame; pet.edge = candidate.edge; pet.ratio = ratioAt(candidate.rail, free); return candidate; }
+        if (free !== undefined) { reserve(candidate.frame, pet); pet.current = candidate.frame; pet.edge = candidate.edge; pet.ratio = ratioAt(candidate.rail, free); return candidate; }
       }
       // Extremely narrow/custom layouts may provide no usable slot at all.
-      pet.current = target.frame; pet.edge = target.edge; pet.ratio = ratioAt(target.rail, x); return target;
+      reserve(target.frame, pet); pet.current = target.frame; pet.edge = target.edge; pet.ratio = ratioAt(target.rail, x); return target;
     }
     function seat(pet, target, x, animate = true) {
       pet.fall = null;
       if (target.vertical) {
         // Physical landing does not negotiate a different slot. Pets can share
         // a landing column; the management menu keeps each one selectable.
-        pet.current = target.frame; pet.edge = 'top'; pet.ratio = ratioAt(target.rail, x);
+        reserve(target.frame, pet); pet.current = target.frame; pet.edge = 'top'; pet.ratio = ratioAt(target.rail, x);
         pet.gravitySeat = { x, low: target.rail.low, high: target.rail.high, offsetY: Math.max(0, target.y - target.rail.y - finite(window.scrollY)) };
       } else allocate(pet, target, x);
       if (animate) react(pet, 'land', 420); else { stopMotion(pet); pet.rest = 'idle'; pet.pose = 'idle'; state(pet, 'idle'); }
     }
     function startFall(pet, point) {
+      const size = sizeOf(pet);
       stopMotion(pet); pet.gravitySeat = null;
       const start = { x: point.x, y: point.y + finite(window.scrollY) };
-      const target = fallTarget(frames, start, size, finite(window.scrollY));
+      const target = targetFor(pet, start);
       if (target && (!canAnimate(pet) || target.y <= start.y)) { seat(pet, target, target.x, canAnimate(pet) && target.y === start.y); return; }
       pet.fall = { from: start, point: { ...start }, target, elapsed: 0, previous: null, velocity: 0 };
       state(pet, 'fall', 'jump'); request();
     }
     function settleFall(pet) {
+      const size = sizeOf(pet);
       if (!pet.fall) return;
       if (dirty) measure();
-      const target = fallTarget(frames, pet.fall.point, size, finite(window.scrollY));
+      const target = targetFor(pet, pet.fall.point);
       if (target) seat(pet, target, pet.fall.point.x, false);
     }
     function paint(now = 0) {
       raf = null; if (document.hidden || disposed || suspended) return;
       if (dirty) measure(); let moving = false;
       for (const pet of pets) {
+        const size = sizeOf(pet);
         const rail = railOf(pet); if (!rail && !pet.fall) { pet.actor.hidden = true; stopMotion(pet); continue; }
         if (pointer?.pet === pet && pointer.dragging) {
           pet.point = { x: clamp(pointer.x - pointer.dx, 0, window.innerWidth - size), y: clamp(pointer.y - pointer.dy, 0, window.innerHeight - size) };
-          const target = fallTarget(frames, { x: pet.point.x, y: pet.point.y + finite(window.scrollY) }, size, finite(window.scrollY)); pet.actor.dataset.target = target ? target.frame.key + ':' + target.edge : '';
+          const target = targetFor(pet, { x: pet.point.x, y: pet.point.y + finite(window.scrollY) }); pet.actor.dataset.target = target ? target.frame.key + ':' + target.edge : '';
           pet.actor.hidden = false; state(pet, 'drag', 'jump');
         } else if (pointer?.pet === pet) {
           pet.actor.hidden = false; state(pet, 'idle', pointer.wasFalling ? 'jump' : pet.pose);
@@ -1521,7 +1602,7 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
             // Recompute from the current world position after scroll/reflow.
             // Only a collision ends an ordinary fall, never elapsed time or
             // leaving the viewport. The same RAF serves all falling pets.
-            const target = fallTarget(frames, fall.point, size, finite(window.scrollY));
+            const target = targetFor(pet, fall.point);
             if (target) {
               fall.target = target;
               fall.velocity = Math.min(1400, fall.velocity + GRAVITY * dt);
@@ -1565,7 +1646,7 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
     function releaseCapture(pet, id) { try { if (pet.actor.hasPointerCapture?.(id)) pet.actor.releasePointerCapture(id); } catch (_) {} }
     function endPointer(cancelled) {
       if (!pointer) return;
-      const previous = pointer, pet = pointer.pet; pointer = null; releaseCapture(pet, previous.id);
+      const previous = pointer, pet = pointer.pet, size = sizeOf(pet); pointer = null; releaseCapture(pet, previous.id);
       if (cancelled && previous.interruptedFall) {
         // Cancelling a pickup cancels pointer ownership, not the gravity that
         // was already in progress. Restore its world position and momentum;
@@ -1594,11 +1675,12 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
       const sprite = create('span', 'scroll-tino__sprite'); sprite.setAttribute('aria-hidden', 'true'); actor.appendChild(sprite); layer.appendChild(actor);
       const pet = { number, id: 'tino-' + number, name: '티노 ' + number, actor, sprite, current: homeFrame, edge, ratio: .3 + (number % 3) * .23, point: { x: 0, y: 0 }, facing: 1,
         timer: null, walk: null, reaction: null, fall: null, hover: false, quiet: false, suppressClick: false, rest: 'idle', pose: 'idle' };
+      reserve(homeFrame, pet);
       if (dirty) measure();
       pet.listeners = [];
       const on = (type, fn, opts) => { actor.addEventListener(type, fn, opts); pet.listeners.push(() => actor.removeEventListener(type, fn, opts)); };
       pets.push(pet); if (!selected) selected = pet;
-      actor.style.setProperty('--tino-size', size + 'px');
+      actor.style.setProperty('--tino-size', sizeOf(pet) + 'px');
       const rail = railOf(pet); if (rail) allocate(pet, { frame: pet.current, edge: pet.edge, rail }, railPoint(rail, pet.ratio).x);
       updateCount();
       on('pointerdown', event => {
@@ -1640,7 +1722,7 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
       const area = dialogArea({ width: document.documentElement.clientWidth || window.innerWidth, height: window.innerHeight }, document.querySelector('.mast')?.getBoundingClientRect());
       if (!area) { closeDialog(false); announce('화면의 세로 공간이 좁아 말풍선을 닫았어요. 화면을 넓힌 뒤 다시 열어 주세요.'); return false; }
       dialog.style.maxHeight = area.height + 'px';
-      const anchor = dialogSource === dialogPet?.actor ? { left: dialogPet.point.x, top: dialogPet.point.y, bottom: dialogPet.point.y + size } : dialogSource.getBoundingClientRect();
+      const anchor = dialogSource === dialogPet?.actor ? { left: dialogPet.point.x, top: dialogPet.point.y, bottom: dialogPet.point.y + sizeOf(dialogPet) } : dialogSource.getBoundingClientRect();
       const position = placeDialog(anchor, dialog.getBoundingClientRect(), area); dialog.style.left = position.left + 'px'; dialog.style.top = position.top + 'px'; return true;
     }
     function closeDialog(restore = true) {
@@ -1716,7 +1798,7 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
         for (const item of frames) if (item.node.isConnected && item.node.getClientRects().length)
           for (const edge of item.floor ? ['top'] : ['top', 'bottom']) addChoice('move-' + item.key + '-' + edge, item.label + ' · ' + (edge === 'top' ? '위' : '아래') + (item === current && edge === pet.edge ? ' · 지금 여기' : ''), () => relocate(pet, item, edge), item.key, edge);
       } else if (branch === 'pets') {
-        answer.textContent = '지금 ' + pets.length + '명, 최대 ' + MAX_PETS + '명까지 함께할 수 있어요. 선택한 티노만 옮기거나 쉬게 할 수 있어요. 새로 열면 기본 4명으로 시작해요.';
+        answer.textContent = '지금 ' + pets.length + '명, 최대 ' + MAX_PETS + '명까지 함께할 수 있어요. 선택한 티노만 옮기거나 쉬게 할 수 있어요. 새로 열면 기본 6명으로 시작해요.';
         for (const friend of pets) {
           const button = addChoice('select-' + friend.id, friend.name + (friend === pet ? ' · 선택됨' : '') + ' · ' + (friend.current?.label || '이동 중'), () => { selected = friend; dialogPet = friend; renderDialog('home'); request(); }); button.dataset.tinoPetTarget = friend.id;
         }
@@ -1781,10 +1863,10 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
     listen(document, 'pointerdown', event => { if (event.target !== tip) hideTip(); });
     listen(document, 'keydown', hideTip);
     cleanup.push(() => { hideTip(); tip.remove(); });
-    const initial = clamp(Math.floor(finite(options.initialCount, 4)), 1, MAX_PETS);
-    const story = frames.find(item => item.key === 'story-panel') || frames[0];
-    const gameFrames = frames.filter(item => item.node.classList.contains('game-card'));
-    for (let i = 0; i < initial; i++) createPet(i < 2 ? story : gameFrames[(i - 2) % Math.max(1, gameFrames.length)] || story, i === 1 ? 'bottom' : 'top');
+    const initial = clamp(Math.floor(finite(options.initialCount, 6)), 1, MAX_PETS);
+    measure();
+    const homes = initialHomes(frames, initial);
+    for (let i = 0; i < initial; i++) createPet(homes[i] || frames[0], 'top');
     for (const item of frames) for (const edge of item.floor ? ['top'] : ['top', 'bottom']) listen(item.calls[edge], 'click', () => relocate(selected, item, edge));
     listen(launcher, 'click', () => { if (!dialog.hidden) closeDialog(); else openDialog(launcher); }); listen(close, 'click', () => closeDialog());
     listen(document, 'pointerdown', event => { if (!dialog.hidden && !dialog.contains(event.target) && !pets.some(pet => pet.actor.contains(event.target)) && event.target !== launcher) closeDialog(false); });
@@ -1821,11 +1903,11 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
     document.fonts?.ready.then(invalidate); request(); scheduleTip();
     return { actor: pets[0].actor, pets, dialog, frames, invalidate, destroy() {
       endPointer(true); disposed = true; for (const pet of pets) { stopMotion(pet); pet.fall = null; pet.listeners.forEach(dispose => dispose()); } cancelFrame(); cleanup.forEach(fn => fn()); resize?.disconnect(); mutations?.disconnect(); revealObserver?.disconnect();
-      for (const item of frames) { Object.values(item.perches).forEach(perch => perch.remove()); delete item.node.dataset.tinoFrame; delete item.node.dataset.tinoLabel; delete item.node.dataset.tinoDrop; item.node.classList.remove('tino-frame'); }
+      for (const item of frames) { Object.values(item.perches).forEach(perch => perch.remove()); delete item.node.dataset.tinoFrame; delete item.node.dataset.tinoLabel; delete item.node.dataset.tinoDrop; item.node.classList.remove('tino-frame'); item.node.classList.remove('tino-room'); }
       floorNode.remove(); layer.remove(); dialog.remove(); status.remove(); launcher.remove();
     } };
   }
-  if (typeof module === 'object' && module.exports) module.exports = { railBounds, railPoint, ratioAt, frameDropMode, fallTarget, dialogArea, placeDialog, mount, WALK_SPEED, WALK_DURATION, IDLE_DELAY, MAX_PETS, GRAVITY };
+  if (typeof module === 'object' && module.exports) module.exports = { petSize, initialHomes, railBounds, railPoint, ratioAt, frameDropMode, fallTarget, dialogArea, placeDialog, mount, WALK_SPEED, WALK_DURATION, IDLE_DELAY, MAX_PETS, GRAVITY };
   else if (root?.document) { if (root.document.readyState === 'loading') root.document.addEventListener('DOMContentLoaded', () => mount(root), { once: true }); else mount(root); }
 })(typeof window !== 'undefined' ? window : null);
 
@@ -1907,7 +1989,8 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
       best: Math.max(0, Math.floor(Number(options.best) || 0)),
       speed: BASE_SPEED,
       untilSpawn: 0.9,
-      player: { y: GROUND - PLAYER_HEIGHT, velocity: 0, grounded: true },
+      player: { y: GROUND - PLAYER_HEIGHT, velocity: 0, grounded: true, slide: 0 },
+      attackCooldown: 0, bonus: 0, books: [], sparks: [], defeated: 0,
       obstacles: []
     };
   }
@@ -1919,10 +2002,20 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
   }
 
   function jump(state) {
-    if (state.mode !== 'running' || !state.player.grounded) return state;
+    if (state.mode !== 'running' || !state.player.grounded || state.player.slide > 0) return state;
     return Object.assign({}, state, {
       player: Object.assign({}, state.player, { velocity: -JUMP_SPEED, grounded: false })
     });
+  }
+
+  function slide(state) {
+    if (state.mode !== 'running' || !state.player.grounded || state.player.slide > 0) return state;
+    return Object.assign({}, state, { player: Object.assign({}, state.player, { slide: .85 }) });
+  }
+
+  function attack(state) {
+    if (state.mode !== 'running' || state.attackCooldown > 0) return state;
+    return Object.assign({}, state, { attackCooldown: .75, books: state.books.concat([{ x: PLAYER_X + 52, y: state.player.y + (state.player.slide > 0 ? 48 : 36), width: 24, height: 24 }]) });
   }
 
   function pause(state) {
@@ -1940,6 +2033,7 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
 
   function playerBounds(player) {
     // Forgiving body bounds exclude the decorative antenna and trailing feet.
+    if (player.slide > 0) return { x: PLAYER_X + 8, y: GROUND - 28, width: 48, height: 25 };
     return { x: PLAYER_X + 13, y: player.y + 13, width: PLAYER_WIDTH - 26, height: PLAYER_HEIGHT - 16 };
   }
 
@@ -1947,7 +2041,7 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
     var elapsed = state.elapsed + dt;
     var speed = BASE_SPEED + Math.min(270, elapsed * 4);
     var distance = state.distance + speed * dt;
-    var player = Object.assign({}, state.player);
+    var player = Object.assign({}, state.player, { slide: Math.max(0, (state.player.slide || 0) - dt) });
     if (!player.grounded) {
       player.velocity += GRAVITY * dt;
       player.y += player.velocity * dt;
@@ -1958,7 +2052,7 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
       }
     }
     var obstacles = state.obstacles.map(function (obstacle) {
-      return Object.assign({}, obstacle, { x: obstacle.x - speed * dt });
+      return Object.assign({}, obstacle, { x: obstacle.x - (speed + (obstacle.type === 'enemy' ? 70 : 0)) * dt });
     }).filter(function (obstacle) { return obstacle.x + obstacle.width > -20; });
     var untilSpawn = state.untilSpawn - dt;
     var seed = state.seed;
@@ -1973,10 +2067,23 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
       var spawnX = obstacles.reduce(function (furthest, obstacle) {
         return Math.max(furthest, obstacle.x + obstacle.width + speed * 1.15);
       }, state.width + 32);
-      obstacles.push({ x: spawnX, y: GROUND - heights[kind], width: widths[kind], height: heights[kind], kind: kind });
+      var type = elapsed > 6 && kind === 1 ? 'enemy' : elapsed > 10 && kind === 2 ? 'overhead' : 'block';
+      if (type === 'enemy') { heights[kind] = 44; widths[kind] = 48; }
+      if (type === 'overhead') { heights[kind] = 42; widths[kind] = 64; }
+      obstacles.push({ type: type, x: spawnX, y: type === 'overhead' ? GROUND - 84 : GROUND - heights[kind], width: widths[kind], height: heights[kind], kind: kind });
       untilSpawn += 1.25 + spacing.value * 0.8;
     }
-    var score = Math.floor(distance / 15);
+    var bonus = state.bonus || 0, defeated = state.defeated || 0;
+    var sparks = (state.sparks || []).map(function(e){return { x: e.x - speed * dt, y: e.y, life: e.life - dt };}).filter(function(e){return e.life > 0;});
+    var books = (state.books || []).map(function(b){return Object.assign({},b,{x:b.x + 630 * dt});}).filter(function(b){
+      if (b.x > state.width + 40) return false;
+      var target = obstacles.find(function(o){return !o.destroyed && overlaps(b,o);});
+      if (!target) return true;
+      if (target.type === 'enemy') { target.destroyed = true; bonus += 25; defeated++; sparks.push({x:target.x,y:target.y,life:.35}); }
+      return false;
+    });
+    obstacles = obstacles.filter(function(o){return !o.destroyed;});
+    var score = Math.floor(distance / 15) + bonus;
     var collided = obstacles.some(function (obstacle) { return overlaps(playerBounds(player), obstacle); });
     return Object.assign({}, state, {
       mode: collided ? 'over' : 'running',
@@ -1988,7 +2095,7 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
       best: Math.max(state.best, score),
       untilSpawn: untilSpawn,
       player: player,
-      obstacles: obstacles
+      obstacles: obstacles, books: books, sparks: sparks, bonus: bonus, defeated: defeated, attackCooldown: Math.max(0, (state.attackCooldown || 0) - dt)
     });
   }
 
@@ -2006,7 +2113,7 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
   }
 
   var physics = {
-    createState: createState, start: start, jump: jump, pause: pause, resume: resume,
+    createState: createState, start: start, jump: jump, slide: slide, attack: attack, pause: pause, resume: resume,
     advance: advance, overlaps: overlaps, playerBounds: playerBounds,
     spriteFrame: spriteFrame, spritePlacement: spritePlacement,
     constants: { height: WORLD_HEIGHT, ground: GROUND, playerX: PLAYER_X,
@@ -2029,6 +2136,9 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
     game.dataset.runnerMounted = 'true';
 
     var startButton = doc.getElementById('runner-start');
+    var jumpButton = doc.getElementById('runner-jump');
+    var slideButton = doc.getElementById('runner-slide');
+    var attackButton = doc.getElementById('runner-attack');
     var pauseButton = doc.getElementById('runner-pause');
     var restartButton = doc.getElementById('runner-restart');
     var scoreLabel = doc.getElementById('runner-score');
@@ -2067,6 +2177,7 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
         startButton.disabled = running;
         startButton.textContent = running ? '달리는 중' : paused ? '계속 달리기' : ready ? '게임 시작' : '다시 달리기';
       }
+      [jumpButton, slideButton, attackButton].forEach(function(b){ if(b) b.disabled = !running; });
       if (pauseButton) pauseButton.disabled = !running;
       if (restartButton) restartButton.disabled = ready;
       if (overlay) overlay.hidden = running;
@@ -2076,6 +2187,9 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
     }
 
     function updateScore() {
+      if (attackButton) { attackButton.disabled = state.mode !== 'running' || state.attackCooldown > 0; attackButton.textContent = state.attackCooldown > 0 ? '책 준비 ' + state.attackCooldown.toFixed(1) + '초' : '전공서적 · X'; }
+      game.dataset.runnerAction = state.player.slide > 0 ? 'slide' : !state.player.grounded ? 'jump' : 'run';
+      game.dataset.runnerDefeated = String(state.defeated || 0);
       if (scoreLabel && state.score !== lastDisplayedScore) {
         lastDisplayedScore = state.score;
         scoreLabel.textContent = formatScore(state.score);
@@ -2152,7 +2266,7 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
       }
       pauseReason = '';
       syncControls();
-      announce('달리는 중. 스페이스, 위쪽 화살표 또는 게임 화면 터치로 점프하세요. Esc 키로 일시 정지할 수 있어요.');
+      announce('달리는 중. 점프는 Space·화면 터치, 슬라이드는 아래 화살표·S, 전공서적 공격은 X 또는 아래 버튼이에요. Esc 키로 일시 정지할 수 있어요.');
       canvas.focus({ preventScroll: true });
       draw();
       frame = root.requestAnimationFrame(tick);
@@ -2188,20 +2302,35 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
     function drawTino() {
       var runFrame = Math.floor(state.elapsed * 9) % 2 + 1;
       var key = !state.player.grounded ? 'jump' : state.mode === 'running' ? 'run' + runFrame : 'idle';
+      var sliding = state.player.slide > 0;
+      if (sliding) { pixelArt('slide', PLAYER_X, GROUND - 32, 68, 32); return; }
       var sprite = images[key] || images.idle;
       if (sprite) {
         // Separate optional images still take precedence over a supplied sprite sheet.
         var placement = spritePlacement(sprite.naturalWidth, sprite.naturalHeight, state.player.y);
+        if (sliding) { placement.y = GROUND - 32; placement.height = 32; placement.width = 68; }
         context.drawImage(sprite, placement.x, placement.y, placement.width, placement.height);
       } else if (spriteSheet) {
         var source = spriteFrame(key);
         var target = spritePlacement(source.width, source.height, state.player.y);
+        if (sliding) { target.y = GROUND - 32; target.height = 32; target.width = 68; }
         context.drawImage(spriteSheet, source.x, source.y, source.width, source.height,
           target.x, target.y, target.width, target.height);
-      } else drawFallbackTino(PLAYER_X, state.player.y, state.mode === 'running' ? runFrame : 0);
+      } else drawFallbackTino(PLAYER_X, sliding ? GROUND - 40 : state.player.y, state.mode === 'running' ? runFrame : 0);
     }
 
+    var PIXELS = {
+      slide: ['........mmm.........','.........k..........','......kkkkkkkk......','....kkwwwwwwwwkk....','...kwwwwwwwwwwwwk...','...kwwwwkwkwkwkwk...','..kkkkwwwwwwwwkk....','.kbbbbkkkkkkkkbkk...','kbbbbbbbbbbbbbbkkk..','.kkkkkkkkkkkkkkkkkk.'],
+      enemy: ['..kkk....kkk..','...kk....kk...','..kkkkkkkkkk..','.kmmmmmmmmmmk.','kmmwwmmmmwwmmk','kmmkkmmmmkkmmk','.kmmmmmmmmmmk.','..kkppppppkk..','.kkkppppppkkk.','kk..kkkkkk..kk','....kk..kk....','...kk....kk...'],
+      drone: ['kkkk........kkkk','..kkkkkkkkkkkk..','....kmmmmmmk....','...kmmwwwwmmk...','...kmmkkkkmmk...','....kmmmmmmk....','.....kkkkkk.....','......kkkk......','......pppp......','.......pp.......'],
+      book: ['.kkkkkkkkk..','kbbbbbbbbkk.','kbwwwwwwbkwk','kbwbbbbwbkwk','kbwwwwwwbkwk','kbwbbbbbbkwk','kbwwwwwwbkwk','kbbbbbbbbkwk','kkkkkkkkkkwk','.kwwwwwwwwk.','..kkkkkkkk..']
+    };
+    function pixelArt(key,x,y,w,h) {
+      var rows = PIXELS[key], palette = {k:'#14233b',m:'#86cdbb',w:'#fff9df',p:'#ed967e',b:'#4564a8'};
+      rows.forEach(function(row,iy){Array.from(row).forEach(function(c,ix){if(palette[c])rect(x+ix*w/row.length,y+iy*h/rows.length,Math.ceil(w/row.length),Math.ceil(h/rows.length),palette[c]);});});
+    }
     function drawObstacle(obstacle) {
+      if (obstacle.type === 'enemy' || obstacle.type === 'overhead') { pixelArt(obstacle.type === 'enemy' ? 'enemy' : 'drone',obstacle.x,obstacle.y,obstacle.width,obstacle.height); return; }
       var x = obstacle.x;
       var y = obstacle.y;
       var w = obstacle.width;
@@ -2236,6 +2365,8 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
         rect(d + 31 - offset, GROUND + 30, 5, 3, '#c2c8bc');
       }
       state.obstacles.forEach(drawObstacle);
+      state.books.forEach(function(b){pixelArt('book',b.x,b.y,b.width,b.height);});
+      state.sparks.forEach(function(e){context.fillStyle='#345f58';context.font='bold 14px monospace';context.fillText('+25',e.x,e.y-8-(.35-e.life)*35);});
       drawTino();
       context.fillStyle = '#647064';
       context.font = '11px Consolas, monospace';
@@ -2288,6 +2419,7 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
     if (startButton) startButton.addEventListener('click', function () { if (state.mode !== 'running') startGame(false); });
     if (pauseButton) pauseButton.addEventListener('click', function () { pauseGame(); });
     if (restartButton) restartButton.addEventListener('click', function () { startGame(true); });
+    [[jumpButton,jump],[slideButton,slide],[attackButton,attack]].forEach(function(pair){if(pair[0])pair[0].addEventListener('click',function(){state=pair[1](state);canvas.focus({preventScroll:true});updateScore();draw();});});
     canvas.addEventListener('pointerdown', function (event) {
       if (event.button !== undefined && event.button !== 0) return;
       canvas.focus({ preventScroll: true });
@@ -2298,6 +2430,10 @@ html[data-motion=off] .start-loading-signal i,.start-screen[data-page-hidden=tru
       if (event.code === 'Space' || event.code === 'ArrowUp' || event.key === ' ' || event.key === 'ArrowUp') {
         event.preventDefault();
         if (!event.repeat && state.mode === 'running') state = jump(state);
+      } else if (event.key === 'ArrowDown' || (event.key || '').toLowerCase() === 's') {
+        event.preventDefault(); if (!event.repeat) { state = slide(state); updateScore(); }
+      } else if ((event.key || '').toLowerCase() === 'x') {
+        event.preventDefault(); if (!event.repeat) { state = attack(state); updateScore(); }
       } else if (event.key === 'Escape') {
         if (state.mode === 'running') { event.preventDefault(); pauseGame(); }
       }

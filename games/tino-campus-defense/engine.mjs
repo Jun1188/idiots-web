@@ -1,162 +1,37 @@
-/** Pure, deterministic fixed-step combat. No DOM, timers, or random sources. */
-export const WIDTH = 960;
-export const STEP = 1 / 60;
-export const UNITS = {
-  sniper: { name: '아크 티노', cost: 150, cooldown: 8, hp: 85, damage: 52, interval: 2.6, range: 265, speed: 34, size: 72 },
-  melee: { name: '가드 티노', cost: 50, cooldown: 3, hp: 400, damage: 7, interval: 1.1, range: 34, speed: 45, size: 66 },
-  tank: { name: '메카 티노', cost: 160, cooldown: 9, hp: 430, damage: 48, interval: 2.1, range: 46, splash: 65, speed: 29, size: 80 },
-  ranged: { name: '펄스 티노', cost: 100, cooldown: 5, hp: 110, damage: 32, interval: 1.4, range: 155, speed: 40, size: 70 },
-};
-export const STRUCTURES = {
-  barricade: { name: '티노 캠퍼스 방벽', cost: 120, hp: 620, damage: 0, interval: 2, range: 0, speed: 0, size: 70 },
-  turret: { name: '공학 펄스 포탑', cost: 180, hp: 260, damage: 35, interval: 2.4, range: 235, speed: 0, size: 80 },
-};
-export const BUILD_SLOTS = [210, 350, 490];
-export const ENEMIES = {
-  scout: { hp: 100, damage: 20, interval: 1, range: 30, speed: 58, size: 62, bounty: 8 },
-  brute: { hp: 430, damage: 40, interval: 1.7, range: 38, speed: 26, size: 86, bounty: 20 },
-  shooter: { hp: 150, damage: 30, interval: 1.6, range: 180, speed: 36, size: 68, bounty: 18 },
-  boss: { hp: 1300, damage: 65, interval: 2.8, range: 55, splash: 85, speed: 18, size: 132, bounty: 60 },
-};
-export const WAVES = [
-  ...[5, 13, 21, 29].map(at => ({ at, title: '오류 주자 접근', units: ['scout', 'scout'] })),
-  ...[33, 45, 57, 69, 81].map(at => ({ at, title: '철갑 운반체 접근', units: ['brute', 'scout', 'scout'] })),
-  ...[45, 63, 81].map(at => ({ at, title: '스파크 드론 접근', units: ['shooter'] })),
-  { at: 95, title: '과부하 크롤러', units: ['boss', 'shooter', 'scout'] },
-  ...[115, 135, 155].map(at => ({ at, title: '마지막 지원군', units: ['brute', 'shooter', 'scout'] })),
-].sort((a, b) => a.at - b.at);
-export const BOSS_AT = WAVES.find(w => w.units.includes('boss')).at;
-export function createGame() {
-  return { phase: 'ready', time: 0, energy: 150, cap: 400, income: 9, level: 0,
-    bases: { ally: 1100, enemy: 1500 }, maxBases: { ally: 1100, enemy: 1500 },
-    units: [], projectiles: [], events: [], pending: [], cooldowns: { sniper: 0, melee: 0, tank: 0, ranged: 0, support: 30 },
-    wave: 0, nextId: 1, kills: 0, summoned: 0, bossDefeated: false };
+/** Campus Window: deterministic grab-and-throw platform defense, no DOM or clocks. */
+export const WIDTH=720, HEIGHT=540, STEP=1/120, DURATION=180;
+export const PLATFORMS=[{x:340,y:170,w:340},{x:180,y:330,w:380},{x:60,y:490,w:490}];
+export const PADS=[{x:460,y:170},{x:300,y:330},{x:180,y:490}];
+export const FACILITIES={signal:{name:'캠퍼스 안내탑',cost:40,description:'주변 티노 걸음을 늦춰요'},bumper:{name:'공학 실습관',cost:55,description:'가까운 티노를 오른쪽으로 튕겨요'}};
+export function createGame(){return {phase:'ready',time:0,hp:10,energy:60,units:[],facilities:[],events:[],nextId:1,nextSpawn:2,spawned:0,saved:0,leaked:0,held:null,score:0};}
+export function command(s,action,arg){
+ if(action==='start'&&s.phase==='ready'){s.phase='playing';return true;}
+ if(action==='pause'&&s.phase==='playing'){if(s.held!==null)release(s,0,0);s.phase='paused';return true;}
+ if(action==='resume'&&s.phase==='paused'){s.phase='playing';return true;}
+ if(s.phase!=='playing')return false;
+ if(action==='build'){const [kind,idx]=String(arg).split(':'),slot=Number(idx),f=FACILITIES[kind];if(!f||!Number.isInteger(slot)||!PADS[slot]||s.facilities.some(v=>v.slot===slot)||s.energy<f.cost)return false;s.energy-=f.cost;s.facilities.push({kind,slot,cooldown:0});return true;}
+ return false;
 }
-export function emit(s, type, data = {}) { s.events.push({ type, time: s.time, ...data }); }
-export function spawn(s, kind, team = 'ally') {
-  const stats = (team === 'ally' ? UNITS : ENEMIES)[kind];
-  if (!stats || s.units.filter(u => u.team === team && !u.structure).length >= (team === 'ally' ? 12 : 14)) return null;
-  const u = { ...stats, id: s.nextId++, kind, team, x: team === 'ally' ? 82 : 878,
-    maxHp: stats.hp, attack: 0, windup: 0, strike: null, action: 'walk', flash: 0, pose: 0, knock: 0 };
-  s.units.push(u);
-  emit(s, 'spawn', { x: u.x, team, kind });
-  return u;
+export function spawn(s){const u={id:s.nextId++,x:650,y:100,vx:0,vy:0,r:30,grounded:false,held:false,thrown:false,age:0,flash:0};s.units.push(u);s.spawned++;return u;}
+export function grab(s,x,y){if(s.phase!=='playing'||s.held!==null||!Number.isFinite(x)||!Number.isFinite(y))return null;const choices=s.units.filter(u=>Math.abs(u.x-x)<52&&Math.abs(u.y-y)<57).sort((a,b)=>Math.hypot(a.x-x,a.y-y)-Math.hypot(b.x-x,b.y-y));const u=choices[0];if(!u)return null;u.held=true;u.grounded=false;u.vx=0;u.vy=0;s.held=u.id;return u.id;}
+export function drag(s,x,y){const u=s.units.find(u=>u.id===s.held);if(s.phase!=='playing'||!u||!Number.isFinite(x)||!Number.isFinite(y))return false;u.x=Math.max(-40,Math.min(WIDTH+40,x));u.y=Math.max(30,Math.min(HEIGHT-30,y));return true;}
+export function release(s,vx,vy){const u=s.units.find(u=>u.id===s.held);if(!u)return false;u.held=false;u.thrown=true;u.vx=Math.max(-900,Math.min(900,Number.isFinite(vx)?vx:0));u.vy=Math.max(-750,Math.min(750,Number.isFinite(vy)?vy:0));s.held=null;return true;}
+export function scoreGame(s){return s.saved*100+(s.phase==='won'?1000+s.hp*100:0);}
+export function step(s,dt=STEP){if(s.phase!=='playing')return;dt=Math.max(0,Math.min(.05,Number.isFinite(dt)?dt:0));s.time+=dt;s.energy=Math.min(150,s.energy+dt*.7);s.events=s.events.filter(e=>s.time-e.at<.7);
+ if(s.time<DURATION&&s.time>=s.nextSpawn&&s.units.length<10){spawn(s);s.nextSpawn=s.time+Math.max(3.4,6.4-s.time/70);}
+ for(const f of s.facilities)f.cooldown=Math.max(0,f.cooldown-dt);
+ for(const u of s.units){u.age+=dt;u.flash=Math.max(0,u.flash-dt);if(u.held)continue;
+ const oldFeet=u.y+u.r;let slowed=false;
+ for(const f of s.facilities){const pad=PADS[f.slot];if(Math.abs(u.x-pad.x)<95&&Math.abs(u.y+u.r-pad.y)<50){if(f.kind==='signal')slowed=true;else if(f.cooldown<=0){u.vx=360;u.vy=-360;u.grounded=false;u.thrown=true;u.flash=.25;f.cooldown=2.2;}}}
+ u.slowed=slowed;
+ if(u.grounded&&!u.thrown)u.vx=-(24+Math.min(14,s.time/13))*(slowed?.4:1);
+ u.vy+=900*dt;u.x+=u.vx*dt;u.y+=u.vy*dt;u.grounded=false;
+ for(const p of PLATFORMS){if(u.vy>=0&&oldFeet<=p.y+2&&u.y+u.r>=p.y&&u.x>p.x&&u.x<p.x+p.w){u.y=p.y-u.r;u.vy=0;u.grounded=true;if(u.thrown){u.vx*=Math.pow(.08,dt);if(Math.abs(u.vx)<35)u.thrown=false;}break;}}
+ if(!u.grounded)u.vx*=Math.pow(.85,dt);
+ if(u.x>WIDTH+35||u.x< -35||u.y>HEIGHT+65){u.done=true;s.saved++;s.energy=Math.min(150,s.energy+5);s.events.push({at:s.time,x:Math.max(40,Math.min(WIDTH-40,u.x)),y:Math.min(HEIGHT-30,u.y),text:'+100 잘 가!'});}
+ else if(u.grounded&&u.y>400&&u.x<105){u.done=true;s.hp--;s.leaked++;s.events.push({at:s.time,x:100,y:440,text:'작업실 -1'});}
+ }
+ s.units=s.units.filter(u=>!u.done);if(s.held!==null&&!s.units.some(u=>u.id===s.held))s.held=null;
+ if(s.hp<=0){s.phase='lost';s.held=null;for(const u of s.units)u.held=false;}
+ else if(s.time>=DURATION&&!s.units.length)s.phase='won';s.score=scoreGame(s);
 }
-export function command(s, action, kind) {
-  if (action === 'start' && s.phase === 'ready') { s.phase = 'playing'; return true; }
-  if (action === 'pause' && s.phase === 'playing') { s.phase = 'paused'; return true; }
-  if (action === 'resume' && s.phase === 'paused') { s.phase = 'playing'; return true; }
-  if (s.phase !== 'playing') return false;
-  if (action === 'build') {
-    const [type, slotValue] = String(kind).split(':');
-    const slot = Number(slotValue), stats = STRUCTURES[type];
-    if (!stats || !Number.isInteger(slot) || !BUILD_SLOTS[slot] || s.energy < stats.cost || s.units.some(u => u.structure && u.slot === slot)) return false;
-    // Never place a building behind enemies that have already crossed its pad.
-    if (s.units.some(u => u.team === 'enemy' && u.hp > 0 && u.x < BUILD_SLOTS[slot] + 45)) return false;
-    s.energy -= stats.cost;
-    s.units.push({ ...stats, kind: type, structure: true, slot, id: s.nextId++, team: 'ally', x: BUILD_SLOTS[slot], maxHp: stats.hp, attack: 0, windup: 0, strike: null, action: 'idle', flash: 0, pose: 0, knock: 0 });
-    emit(s, 'build', { x: BUILD_SLOTS[slot], kind: type }); return true;
-  }
-  if (action === 'summon') {
-    const u = UNITS[kind];
-    if (!u || s.energy < u.cost || s.cooldowns[kind] > 0 || s.units.filter(u => u.team === 'ally' && !u.structure).length >= 12) return false;
-    s.energy -= u.cost; s.cooldowns[kind] = u.cooldown; s.summoned++; spawn(s, kind); return true;
-  }
-  if (action === 'upgrade' && !s.level && s.energy >= 160) {
-    s.energy -= 160; s.level = 1; s.income = 12; s.cap = 500; emit(s, 'upgrade'); return true;
-  }
-  if (action === 'support' && s.cooldowns.support <= 0) {
-    const targets = s.units.filter(u => u.team === 'enemy' && u.x < WIDTH * .55);
-    if (!targets.length) return false;
-    s.cooldowns.support = 35;
-    for (const u of targets) { u.hp -= 90; u.flash = .25; u.knock = 25; }
-    emit(s, 'support'); return true;
-  }
-  return false;
-}
-function hit(s, attacker, target, amount) {
-  if (target.base) {
-    s.bases[target.team] = Math.max(0, s.bases[target.team] - amount);
-    emit(s, 'baseHit', { team: target.team, x: target.x, amount });
-  } else {
-    target.hp -= amount; target.flash = .16;
-    target.knock = target.structure ? 0 : Math.max(target.knock, attacker.kind === 'boss' ? 18 : 4);
-    emit(s, 'hit', { x: target.x, amount, team: target.team });
-  }
-}
-export function step(s, dt = STEP) {
-  if (s.phase !== 'playing') return;
-  // A caller must subdivide long frames: never skip collisions or cooldowns.
-  dt = Math.min(Math.max(dt, 0), .05);
-  s.time += dt;
-  s.events = s.events.filter(e => s.time - e.time < 1.2);
-  s.energy = Math.min(s.cap, s.energy + s.income * dt);
-  for (const key of Object.keys(s.cooldowns)) s.cooldowns[key] = Math.max(0, s.cooldowns[key] - dt);
-  while (s.wave < WAVES.length && s.time >= WAVES[s.wave].at) {
-    const wave = WAVES[s.wave++];
-    wave.units.forEach((kind, i) => s.pending.push({ at: wave.at + i * 2.5, kind }));
-    emit(s, 'wave', { title: wave.title });
-  }
-  s.pending = s.pending.filter(p => p.at > s.time || !spawn(s, p.kind, 'enemy'));
-  for (const u of s.units) {
-    if (u.hp <= 0) continue;
-    const dir = u.team === 'ally' ? 1 : -1;
-    u.attack = Math.max(0, u.attack - dt); u.flash = Math.max(0, u.flash - dt); u.pose = Math.max(0, u.pose - dt);
-    if (u.knock > 0) { const d = Math.min(u.knock, dt * 70); u.x -= dir * d; u.knock -= d; }
-    const foes = s.units.filter(v => v.team !== u.team && v.hp > 0 && (v.x - u.x) * dir >= -18);
-    foes.sort((a, b) => Math.abs(a.x - u.x) - Math.abs(b.x - u.x) || a.id - b.id);
-    const enemyTeam = u.team === 'ally' ? 'enemy' : 'ally';
-    const target = foes[0] || { base: true, team: enemyTeam, x: u.team === 'ally' ? 890 : 70 };
-    const distance = Math.abs(target.x - u.x);
-    if (u.structure && !u.damage) { u.action = 'idle'; continue; }
-    if (u.strike) {
-      u.windup -= dt;
-      u.action = 'attack';
-      if (u.windup <= 0) {
-        const victim = u.strike.base ? u.strike : s.units.find(v => v.id === u.strike.id && v.hp > 0);
-        if (victim && Math.abs(victim.x - u.x) <= u.range + 28) {
-          if (u.range > 100) s.projectiles.push({ x: u.x, targetId: victim.id, targetTeam: victim.team, base: victim.base, targetX: victim.x, team: u.team, damage: u.damage, speed: 340 });
-          else {
-            hit(s, u, victim, u.damage);
-            if (u.splash && !victim.base) {
-              for (const other of foes.filter(v => v.id !== victim.id && Math.abs(v.x - victim.x) < u.splash)) hit(s, u, other, u.damage * .6);
-            }
-          }
-        }
-        u.strike = null; u.pose = .18;
-      }
-    } else if (distance <= u.range) {
-      u.action = u.pose > 0 ? 'attack' : 'idle';
-      if (u.attack <= 0) {
-        u.attack = u.interval;
-        u.windup = u.kind === 'boss' ? .85 : u.kind === 'tank' ? .4 : .22;
-        u.strike = { id: target.id, base: target.base, team: target.team, x: target.x };
-        u.action = 'attack';
-      }
-    } else {
-      const front = s.units.filter(v => v.team === u.team && v.id !== u.id && v.hp > 0 && (v.x - u.x) * dir > 0 && (v.x - u.x) * dir < 20);
-      // A shallow staggered formation, without making slow melee obstruct ranged reach.
-      const spacing = front.some(v => v.range === u.range) ? .2 : 1;
-      u.x += dir * Math.min(u.speed * dt * spacing, Math.max(0, distance - u.range));
-      u.action = u.structure ? 'idle' : 'walk';
-    }
-    u.x = Math.max(70, Math.min(890, u.x));
-  }
-  for (const p of s.projectiles) {
-    const target = p.base ? { base: true, team: p.targetTeam, x: p.targetX } : s.units.find(u => u.id === p.targetId && u.hp > 0);
-    if (!target) { p.done = true; continue; }
-    const d = target.x - p.x;
-    if (Math.abs(d) <= p.speed * dt) { hit(s, p, target, p.damage); p.done = true; }
-    else p.x += Math.sign(d) * p.speed * dt;
-  }
-  s.projectiles = s.projectiles.filter(p => !p.done);
-  for (const u of s.units.filter(u => u.hp <= 0)) {
-    emit(s, 'defeat', { x: u.x, kind: u.kind, team: u.team, unit: { ...u, action: 'hurt', flash: 1 } });
-    if (u.team === 'enemy') { s.energy = Math.min(s.cap, s.energy + u.bounty); s.kills++; if (u.kind === 'boss') s.bossDefeated = true; }
-  }
-  s.units = s.units.filter(u => u.hp > 0);
-  if (s.bases.ally <= 0) s.phase = 'lost';
-  else if (s.bases.enemy <= 0) s.phase = 'won';
-}
-
-export function scoreGame(s) { return Math.max(0, Math.round(s.kills * 100 + (s.maxBases.enemy - s.bases.enemy) * 2 + (s.phase === 'won' ? 2000 + s.bases.ally + Math.max(0, 300 - s.time) * 10 : 0))); }

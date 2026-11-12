@@ -1,179 +1,31 @@
-import { createGame, command, step, STEP, UNITS, WAVES, BOSS_AT, STRUCTURES, BUILD_SLOTS, scoreGame } from './engine.mjs';
-import { loadArt, createRenderer, portrait } from './renderer.mjs';
-const $ = selector => document.querySelector(selector);
-const root = $('#game');
-const unitButtons = [...document.querySelectorAll('[data-unit]')];
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-let state = createGame();
-let runId = '';
-let resultSent = false;
-let renderer;
-let frame = 0;
-let last = 0;
-let remainder = 0;
-let lastUi = 0;
-let summaryAt = -10;
-let warning = '';
-let furthestAdvance = 0;
-let advanceAt = 0;
-const timeLabel = seconds => `${Math.floor(seconds / 60).toString().padStart(2,'0')}:${Math.floor(seconds % 60).toString().padStart(2,'0')}`;
-function announce(text) { $('#announcement').textContent = text; }
-function availability(kind) {
-  const u = UNITS[kind];
-  if (state.phase !== 'playing') return '시작 대기';
-  if (state.units.filter(u => u.team === 'ally' && !u.structure).length >= 12) return '팀 가득 참';
-  if (state.cooldowns[kind] > 0) return `${state.cooldowns[kind].toFixed(1)}초 준비`;
-  if (state.energy < u.cost) return `에너지 ${Math.ceil(u.cost - state.energy)} 부족`;
-  return '소환 가능';
-}
-function updateUi() {
-  const playing = state.phase === 'playing';
-  $('#energy').textContent = Math.floor(state.energy);
-  $('#capacity').textContent = ` / ${state.cap}`;
-  $('#income').textContent = `+${state.income} / 초`;
-  $('#clock').textContent = timeLabel(state.time);
-  $('#population').textContent = `팀 ${state.units.filter(u => u.team === 'ally' && !u.structure).length} / 12`;
-  for (const team of ['ally', 'enemy']) {
-    $(`#${team}-hp`).value = state.bases[team];
-    $(`#${team}-value`).textContent = `${Math.ceil(state.bases[team])} / ${state.maxBases[team]}`;
-  }
-  for (const button of unitButtons) {
-    const kind = button.dataset.unit, reason = availability(kind);
-    button.disabled = !playing || reason !== '소환 가능';
-    const count = state.units.filter(u => u.team === 'ally' && u.kind === kind).length;
-    button.querySelector('.role-count').textContent = `전장 ${count}`;
-    button.querySelector('.availability').textContent = playing ? reason : state.phase === 'paused' ? '일시정지' : '시작 후 소환';
-    button.setAttribute('aria-label', `${UNITS[kind].name}, ${UNITS[kind].cost} 에너지, ${button.querySelector('.availability').textContent}`);
-  }
-  const slot = Number($('#build-slot').value);
-  const occupied = state.units.some(u => u.structure && u.slot === slot);
-  const threatened = state.units.some(u => u.team === 'enemy' && u.x < BUILD_SLOTS[slot] + 45);
-  for (const b of document.querySelectorAll('[data-build]')) b.disabled = !playing || occupied || threatened || state.energy < STRUCTURES[b.dataset.build].cost;
-  $('#build-note').textContent = occupied ? '이 패드는 사용 중입니다. 다른 위치를 골라 주세요.' : threatened ? '적이 넘어온 패드입니다. 후방 위치를 선택하세요.' : '위치 선택 후 설치 · 방벽은 길을 막고 포탑은 뒤에서 지원합니다.';
-  $('#upgrade').disabled = !playing || state.level > 0 || state.energy < 160;
-  $('#upgrade span').textContent = state.level ? '완료 · 수입 +3 / 초' : '160 · 수입 +3 / 초';
-  const inReach = state.units.some(u => u.team === 'enemy' && u.x < 528);
-  $('#support').disabled = !playing || state.cooldowns.support > 0 || !inReach;
-  $('#support span').textContent = state.cooldowns.support > 0 ? `${Math.ceil(state.cooldowns.support)}초 뒤 준비` : !inReach ? '우리 진영 안에 적이 없습니다' : '우리 쪽 55% 안의 적에게 90 피해';
-  $('#pause').disabled = !['playing', 'paused'].includes(state.phase);
-  $('#pause').innerHTML = state.phase === 'paused' ? '계속하기 <kbd>P</kbd>' : '일시정지 <kbd>P</kbd>';
-  const next = WAVES[state.wave];
-  const bossSoon = state.time >= BOSS_AT - 5 && state.time < BOSS_AT;
-  $('#phase-label').textContent = state.phase === 'ready' ? '작전 준비' : state.phase === 'paused' ? '일시정지' : state.time < 35 ? '01 / 첫 교대' : state.time < 70 ? '02 / 전선 구축' : state.time < BOSS_AT ? '03 / 과부하' : '04 / 마지막 돌파';
-  $('#wave-note').textContent = bossSoon ? `경고 · 과부하 크롤러 ${Math.ceil(BOSS_AT-state.time)}초` : next ? `${next.title} · ${Math.ceil(next.at-state.time)}초` : '마지막 기지를 무너뜨리세요';
-  if (bossSoon && warning !== 'boss') { warning = 'boss'; announce('5초 뒤 과부하 크롤러가 나타납니다. 전선을 정비하세요.'); }
-  if (state.time - summaryAt > 5) {
-    summaryAt = state.time;
-    const allies = state.units.filter(u => u.team === 'ally' && !u.structure).length;
-    const foes = state.units.filter(u => u.team === 'enemy').length;
-    const boss = state.units.find(u => u.kind === 'boss');
-    const frontline = state.units.filter(u => u.team === 'enemy').reduce((min,u) => Math.min(min,u.x),960);
-    const friendlies = state.units.filter(u => u.team === 'ally');
-    const advance = friendlies.reduce((max,u) => Math.max(max,u.x),0);
-    if (advance > furthestAdvance + 25) { furthestAdvance = advance; advanceAt = state.time; }
-    const guardHeavy = friendlies.length >= 3 && friendlies.filter(u => u.kind === 'melee').length / friendlies.length > .7;
-    const stalled = guardHeavy && state.time > 80 && state.time - advanceAt > 25;
-    const pressure = stalled ? '가드는 버티는 역할이에요. 펄스와 메카를 더하면 전선을 밀 수 있어요.' : frontline < 240 ? '작업실이 위험해요. 가드와 지원 펄스를 준비하세요.' : '가드 뒤에서 펄스가 안전하게 공격해요.';
-    $('#battle-summary').textContent = `아군 ${allies} · 적 ${foes}${boss ? ` · 크롤러 ${Math.ceil(boss.hp)} HP` : ''}. ${pressure} ${state.level ? '공학 개선 완료.' : '공학 개선 160 에너지.'}`;
-  }
-}
-function showCover(title, description, button, kicker) {
-  $('#cover').hidden = false;
-  $('#cover-title').textContent = title;
-  $('#cover-description').textContent = description;
-  $('#cover-kicker').textContent = kicker;
-  $('#start').textContent = button;
-}
-function endGame() {
-  const won = state.phase === 'won';
-  if (!resultSent) {
-    resultSent = true;
-    const detail = { game: 'campus-line', score: scoreGame(state), runId };
-    window.dispatchEvent(new CustomEvent('idiots:game-result', { detail }));
-    if (window.parent !== window) window.parent.postMessage({ type: 'idiots:game-result', ...detail }, location.origin);
-  }
-  showCover(won ? '작업실의 불을 지켰어요.' : '오늘은 잠깐, 쉬어가기.', won ? `${timeLabel(state.time)} · ${state.summoned}명의 티노가 함께했어요. 다른 조합으로 다시 도전해 보세요.` : '가드로 펄스를 보호해 보세요. 위급할 땐 동아리 펄스, 여유가 생기면 공학 업그레이드.', '다시 플레이', won ? 'MISSION COMPLETE' : 'RETRY / 다시 할 수 있어요');
-  $('#cover-meta').textContent = `처치 ${state.kills} · 공학 개선 ${state.level ? '완료' : '미사용'}`;
-  $('#battle-summary').textContent = won ? `작전 완료 · ${timeLabel(state.time)} · ${state.kills}기 정리. 작업실을 지켰습니다.` : `작전 종료 · ${timeLabel(state.time)}. 가드로 앞을 지키고, 펄스와 메카를 조합해 다시 도전하세요.`;
-  announce(won ? '승리! 기계 소굴을 멈췄습니다.' : '작업실을 지키지 못했습니다. 다시 플레이할 수 있습니다.');
-  $('#start').focus({ preventScroll: true });
-}
-function loop(now) {
-  frame = 0;
-  if (state.phase !== 'playing') return;
-  const delta = last ? Math.min((now-last)/1000, .1) : 0;
-  last = now; remainder += delta;
-  while (remainder >= STEP && state.phase === 'playing') { step(state, STEP); remainder -= STEP; }
-  renderer.render(state);
-  if (now-lastUi > 100) { updateUi(); lastUi = now; }
-  if (state.phase === 'playing') frame = requestAnimationFrame(loop);
-  else { updateUi(); endGame(); }
-}
-function run() {
-  cancelAnimationFrame(frame); last = 0; remainder = 0;
-  $('#cover').hidden = true; updateUi(); renderer.render(state);
-  frame = requestAnimationFrame(loop);
-}
-function pause() {
-  if (!command(state, 'pause')) return;
-  cancelAnimationFrame(frame); frame = 0;
-  showCover('잠깐 쉬어가요.', '전투와 에너지 시간이 멈췄습니다. 준비되면 계속해 주세요.', '계속하기', 'PAUSED');
-  updateUi(); announce('일시정지했습니다.');
-}
-$('#start').addEventListener('click', () => {
-  if (state.phase === 'paused') command(state, 'resume');
-  else { runId = globalThis.crypto?.randomUUID?.() || `campus-${Date.now()}-${Math.random().toString(36).slice(2)}`; resultSent = false; state = createGame(); command(state, 'start'); summaryAt = -10; warning = ''; furthestAdvance = 0; advanceAt = 0; }
-  $('#cover-meta').textContent = '보통 3~5분 · 직접 시작 · 이 기기 점수 저장 · 과금 없음';
-  root.focus({ preventScroll: true }); run();
-});
-function action(action, kind) {
-  if (command(state, action, kind)) {
-    if (action === 'summon') announce(`${UNITS[kind].name} 합류.`);
-    if (action === 'build') announce(`${STRUCTURES[kind.split(':')[0]].name} 설치 완료.`);
-    if (action === 'upgrade') announce('공학 개선 완료. 초당 에너지가 12로 늘었습니다.');
-    if (action === 'support') announce('동아리 펄스! 우리 진영 안의 적을 밀어냈습니다.');
-    updateUi();
-  }
-}
-for (const button of unitButtons) button.addEventListener('click', () => action('summon', button.dataset.unit));
-for (const b of document.querySelectorAll('[data-build]')) b.addEventListener('click', () => action('build', `${b.dataset.build}:${$('#build-slot').value}`));
-$('#build-slot').addEventListener('change', updateUi);
-$('#upgrade').addEventListener('click', () => action('upgrade'));
-$('#support').addEventListener('click', () => action('support'));
-$('#pause').addEventListener('click', () => {
-  if (state.phase === 'paused') { command(state, 'resume'); run(); }
-  else pause();
-});
-function closeHelp() { $('#guide').hidden = true; $('#help').setAttribute('aria-expanded', 'false'); $('#help').focus(); }
-$('#help').addEventListener('click', () => {
-  if (!$('#guide').hidden) { closeHelp(); return; }
-  if (state.phase === 'playing') pause();
-  $('#guide').hidden = false; $('#help').setAttribute('aria-expanded', 'true'); $('#close-help').focus();
-});
-$('#close-help').addEventListener('click', closeHelp);
-root.addEventListener('keydown', event => {
-  if (event.repeat || event.altKey || event.ctrlKey || event.metaKey || /INPUT|TEXTAREA|SELECT/.test(event.target.tagName)) return;
-  const key = event.key.toLowerCase();
-  if (key === 'escape') { if (!$('#guide').hidden) closeHelp(); else pause(); return; }
-  if (key === 'p' || (key === ' ' && event.target.tagName !== 'BUTTON' && event.target.tagName !== 'A')) {
-    event.preventDefault(); if (state.phase === 'paused') { command(state, 'resume'); run(); } else pause(); return;
-  }
-  const unit = { '1': 'melee', '2': 'ranged', '3': 'tank', '4': 'sniper' }[key];
-  if (unit) { event.preventDefault(); action('summon', unit); }
-  if (key === 'b' || key === 't') action('build', `${key === 'b' ? 'barricade' : 'turret'}:${$('#build-slot').value}`);
-  if (key === 'u') action('upgrade');
-  if (key === 'e') action('support');
-});
-document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
-window.addEventListener('pagehide', () => { pause(); cancelAnimationFrame(frame); });
-try {
-  const art = await loadArt();
-  renderer = createRenderer($('#stage'), art, reduced);
-  for (const img of document.querySelectorAll('[data-portrait]')) img.src = portrait(art, img.dataset.portrait);
-  renderer.render(state); $('#start').disabled = false; $('#start').textContent = '작전 시작'; updateUi();
-} catch (error) {
-  $('#cover-title').textContent = '그림을 불러오지 못했어요.';
-  $('#cover-description').textContent = '연결을 확인하고 페이지를 새로고침해 주세요. 게임은 아직 시작하지 않았습니다.';
-  $('#start').textContent = '새로고침이 필요합니다';
-  console.error('Campus Line asset load failed', error);
-}
+import{createGame,command,step,STEP,WIDTH,HEIGHT,DURATION,FACILITIES,grab,drag,release,scoreGame}from'./engine.mjs';
+import{loadArt,createRenderer}from'./renderer.mjs';
+const $=s=>document.querySelector(s),game=$('#game'),stage=$('#stage'),targets=$('#tino-targets');
+let state=createGame(),renderer,raf=0,last=0,acc=0,selected=null,pointer=null,samples=[],runId='',sent=false,lastUI=0;
+const nodes=new Map();const fmt=t=>`${Math.floor(t/60).toString().padStart(2,'0')}:${Math.floor(t%60).toString().padStart(2,'0')}`;
+function coords(e){const r=stage.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width*WIDTH,y:(e.clientY-r.top)/r.height*HEIGHT};}
+function updateTargets(){for(const [id,node]of nodes)if(!state.units.some(u=>u.id===id)){node.remove();nodes.delete(id);}
+ for(const u of state.units){let node=nodes.get(u.id);if(!node){node=document.createElement('button');node.className='tino-grab-target';node.type='button';node.dataset.tinoId=u.id;node.innerHTML='<span></span>';node.setAttribute('aria-label',`티노 ${u.id} 잡기`);node.addEventListener('pointerdown',e=>{if(e.button!==0||state.phase!=='playing'||pointer!==null)return;const p=coords(e);if(grab(state,p.x,p.y)===null)return;e.preventDefault();selected=u.id;pointer=e.pointerId;samples=[{...p,t:e.timeStamp}];node.setPointerCapture(e.pointerId);node.focus({preventScroll:true});updateUI();});
+ node.addEventListener('pointermove',e=>{if(e.pointerId!==pointer)return;e.preventDefault();const p=coords(e);drag(state,p.x,p.y);samples.push({...p,t:e.timeStamp});samples=samples.filter(v=>e.timeStamp-v.t<120);});
+ const finish=(e,cancel)=>{if(e.pointerId!==pointer)return;const p=coords(e),first=samples[0]||{...p,t:e.timeStamp},dt=Math.max(.03,(e.timeStamp-first.t)/1000);release(state,cancel?0:(p.x-first.x)/dt,cancel?0:(p.y-first.y)/dt);pointer=null;samples=[];if(node.hasPointerCapture(e.pointerId))node.releasePointerCapture(e.pointerId);updateUI();};
+ node.addEventListener('pointerup',e=>finish(e,false));node.addEventListener('pointercancel',e=>finish(e,true));node.addEventListener('lostpointercapture',e=>{if(pointer===e.pointerId){release(state,0,0);pointer=null;}});
+ node.addEventListener('focus',()=>{selected=u.id;});node.addEventListener('keydown',e=>{if(state.phase!=='playing')return;if(e.key===' '){e.preventDefault();if(e.repeat)return;if(state.held===u.id)release(state,680,-460);else grab(state,u.x,u.y);updateUI();}else if(e.key.startsWith('Arrow')&&state.held===u.id){e.preventDefault();drag(state,u.x+(e.key==='ArrowRight'?30:e.key==='ArrowLeft'?-30:0),u.y+(e.key==='ArrowDown'?30:e.key==='ArrowUp'?-30:0));}});targets.appendChild(node);nodes.set(u.id,node);}
+ node.style.left=`${u.x/WIDTH*100}%`;node.style.top=`${u.y/HEIGHT*100}%`;node.disabled=state.phase!=='playing';node.setAttribute('aria-pressed',String(u.held));node.querySelector('span').textContent=`${u.id} ${u.held?'잡힘':u.thrown?'휙!':u.slowed?'천천히':'방문'}`;
+ }}
+function updateUI(){const playing=state.phase==='playing';$('#clock').textContent=fmt(state.time);$('#energy').textContent=Math.floor(state.energy);$('#ally-hp').value=state.hp;$('#ally-value').textContent=`${state.hp} / 10`;$('#saved').textContent=`보낸 티노 ${state.saved}`;$('#rescued').textContent=state.saved;$('#wave').textContent=`${Math.min(5,Math.floor(state.time/36)+1)} / 5`;
+ $('#phase-label').textContent=state.phase==='ready'?'준비':state.time<DURATION?'작업실 지키기':'남은 티노 보내기';$('#pause').disabled=!['playing','paused'].includes(state.phase);$('#pause').textContent=state.phase==='paused'?'계속하기 · P':'일시정지 · P';$('#select-tino').disabled=!playing||!state.units.length;$('#throw-tino').disabled=!playing||!state.units.some(u=>u.id===selected);$('#selection-note').textContent=selected&&state.units.some(u=>u.id===selected)?`티노 ${selected} 선택 · 잡아서 움직이거나 ‘보내기’를 누르세요.`:'번호 버튼을 잡거나, 다음 티노 선택으로 시작하세요.';
+ const slot=Number($('#build-slot').value),used=state.facilities.some(f=>f.slot===slot);for(const b of document.querySelectorAll('[data-build]'))b.disabled=!playing||used||state.energy<FACILITIES[b.dataset.build].cost;$('#build-note').textContent=used?'이미 시설이 있는 패드입니다. 다른 위치를 선택하세요.':'시설은 보조 역할이에요. 직접 잡고 보내는 것이 핵심!';$('#battle-summary').textContent=`작업실 ${state.hp}/10 · 방문 중 ${state.units.length}명 · 회수 ${state.saved}명 · ${state.time<DURATION?'남은 시간 '+fmt(DURATION-state.time):'남은 티노를 모두 보내세요.'}`;updateTargets();}
+function cover(title,copy,kicker,button){$('#cover').hidden=false;$('#cover-title').textContent=title;$('#cover-description').textContent=copy;$('#cover-kicker').textContent=kicker;$('#start').textContent=button;}
+function pause(){if(!command(state,'pause'))return;pointer=null;samples=[];cancelAnimationFrame(raf);cover('잠깐 쉬어가요.','시간과 시설, 티노의 움직임이 모두 멈췄어요.','PAUSED','계속하기');updateUI();renderer.render(state);}
+function end(){cancelAnimationFrame(raf);pointer=null;if(!sent){sent=true;window.dispatchEvent(new CustomEvent('idiots:game-result',{detail:{game:'campus-line',score:scoreGame(state),runId}}));}const won=state.phase==='won';cover(won?'작업실을 지켰어요!':'다음 당번도 부탁해요.',`보낸 티노 ${state.saved}명 · ${state.score}점. ${won?'모두 무사히 바깥으로!':'시설을 보조로 쓰고 티노를 멀리 던져 보세요.'}`,won?'MISSION COMPLETE':'RETRY / 다시 할 수 있어요','다시 플레이');updateUI();$('#start').focus({preventScroll:true});}
+function loop(now){if(state.phase!=='playing')return;acc+=last?Math.min(.1,(now-last)/1000):0;last=now;while(acc>=STEP&&state.phase==='playing'){step(state);acc-=STEP;}renderer.render(state);updateTargets();if(now-lastUI>100){updateUI();lastUI=now;}if(['won','lost'].includes(state.phase))end();else raf=requestAnimationFrame(loop);}
+function run(){last=0;acc=0;$('#cover').hidden=true;updateUI();cancelAnimationFrame(raf);raf=requestAnimationFrame(loop);}
+$('#start').addEventListener('click',()=>{if(state.phase==='paused')command(state,'resume');else{state=createGame();selected=null;sent=false;runId=crypto.randomUUID();command(state,'start');}run();});
+$('#pause').addEventListener('click',()=>{if(state.phase==='paused'){command(state,'resume');run();}else pause();});
+$('#select-tino').addEventListener('click',()=>{if(!state.units.length)return;const i=state.units.findIndex(u=>u.id===selected);selected=state.units[(i+1)%state.units.length].id;nodes.get(selected)?.focus({preventScroll:true});updateUI();});
+$('#throw-tino').addEventListener('click',()=>{const u=state.units.find(u=>u.id===selected);if(!u)return;if(state.held===null)grab(state,u.x,u.y);if(state.held===u.id)release(state,680,-460);updateUI();});
+for(const b of document.querySelectorAll('[data-build]'))b.addEventListener('click',()=>{command(state,'build',`${b.dataset.build}:${$('#build-slot').value}`);updateUI();});$('#build-slot').addEventListener('change',updateUI);
+$('#help').addEventListener('click',()=>{pause();$('#guide').hidden=!$('#guide').hidden;$('#help').setAttribute('aria-expanded',String(!$('#guide').hidden));});$('#close-help').addEventListener('click',()=>{$('#guide').hidden=true;$('#help').setAttribute('aria-expanded','false');$('#help').focus();});
+game.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#guide').hidden){e.preventDefault();$('#guide').hidden=true;$('#help').setAttribute('aria-expanded','false');$('#help').focus();return;}if(e.key==='Escape'||(e.key.toLowerCase()==='p'&&!/SELECT|INPUT/.test(e.target.tagName))){e.preventDefault();if(state.phase==='paused'){command(state,'resume');run();}else pause();}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});window.addEventListener('blur',pause);window.addEventListener('pagehide',pause);window.addEventListener('resize',()=>{if(pointer!==null)pause();});
+try{renderer=createRenderer(stage,await loadArt(),matchMedia('(prefers-reduced-motion:reduce)').matches);renderer.render(state);$('#start').disabled=false;$('#start').textContent='당번 시작';updateUI();}catch(e){$('#cover-title').textContent='그림을 불러오지 못했어요.';$('#cover-description').textContent='연결을 확인하고 새로고침해 주세요.';console.error(e);}
