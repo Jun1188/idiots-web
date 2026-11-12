@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="112" height="144" viewBox="0 0 112 144" shape-rendering="crispEdges">
+<title>가상의 교수님과 F 시험지가 놓인 캠퍼스 책상</title>
+<!-- Original hand-drawn pixel asset; not a depiction of a real professor. -->
+<path fill="#243e50" d="M28 16h40v8h8v32h-8v8H28v-8h-8V24h8z"/>
+<path fill="#e0ded0" d="M28 12h32v4h12v12H60v-4H32v8H20V20h8z"/>
+<path fill="#efbf99" d="M30 30h36v26h-6v8H36v-8h-6z"/>
+<path fill="#2e4254" d="M26 34h22v4h4v-4h22v16H52V40h-4v10H26zm4 4v8h14v-8zm26 0v8h14v-8z"/>
+<path fill="#fff5d9" d="M32 40h4v4h-4zm26 0h4v4h-4z"/>
+<path fill="#ad725d" d="M44 54h12v4H44z"/>
+<path fill="#e7ece0" d="M32 64h32l16 16v44H16V80z"/>
+<path fill="#38596a" d="M24 68h12l12 20 12-20h12l12 16v40H12V84z"/>
+<path fill="#f6e4bc" d="M36 64h8l4 12 4-12h8L48 92z"/>
+<path fill="#b66256" d="M44 76h8v28h-8z"/>
+<path fill="#aac1bd" d="M20 96h16v4H20zm40-8h12v4H60z"/>
+<path fill="#edbd95" d="M12 100h16v12H12zm56 0h16v12H68z"/>
+<path fill="#30515e" d="M2 112h106v12H2zm8 12h10v20H10zm80 0h10v20H90z"/>
+<path fill="#b79369" d="M2 108h106v8H2z"/>
+<path fill="#b5c6bf" d="M58 85h42v25H58z"/>
+<path fill="#fcf1d1" d="M54 81h42v25H54z"/>
+<path fill="#b34d4a" d="M62 85h18v4H66v4h10v4H66v6h-4z"/>
+<path fill="#c3b89a" d="M82 88h10v2H82zm0 6h10v2H82z"/>
+<path fill="#e0c293" d="M8 102h26v6H8z"/>
+</svg>

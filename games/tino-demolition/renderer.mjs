@@ -22,6 +22,7 @@ export function createRenderer(canvas,art,reducedMotion=false){
     ctx.save();ctx.globalAlpha=alpha;ctx.translate(r.x+r.w/2,r.y+r.h/2);ctx.rotate(reducedMotion?0:r.angle);
     ctx.drawImage(art.images[def.file],sx+cx*sw,sy+cy*sh,cw*sw,ch*sh,-r.w/2,-r.h/2,r.w,r.h);ctx.restore();
   }
+  const statePower=s=>Math.max(0,Math.min(1,(s.power-20)/80));
   function shadow(x,y,w){ctx.fillStyle='#26394242';ctx.beginPath();ctx.ellipse(x,y,w/2,5,0,0,Math.PI*2);ctx.fill();}
   function render(s,preview,dragging=false){
     const bg=art.images[art.atlas.background.file];
@@ -57,7 +58,7 @@ export function createRenderer(canvas,art,reducedMotion=false){
       const y=Math.min(...roofs.map(b=>b.y))-20;
       ctx.fillStyle='#244956';ctx.fillRect((left+right)/2-69,y,138,20);
       ctx.fillStyle='#d9e5ca';ctx.font='bold 11px monospace';ctx.textAlign='center';
-      ctx.fillText(key==='b'||key==='d'?'TUK · TIP':'TUK · ENGINEERING',(left+right)/2,y+14);
+      ctx.fillText(key==='d'||key==='g'?'TUK · TIP':'TUK · ENGINEERING',(left+right)/2,y+14);
     }
     for(const b of s.barriers){
       // The visual barrier occupies the same bounds as its collision plane.
@@ -66,7 +67,10 @@ export function createRenderer(canvas,art,reducedMotion=false){
     shadow(WORLD.origin.x,WORLD.ground+4,105);
     sprite('launcher',WORLD.origin.x-43,WORLD.ground-110,86,110);
     if(s.phase==='aim'||s.phase==='paused'){
-      sprite(AMMO[s.ammoType].sprite,WORLD.origin.x-42,WORLD.origin.y-25,76,55);
+      const pull=dragging?18+statePower(s)*30:0;
+      const a=s.angle*Math.PI/180,px=WORLD.origin.x-Math.cos(a)*pull,py=WORLD.origin.y+Math.sin(a)*pull;
+      if(dragging){ctx.strokeStyle='#6e4837';ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(WORLD.origin.x-24,WORLD.origin.y+20);ctx.lineTo(px,py);ctx.lineTo(WORLD.origin.x+24,WORLD.origin.y+20);ctx.stroke();}
+      sprite(AMMO[s.ammoType].sprite,px-42,py-25,76,55);
     }
     if(s.phase==='won')sprite('celebrate',WORLD.origin.x-34,WORLD.ground-87,83,78);
     if(preview&&s.phase==='aim'){

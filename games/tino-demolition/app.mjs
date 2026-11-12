@@ -32,6 +32,10 @@ function targetText(){
 function refresh(){
   const definition=LEVELS[state.level];
   const alive=state.blocks.filter(b=>b.hp>0).length;
+  canvas.dataset.remainingBlocks=String(alive);
+  canvas.dataset.totalBlocks=String(state.blocks.length);
+  canvas.dataset.remainingHp=String(Math.round(state.blocks.reduce((sum,b)=>sum+Math.max(0,b.hp),0)));
+  canvas.dataset.angle=String(state.angle);canvas.dataset.power=String(state.power);
   $('#level-name').textContent=definition.name;
   $('#ammo').textContent=`남은 발 ${state.shotsLeft} / ${definition.shots}`;
   $('#damage').textContent=`철거 ${Math.round((1-alive/state.blocks.length)*100)}%`;
@@ -138,16 +142,16 @@ function cancelCharge(){
 $('.stage-wrap').addEventListener('pointerdown',event=>{
   if(event.button!==0)return;
   const p=coordinates(event);if(Math.hypot(p.x-WORLD.origin.x,p.y-WORLD.origin.y)>100)return;
-  if(beginCharge(event.pointerId)){canvas.setPointerCapture(event.pointerId);event.preventDefault();}
+  if(beginCharge(event.pointerId)){root.focus({preventScroll:true});canvas.setPointerCapture(event.pointerId);event.preventDefault();}
 });
 $('.stage-wrap').addEventListener('pointermove',event=>{
   if(!drag||event.pointerId!==drag.id)return;
-  const p=coordinates(event);setAim(state,dragAngle(p.x,p.y),state.power);aim();
+  const p=coordinates(event);setAim(state,dragAngle(p.x,p.y,state.angle),state.power);aim();
 });
 function finishDrag(event,cancelled=false){
   if(!drag||event.pointerId!==drag.id)return;
   if(cancelled){cancelCharge();aim();return;}
-  const id=drag.id;setAim(state,state.angle,chargePower(performance.now()-drag.started));
+  const id=drag.id;const p=coordinates(event);setAim(state,dragAngle(p.x,p.y,state.angle),chargePower(performance.now()-drag.started));
   drag=null;cancelAnimationFrame(chargeFrame);chargeFrame=0;canvas.classList.remove('aiming');
   if(canvas.hasPointerCapture(id))canvas.releasePointerCapture(id);
   launch();
@@ -156,6 +160,11 @@ $('.stage-wrap').addEventListener('pointerup',event=>finishDrag(event));
 $('.stage-wrap').addEventListener('pointercancel',event=>finishDrag(event,true));
 canvas.addEventListener('lostpointercapture',event=>finishDrag(event,true));
 window.addEventListener('resize',()=>{cancelCharge();if(loaded)aim();});
+// Pointer charging is cancellable even if focus was outside the game when the drag began.
+// Clear drag before releasing capture so pointerup/lostcapture cannot launch afterwards.
+window.addEventListener('keydown',event=>{
+ if(event.key==='Escape'&&drag){event.preventDefault();event.stopPropagation();cancelCharge();aim();}
+},true);
 function closeHelp(){$('#help').hidden=true;$('#help-button').setAttribute('aria-expanded','false');$('#help-button').focus();}
 $('#help-button').addEventListener('click',()=>{if(!$('#help').hidden){closeHelp();return;}togglePause(true);$('#help').hidden=false;$('#help-button').setAttribute('aria-expanded','true');$('#close-help').focus();});
 $('#close-help').addEventListener('click',closeHelp);

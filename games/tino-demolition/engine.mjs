@@ -6,14 +6,20 @@ export const AMMO = {
   glass: {label:'연구 티노',sprite:'aim',damage:1,radius:72,description:'유리에는 두 배의 충격'},
 };
 export const chargePower = elapsed => Math.round(20 + 80 * Math.min(1,Math.max(0,elapsed)/1800));
-export function dragAngle(x,y){return Math.max(12,Math.min(80,Math.atan2(WORLD.origin.y-y,Math.max(5,x-WORLD.origin.x))*180/Math.PI));}
+/** Pull behind/down like a slingshot; forward/up aiming remains available for touch. */
+export function dragAngle(x,y,fallback=45){
+ const dx=x-WORLD.origin.x,dy=y-WORLD.origin.y;
+ if(Math.hypot(dx,dy)<12)return fallback;
+ const upward=dx<0?dy:-dy;
+ return Math.max(12,Math.min(80,Math.atan2(upward,Math.max(5,Math.abs(dx)))*180/Math.PI));
+}
 export function selectAmmo(s,key){if(s.phase!=='aim'||!AMMO[key])return false;s.ammoType=key;return true;}
 export const DT = 1 / 120;
 export const MATERIALS = {
-  brick: { hp: 120, label: '벽돌 외벽' },
-  glass: { hp: 65, label: '유리 외벽' },
-  pillar: { hp: 85, label: '건물 지지부' },
-  roof: { hp: 80, label: '지붕' },
+  brick: { hp: 145, label: '벽돌 외벽' },
+  glass: { hp: 95, label: '유리 외벽' },
+  pillar: { hp: 170, label: '건물 지지부' },
+  roof: { hp: 85, label: '지붕' },
 };
 const block = (id, kind, x, y, w, h, supports = []) => ({ id, kind, x, y, w, h, supports, hp: MATERIALS[kind].hp, maxHp: MATERIALS[kind].hp });
 // Repeated structural bays have a continuous slab line and actual supporting piers.
@@ -32,12 +38,12 @@ function campus(id,x,bays,floors,kind='brick'){
  return out;
 }
 export const LEVELS = [
- {name:'01 · 창의공학관',brief:'중앙 현관의 기둥을 공략하세요. 연결된 층이 내려앉으면 옆 지지부에도 충격이 전해집니다.',shots:5,par:1,angle:30,power:78,
-  blocks:campus('a',940,3,2),barriers:[]},
- {name:'02 · TIP 혁신타워',brief:'콘크리트 가림막 너머 유리 입면을 노려보세요. 연구 티노는 유리층에 두 배의 충격을 줍니다.',shots:5,par:1,angle:40,power:80,
-  blocks:campus('b',1060,3,[2,3,2],'glass'),barriers:[{id:'screen',x:650,y:430,w:120,h:210}]},
- {name:'03 · 캠퍼스 연결동',brief:'앞쪽 공학동과 뒤쪽 연구동의 지지부를 나누어 공략하세요. 서로 다른 티노의 충격 범위도 활용해 보세요.',shots:8,par:2,angle:35,power:85,
-  blocks:[...campus('c',820,2,2),...campus('d',1240,2,3,'glass')],barriers:[]},
+ {name:'01 · 창의공학관',brief:'광장을 사이에 둔 두 공학동. 뒤로 당기는 위치로 각도를, 누르는 시간으로 세기를 조절하세요. 외벽은 한 번에 사라지지 않습니다.',shots:14,par:10,angle:35,power:65,
+  blocks:[...campus('a',660,2,1),...campus('b',1150,2,1)],barriers:[]},
+ {name:'02 · TIP 혁신타워',brief:'앞쪽 연구관과 뒤쪽 TIP 타워를 각각 공략하세요. 높은 궤적으로 앞 건물을 넘기고, 유리에는 연구 티노를 활용해 보세요.',shots:18,par:14,angle:48,power:70,
+  blocks:[...campus('c',720,2,1),...campus('d',1210,2,2,'glass')],barriers:[]},
+ {name:'03 · 캠퍼스 연결동',brief:'서로 떨어진 세 건물. 가까운 곳은 낮고 짧게, 먼 타워는 높게 쏘세요. 기둥과 외벽의 균열을 읽고 다음 발을 계획하세요.',shots:22,par:18,angle:35,power:65,
+  blocks:[...campus('e',570,2,1),...campus('f',970,2,1),...campus('g',1370,1,2,'glass')],barriers:[]},
 ];
 export function createGame(level = 0) {
   const definition = LEVELS[level];
@@ -135,13 +141,13 @@ function impact(s,p,hit){
   if(hit.type==='block'){
     const direct=s.blocks.find(b=>b.id===hit.id);
     const ammo=AMMO[p.ammoType]||AMMO.impact;
-    const damage=Math.max(45,Math.min(240,Math.hypot(p.vx,p.vy)**2*.00075))*ammo.damage*(p.ammoType==='glass'&&direct.kind==='glass'?2:1);
+    const damage=Math.max(45,Math.min(155,Math.hypot(p.vx,p.vy)**2*.00028))*ammo.damage*(p.ammoType==='glass'&&direct.kind==='glass'?2:1);
     direct.hp-=damage;
     if(direct.hp<=0)destroy(s,direct,'hit');
     for(const b of s.blocks.filter(b=>b.hp>0&&b.id!==hit.id)){
       const x=Math.max(b.x,Math.min(b.x+b.w,hit.x)),y=Math.max(b.y,Math.min(b.y+b.h,hit.y));
       const distance=Math.hypot(hit.x-x,hit.y-y);
-      if(distance<ammo.radius){b.hp-=damage*.65*(1-distance/ammo.radius);if(b.hp<=0)destroy(s,b,'impact');}
+      if(distance<ammo.radius){b.hp-=damage*.2*(1-distance/ammo.radius);if(b.hp<=0)destroy(s,b,'impact');}
     }
     collapse(s);
   }
@@ -184,7 +190,7 @@ export function step(s,dt=DT){
       const ox=Math.min(b.x+b.w,other.x+other.w)-Math.max(b.x,other.x);
       const oy=Math.min(b.y+b.h,other.y+other.h)-Math.max(b.y,other.y);
       if(ox>8&&oy>8&&!b.contacts.includes(other.id)){
-        b.contacts.push(other.id);const energy=Math.min(170,Math.abs(b.vx)*.9+b.vy*.2);
+        b.contacts.push(other.id);const energy=Math.min(32,Math.abs(b.vx)*.15+b.vy*.045);
         other.hp-=energy;event(s,'chain-hit',{id:other.id,x:other.x+other.w/2,y:other.y+other.h/2,energy});
         b.vx*=.55;if(other.hp<=0){destroy(s,other,'side-impact');collapse(s);}
       }
@@ -196,7 +202,7 @@ export function step(s,dt=DT){
     if(nextBottom>=floor){
       b.y=floor-b.h;
       for(const other of surfaces.filter(other=>Math.abs(other.y-floor)<1)){
-        other.hp-=Math.min(180,b.vy*.65);if(other.hp<=0)destroy(s,other,'fall-impact');
+        other.hp-=Math.min(55,b.vy*.15);if(other.hp<=0)destroy(s,other,'fall-impact');
       }
       destroy(s,b,'landed');collapse(s);s.settle=Math.max(s.settle,.65);
     }
